@@ -11,7 +11,9 @@
     "test:ci": "ng test --watch=false",
     "verify": "npm run lint && npm run test:ci && npm run build",
     "lint": "ng lint",
-    "lint:fix": "ng lint --fix"
+    "lint:fix": "ng lint --fix",
+    "start:en": "ng serve --configuration=en --port 4201",
+    "i18n": "ng extract-i18n && python3 scripts/i18n-build.py"
   },
   "private": true,
   "packageManager": "npm@11.19.0",
@@ -33,6 +35,7 @@
     "@angular/build": "^22.1.8",
     "@angular/cli": "^22.1.8",
     "@angular/compiler-cli": "^22.1.0",
+    "@angular/localize": "^22.1.7",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
     "angular-eslint": "^22.5.0",

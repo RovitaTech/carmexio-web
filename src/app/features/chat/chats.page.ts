@@ -9,10 +9,10 @@ import { EmptyState } from '../../shared/ui/state-views';
 import { ChatInboxStore } from '../../core/state/chat-inbox.store';
 
 const QUICK_REPLIES = [
-  '¿Sigue disponible?',
-  'Quiero agendar una visita',
-  '¿Puedo hacer una prueba de manejo?',
-  '¿Tienen financiamiento?',
+  $localize`:@@chat.sigue-disponible:¿Sigue disponible?`,
+  $localize`:@@chat.quiero-agendar-una-visita:Quiero agendar una visita`,
+  $localize`:@@chat.puedo-hacer-una-prueba-de:¿Puedo hacer una prueba de manejo?`,
+  $localize`:@@chat.tienen-financiamiento:¿Tienen financiamiento?`,
 ];
 
 /** Two-pane inbox (desktop) / single pane (mobile). `/mensajes/:id` opens a thread. */
@@ -40,7 +40,7 @@ export class ChatsPage {
   );
 
   constructor() {
-    inject(SeoService).set({ title: 'Mensajes', noindex: true });
+    inject(SeoService).set({ title: $localize`:@@chat.mensajes:Mensajes`, noindex: true });
     // Load + subscribe to the open thread; unsubscribe when it changes.
     effect((onCleanup) => {
       const id = this.id();

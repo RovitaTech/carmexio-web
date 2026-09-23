@@ -15,8 +15,10 @@ const PUBLIC_PAGES = [
   '/autos',
   '/autos/car-1--ram-1500-2022',
   '/autos/car-1--ram-1500-2022/inspeccion',
+  '/ofertas',
   '/sucursales',
   '/como-funciona',
+  '/admin/entrar',
   '/entrar',
   '/registro',
 ];
@@ -27,6 +29,15 @@ const STAFF_PAGES = [
   '/staff/revision/car-26',
   '/staff/anuncios',
   '/staff/inspecciones/car-1',
+  '/admin',
+  '/admin/anuncios',
+  '/admin/anuncios/nuevo',
+  '/admin/anuncios/hero-certified',
+  '/admin/ofertas',
+  '/admin/ofertas/offer-buen-fin',
+  '/admin/avisos',
+  '/admin/medios',
+  '/admin/textos',
 ];
 
 async function violations(url: string): Promise<string[]> {
@@ -62,7 +73,7 @@ describe('accessibility (axe)', () => {
     expect(await violations(url)).toEqual([]);
   });
 
-  it.each(STAFF_PAGES)('%s (staff) has no violations', async (url) => {
+  it.each(STAFF_PAGES)('%s (admin) has no violations', async (url) => {
     await TestBed.inject(SessionStore).signIn('staff@carmexio.mx', 'carmexio123');
     expect(await violations(url)).toEqual([]);
   });

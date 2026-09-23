@@ -15,6 +15,7 @@ export class SessionStore {
   readonly busy = signal(false);
   readonly error = signal<string | null>(null);
   readonly isSignedIn = computed(() => this.user() !== null);
+  readonly isAdmin = computed(() => this.user()?.role === 'admin');
   readonly isStaff = computed(() => {
     const role = this.user()?.role;
     return role === 'staff' || role === 'admin';

@@ -11,12 +11,13 @@ const EMAIL = /^[\w.+-]+@[\w-]+\.[\w.-]+$/;
   imports: [RouterLink, AuthLayout],
   template: `
     <cx-auth-layout
+      i18n-title="@@auth.bienvenido-de-nuevo"
       title="Bienvenido de nuevo"
       subtitle="Guarda autos, chatea con Carmexio y publica tu auto."
     >
       <form (submit)="$event.preventDefault(); submit()" novalidate>
         <div class="field">
-          <label for="email">Correo</label>
+          <label for="email" i18n="@@auth.correo">Correo</label>
           <input
             id="email"
             type="email"
@@ -26,7 +27,7 @@ const EMAIL = /^[\w.+-]+@[\w-]+\.[\w.-]+$/;
           />
         </div>
         <div class="field">
-          <label for="password">Contraseña</label>
+          <label for="password" i18n="@@auth.contrasena">Contraseña</label>
           <input
             id="password"
             type="password"
@@ -39,15 +40,23 @@ const EMAIL = /^[\w.+-]+@[\w-]+\.[\w.-]+$/;
           <p class="error" role="alert">{{ session.error() }}</p>
         }
         <button class="btn primary block" type="submit" [disabled]="session.busy()">
-          {{ session.busy() ? 'Entrando…' : 'Entrar' }}
+          @if (session.busy()) {
+            <ng-container i18n="@@auth.signingIn">Entrando…</ng-container>
+          } @else {
+            <ng-container i18n="@@auth.signIn">Entrar</ng-container>
+          }
         </button>
       </form>
-      <button class="demo" type="button" (click)="fillDemo()">
+      <button class="demo" type="button" (click)="fillDemo()" i18n="@@auth.modo-demo-usar-demo-64">
         Modo demo: usar demo&#64;carmexio.mx / carmexio123 (staff: staff&#64;carmexio.mx)
       </button>
       <p class="links">
-        <a routerLink="/recuperar">¿Olvidaste tu contraseña?</a>
-        <a routerLink="/registro" [queryParams]="{ from: from() }">Crear cuenta</a>
+        <a routerLink="/recuperar" i18n="@@auth.olvidaste-tu-contrasena"
+          >¿Olvidaste tu contraseña?</a
+        >
+        <a routerLink="/registro" [queryParams]="{ from: from() }" i18n="@@auth.crear-cuenta"
+          >Crear cuenta</a
+        >
       </p>
     </cx-auth-layout>
   `,
@@ -85,7 +94,7 @@ export class LoginPage {
   protected readonly password = signal('');
 
   constructor() {
-    inject(SeoService).set({ title: 'Entrar', noindex: true });
+    inject(SeoService).set({ title: $localize`:@@auth.entrar-2:Entrar`, noindex: true });
   }
 
   protected fillDemo(): void {
@@ -95,7 +104,9 @@ export class LoginPage {
 
   protected async submit(): Promise<void> {
     if (!EMAIL.test(this.email().trim()) || !this.password()) {
-      this.session.error.set('Ingresa tu correo y contraseña.');
+      this.session.error.set(
+        $localize`:@@auth.ingresa-tu-correo-y-contrasena:Ingresa tu correo y contraseña.`,
+      );
       return;
     }
     if (await this.session.signIn(this.email(), this.password())) {
@@ -108,12 +119,16 @@ export class LoginPage {
   selector: 'cx-register-page',
   imports: [RouterLink, AuthLayout],
   template: `
-    <cx-auth-layout title="Crea tu cuenta" subtitle="Publica tu auto gratis y habla con Carmexio.">
+    <cx-auth-layout
+      i18n-title="@@auth.crea-tu-cuenta"
+      title="Crea tu cuenta"
+      subtitle="Publica tu auto gratis y habla con Carmexio."
+    >
       @if (confirmSent()) {
-        <p role="status">
+        <p role="status" i18n="@@auth.te-enviamos-un-correo-de">
           Te enviamos un correo de confirmación. Confírmalo y después inicia sesión.
         </p>
-        <a class="btn primary block" routerLink="/entrar">Ir a entrar</a>
+        <a class="btn primary block" routerLink="/entrar" i18n="@@auth.ir-a-entrar">Ir a entrar</a>
       } @else {
         <form
           (submit)="
@@ -123,7 +138,8 @@ export class LoginPage {
           novalidate
         >
           <div class="field">
-            <label for="name">Nombre completo</label><input #name id="name" autocomplete="name" />
+            <label for="name" i18n="@@auth.nombre-completo">Nombre completo</label
+            ><input #name id="name" autocomplete="name" />
           </div>
           <div class="field">
             <label for="remail">Correo</label
@@ -143,12 +159,18 @@ export class LoginPage {
           @if (error() || session.error()) {
             <p class="error" role="alert">{{ error() || session.error() }}</p>
           }
-          <button class="btn primary block" type="submit" [disabled]="session.busy()">
+          <button
+            class="btn primary block"
+            type="submit"
+            [disabled]="session.busy()"
+            i18n="@@auth.createAccountSubmit"
+          >
             Crear cuenta
           </button>
         </form>
         <p>
-          ¿Ya tienes cuenta? <a routerLink="/entrar" [queryParams]="{ from: from() }">Entrar</a>
+          ¿Ya tienes cuenta?
+          <a routerLink="/entrar" [queryParams]="{ from: from() }" i18n="@@auth.entrar">Entrar</a>
         </p>
       }
     </cx-auth-layout>
@@ -184,7 +206,10 @@ export class RegisterPage {
   protected readonly confirmSent = signal(false);
 
   constructor() {
-    inject(SeoService).set({ title: 'Crear cuenta', noindex: true });
+    inject(SeoService).set({
+      title: $localize`:@@auth.crear-cuenta-2:Crear cuenta`,
+      noindex: true,
+    });
   }
 
   protected async submit(
@@ -196,15 +221,15 @@ export class RegisterPage {
   ) {
     const problem =
       name.trim().length < 3
-        ? 'Ingresa tu nombre completo.'
+        ? $localize`:@@auth.ingresa-tu-nombre-completo:Ingresa tu nombre completo.`
         : !EMAIL.test(email.trim())
-          ? 'Ingresa un correo válido.'
+          ? $localize`:@@auth.ingresa-un-correo-valido:Ingresa un correo válido.`
           : !/^\+?[0-9 ]{10,15}$/.test(phone.trim())
-            ? 'Ingresa un teléfono válido.'
+            ? $localize`:@@auth.ingresa-un-telefono-valido:Ingresa un teléfono válido.`
             : password.length < 8 || !/[0-9]/.test(password)
-              ? 'La contraseña necesita 8 caracteres y un número.'
+              ? $localize`:@@auth.la-contrasena-necesita-8-caracteres:La contraseña necesita 8 caracteres y un número.`
               : !terms
-                ? 'Acepta los términos para continuar.'
+                ? $localize`:@@auth.acepta-los-terminos-para-continuar:Acepta los términos para continuar.`
                 : null;
     this.error.set(problem);
     if (problem) return;
@@ -219,20 +244,29 @@ export class RegisterPage {
   imports: [RouterLink, AuthLayout],
   template: `
     <cx-auth-layout
+      i18n-title="@@auth.recupera-tu-contrasena"
       title="Recupera tu contraseña"
       subtitle="Te enviaremos un enlace para elegir una nueva."
     >
       @if (sent()) {
-        <p role="status">
+        <p role="status" i18n="@@auth.si-existe-una-cuenta-con">
           Si existe una cuenta con ese correo, recibirás el enlace en unos minutos.
         </p>
-        <a class="btn primary block" routerLink="/entrar">Volver a entrar</a>
+        <a class="btn primary block" routerLink="/entrar" i18n="@@auth.volver-a-entrar"
+          >Volver a entrar</a
+        >
       } @else {
         <form (submit)="$event.preventDefault(); submit(email.value)" novalidate>
           <div class="field">
-            <label for="reset-email">Correo</label><input #email id="reset-email" type="email" />
+            <label for="reset-email" i18n="@@auth.correo">Correo</label
+            ><input #email id="reset-email" type="email" />
           </div>
-          <button class="btn primary block" type="submit" [disabled]="session.busy()">
+          <button
+            class="btn primary block"
+            type="submit"
+            [disabled]="session.busy()"
+            i18n="@@auth.enviar-enlace"
+          >
             Enviar enlace
           </button>
         </form>
@@ -254,7 +288,10 @@ export class ResetPage {
   protected readonly sent = signal(false);
 
   constructor() {
-    inject(SeoService).set({ title: 'Recuperar contraseña', noindex: true });
+    inject(SeoService).set({
+      title: $localize`:@@auth.recuperar-contrasena:Recuperar contraseña`,
+      noindex: true,
+    });
   }
 
   protected async submit(email: string): Promise<void> {

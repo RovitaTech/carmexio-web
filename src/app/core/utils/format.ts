@@ -22,16 +22,21 @@ export function formatKm(km: number): string {
   return `${grouped.format(km)} km`;
 }
 
-/** Relative time in Spanish: "hace 5 min", "hace 3 h", "hace 2 d". */
+/** Relative time: "hace 5 min" / "5 min ago". */
 export function timeAgo(iso: string, now = Date.now()): string {
   const minutes = Math.floor((now - Date.parse(iso)) / 60_000);
-  if (minutes < 1) return 'justo ahora';
-  if (minutes < 60) return `hace ${minutes} min`;
+  if (minutes < 1) return $localize`:@@time.now:justo ahora`;
+  if (minutes < 60) return $localize`:@@time.minutes:hace ${minutes}:count: min`;
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `hace ${hours} h`;
+  if (hours < 24) return $localize`:@@time.hours:hace ${hours}:count: h`;
   const days = Math.floor(hours / 24);
-  if (days < 7) return `hace ${days} d`;
-  return new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'short' });
+  if (days < 7) return $localize`:@@time.days:hace ${days}:count: d`;
+  return new Date(iso).toLocaleDateString(currentLocale(), { day: 'numeric', month: 'short' });
+}
+
+/** Locale of the running build (`$localize.locale` is set by localized bundles). */
+export function currentLocale(): string {
+  return (typeof $localize !== 'undefined' && $localize.locale) || 'es-MX';
 }
 
 export function carSlug(car: { id: string; brand: string; model: string; year: number }): string {

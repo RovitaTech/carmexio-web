@@ -37,6 +37,12 @@
   --cx-gradient-hero: linear-gradient(135deg, #0a0f1c, #0e2447);
   --cx-scrim: linear-gradient(180deg, transparent, rgb(0 0 0 / 70%));
   --cx-banner-scrim: linear-gradient(90deg, rgb(10 15 28 / 92%), rgb(10 15 28 / 30%));
+  --cx-hero-scrim:
+    linear-gradient(90deg, rgb(10 15 28 / 92%) 0%, rgb(10 15 28 / 65%) 45%, rgb(10 15 28 / 25%) 100%),
+    linear-gradient(0deg, rgb(10 15 28 / 85%) 0%, transparent 45%);
+  --cx-gradient-highlight: linear-gradient(90deg, #00c2ff, #7aa7ff);
+  --cx-glass-dark: rgb(10 15 28 / 45%);
+  --cx-glass-hover: rgb(255 255 255 / 18%);
 
   // Content on navy / photos (same in light and dark themes).
   --cx-on-dark: #ffffff;
@@ -54,6 +60,8 @@
 
   --cx-font: 'Urbanist', system-ui, -apple-system, sans-serif;
   --cx-max-width: 1280px;
+  --cx-header-h: 76px;
+  --cx-header-h-compact: 62px;
   --cx-gutter: 20px;
 
   color-scheme: light;

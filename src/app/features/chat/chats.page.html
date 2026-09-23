@@ -1,17 +1,23 @@
 <div class="container page" [class.thread-open]="id()">
-  <aside class="inbox card" aria-label="Conversaciones">
-    <h1>Mensajes</h1>
+  <aside class="inbox card" i18n-aria-label="@@chat.conversaciones" aria-label="Conversaciones">
+    <h1 i18n="@@chat.mensajes">Mensajes</h1>
     @for (c of inbox.conversations(); track c.id) {
       <a class="row" [routerLink]="['/mensajes', c.id]" [class.active]="c.id === id()">
         <img class="thumb" [src]="c.listingImage ?? '/images/logo_mark.png'" alt="" />
         <div class="text">
           <strong>{{ c.location.name }}</strong>
-          <small class="car">{{
-            c.listingTitle
-              ? c.listingTitle + ' · ' + compactPrice(c.listingPrice ?? 0)
-              : 'Consulta general'
-          }}</small>
-          <small>{{ c.lastMessage ?? 'Escríbenos' }}</small>
+          @if (c.listingTitle) {
+            <small class="car"
+              >{{ c.listingTitle }} · {{ compactPrice(c.listingPrice ?? 0) }}</small
+            >
+          } @else {
+            <small class="car" i18n="@@chat.generalEnquiry">Consulta general</small>
+          }
+          @if (c.lastMessage) {
+            <small>{{ c.lastMessage }}</small>
+          } @else {
+            <small i18n="@@chat.writeUs">Escríbenos</small>
+          }
         </div>
         <div class="side">
           <small>{{ timeAgo(c.lastMessageAt) }}</small>
@@ -23,7 +29,9 @@
     } @empty {
       <cx-empty-state
         icon="💬"
+        i18n-title="@@chat.sin-conversaciones"
         title="Sin conversaciones"
+        i18n-message="@@chat.abre-un-auto-y-toca"
         message="Abre un auto y toca “Chatear con Carmexio”."
       />
     }
@@ -32,11 +40,15 @@
   <section class="thread card" aria-live="polite">
     @if (active(); as c) {
       <header>
-        <a class="back" routerLink="/mensajes" aria-label="Volver">←</a>
+        <a class="back" routerLink="/mensajes" i18n-aria-label="@@chat.volver" aria-label="Volver"
+          >←</a
+        >
         <img src="/images/logo_mark.png" alt="" width="36" height="27" />
         <div>
           <strong>{{ c.location.name }}</strong>
-          <small>Asesor Carmexio · responde en ~1 h</small>
+          <small i18n="@@chat.asesor-carmexio-responde-en-1"
+            >Asesor Carmexio · responde en ~1 h</small
+          >
         </div>
         @if (c.listingId) {
           <a class="car-link" [routerLink]="['/autos', c.listingId]">{{ c.listingTitle }} →</a>
@@ -61,22 +73,30 @@
         </div>
       }
       <form class="composer" (submit)="$event.preventDefault(); send()">
-        <label class="visually-hidden" for="msg">Mensaje</label>
+        <label class="visually-hidden" for="msg" i18n="@@chat.mensaje">Mensaje</label>
         <input
           id="msg"
           [value]="draft()"
           (input)="draft.set($any($event.target).value)"
+          i18n-placeholder="@@chat.escribe-un-mensaje"
           placeholder="Escribe un mensaje…"
           maxlength="1000"
         />
-        <button class="btn primary" type="submit" [disabled]="!draft().trim() || sending()">
+        <button
+          class="btn primary"
+          type="submit"
+          [disabled]="!draft().trim() || sending()"
+          i18n="@@chat.enviar"
+        >
           Enviar
         </button>
       </form>
     } @else {
       <cx-empty-state
         icon="💬"
+        i18n-title="@@chat.elige-una-conversacion"
         title="Elige una conversación"
+        i18n-message="@@chat.carmexio-responde-y-coordina-visitas"
         message="Carmexio responde y coordina visitas y pruebas de manejo."
       />
     }

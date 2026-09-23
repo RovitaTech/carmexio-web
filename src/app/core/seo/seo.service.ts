@@ -2,6 +2,7 @@ import { DOCUMENT, RESPONSE_INIT, Service, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { APP_CONFIG } from '../config/app-config';
+import { APP_LANG, LANGS, Lang, langPrefix } from '../i18n/i18n';
 
 export interface SeoData {
   title: string;
@@ -32,17 +33,19 @@ export class SeoService {
   private readonly siteUrl = inject(APP_CONFIG).siteUrl;
   /** Only present while rendering on the server. */
   private readonly response = inject(RESPONSE_INIT, { optional: true });
+  private readonly lang = inject(APP_LANG);
 
   set(data: SeoData): void {
     const title = `${data.title} · ${SITE_NAME}`;
-    const url = this.absolute(data.path ?? this.currentPath());
+    const path = data.path ?? this.currentPath();
+    const url = this.localized(path, this.lang);
     const image = this.absolute(data.image ?? DEFAULT_IMAGE);
 
     this.title.setTitle(title);
     this.setMeta('name', 'robots', data.noindex ? 'noindex, nofollow' : 'index, follow');
     this.setMeta('name', 'description', data.description);
     this.setMeta('property', 'og:site_name', SITE_NAME);
-    this.setMeta('property', 'og:locale', 'es_MX');
+    this.setMeta('property', 'og:locale', this.lang === 'en' ? 'en_US' : 'es_MX');
     this.setMeta('property', 'og:type', 'website');
     this.setMeta('property', 'og:title', title);
     this.setMeta('property', 'og:description', data.description);
@@ -50,6 +53,7 @@ export class SeoService {
     this.setMeta('property', 'og:image', image);
     this.setMeta('name', 'twitter:card', 'summary_large_image');
     this.setCanonical(data.noindex ? undefined : url);
+    this.setAlternates(data.noindex ? undefined : path);
     this.setJsonLd(data.jsonLd);
   }
 
@@ -61,6 +65,33 @@ export class SeoService {
   /** `https://carmexio.mx` + path, unless the value is already absolute. */
   absolute(pathOrUrl: string): string {
     return /^https?:\/\//.test(pathOrUrl) ? pathOrUrl : `${this.siteUrl}${pathOrUrl}`;
+  }
+
+  /** Absolute URL of `path` in a given language (`/en` prefix for English). */
+  private localized(path: string, lang: Lang): string {
+    return `${this.siteUrl}${langPrefix(lang)}${path}` || this.siteUrl;
+  }
+
+  /** `<link rel="alternate" hreflang>` for every language + x-default (Spanish). */
+  private setAlternates(path: string | undefined): void {
+    this.document.head
+      .querySelectorAll('link[rel="alternate"][hreflang]')
+      .forEach((l) => l.remove());
+    if (path === undefined) return;
+    const links: [string, string][] = [
+      ...LANGS.map((lang): [string, string] => [
+        lang === 'es' ? 'es-MX' : 'en',
+        this.localized(path, lang),
+      ]),
+      ['x-default', this.localized(path, 'es')],
+    ];
+    for (const [hreflang, href] of links) {
+      const link = this.document.createElement('link');
+      link.rel = 'alternate';
+      link.hreflang = hreflang;
+      link.href = href;
+      this.document.head.appendChild(link);
+    }
   }
 
   /** Pages set SEO while their navigation is still in flight, so prefer its target URL. */

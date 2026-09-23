@@ -15,7 +15,7 @@ import { filter, map } from 'rxjs';
   template: '',
   host: {
     role: 'progressbar',
-    'aria-label': 'Cargando página',
+    '[attr.aria-label]': 'label',
     '[class.active]': 'navigating()',
     '[attr.aria-hidden]': '!navigating()',
   },
@@ -49,6 +49,7 @@ import { filter, map } from 'rxjs';
   `,
 })
 export class RouteProgress {
+  protected readonly label = $localize`:@@progress.label:Cargando página`;
   protected readonly navigating = toSignal(
     inject(Router).events.pipe(
       filter(

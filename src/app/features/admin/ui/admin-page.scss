@@ -1,0 +1,141 @@
+// Shared by every admin page (via styleUrls). Keep it layout-only.
+:host {
+  display: grid;
+  gap: 20px;
+  max-width: 1120px;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+
+  h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  p {
+    margin-top: 4px;
+  }
+}
+
+.back {
+  color: var(--cx-primary-text);
+  font-weight: 600;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 6px 14px;
+  align-items: center;
+  padding: 12px;
+
+  .thumb {
+    grid-row: span 2;
+    width: 96px;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--cx-radius-sm);
+    object-fit: cover;
+    background: var(--cx-surface-alt);
+  }
+
+  .title {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+
+    strong {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    small {
+      color: var(--cx-text-2);
+    }
+  }
+
+  .row-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: 96px minmax(0, 1fr) auto;
+
+    .thumb {
+      grid-row: auto;
+    }
+  }
+}
+
+.link-btn {
+  padding: 6px 4px;
+  border: 0;
+  background: none;
+  color: var(--cx-primary-text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+
+  &.danger {
+    color: var(--cx-error-text);
+  }
+}
+
+.form {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+}
+
+.grid-2 {
+  display: grid;
+  gap: 14px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+
+  input {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 0;
+  background: linear-gradient(transparent, var(--cx-bg) 30%);
+}
+
+.error {
+  color: var(--cx-error-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+}

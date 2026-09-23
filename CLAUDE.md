@@ -75,6 +75,37 @@ Patterns:
 - Local production server: `NG_ALLOWED_HOSTS=localhost npm run serve:ssr:carmexio-web`
   (production hosts are listed in `angular.json` → `security.allowedHosts`).
 
+## Languages (es-MX + English)
+
+- `@angular/localize`, build-time: Spanish (source) at `/`, English at `/en`. Each is its own
+  bundle; `LangSwitch` does a full page load to the other one. `APP_LANG` = current language.
+- Every customer-facing string needs `i18n="@@area.key"` (templates) or
+  `$localize\`:@@area.key:Texto\`` (TS). Staff portal and `/admin` are internal → Spanish only.
+- After adding/changing copy: `npm run i18n` (extracts, then `scripts/i18n-build.py` checks every
+  id + placeholder against `src/locale/en.translations.py` and writes `messages.en.json`).
+  Production builds fail on a missing translation (`i18nMissingTranslation: error`).
+- Dev server serves Spanish only (`npm start`); English: `npm run start:en` (port 4201).
+- Admin-edited content is bilingual data (`LocalizedText {es, en?}`), shown via
+  `ContentStore.t()` / `.text(key)` — not `$localize`.
+
+## Admin panel & site content
+
+- `/admin` (own layout, outside `Shell`), role `admin` only, login at `/admin/entrar`.
+- Manages `banners` (hero slides, promo strips, ad slots — image or video), `site_alerts`,
+  `offers`, `site_texts` (overrides of `SITE_TEXTS` defaults) and the `site-media` library.
+  Contract: `../carmexio/API_NEEDED.md` §10. Repos: `CONTENT_REPOSITORY` (public read),
+  `CMS_REPOSITORY` (admin write). Public pages read everything through `ContentStore`.
+- Admin forms use Signal Forms; constraints live in the schema (not template attributes).
+
+## Deployment (Vercel)
+
+- Project `carmexio`, linked to GitHub `master` → every push deploys.
+- `vercel.json`: static `dist/carmexio-web/browser` on the CDN; everything else rewrites to
+  `api/ssr.mjs`, which runs the Angular SSR handler from `dist/carmexio-web/server`.
+- `environment.siteUrl` and `public/robots.txt` point at the Vercel domain until carmexio.mx is
+  connected; production hosts are in `angular.json → security.allowedHosts`.
+- Brand logos: `public/brands/*.svg` (Simple Icons, see its README) via `<cx-brand-logo>`.
+
 ## Going live (Supabase)
 
 1. Fill `src/environments/environment.ts` (`supabase.url`, `supabase.publishableKey`) — or

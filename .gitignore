@@ -46,3 +46,6 @@ Thumbs.db
 # Local environment (keys)
 .env*
 src/environments/*.local.ts
+
+# Vercel
+.vercel

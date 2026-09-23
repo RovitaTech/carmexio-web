@@ -9,7 +9,14 @@ import { ToastStore } from '../../core/ui/toast.store';
       @for (t of store.toasts(); track t.id) {
         <div class="toast" [class]="t.tone" [attr.role]="t.tone === 'error' ? 'alert' : 'status'">
           <span>{{ t.text }}</span>
-          <button type="button" aria-label="Cerrar aviso" (click)="store.dismiss(t.id)">✕</button>
+          <button
+            type="button"
+            i18n-aria-label="@@toast.close"
+            aria-label="Cerrar aviso"
+            (click)="store.dismiss(t.id)"
+          >
+            ✕
+          </button>
         </div>
       }
     </div>

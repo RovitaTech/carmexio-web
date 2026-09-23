@@ -12,7 +12,6 @@ import {
   ListingDraft,
   PHOTO_ANGLES,
   PhotoAngle,
-  PromoBanner,
 } from '../domain/models';
 
 // Untyped DB rows stop here: mappers are the only place that reads them.
@@ -80,17 +79,6 @@ export function toBrand(r: Row): Brand {
     logoUrl: r['logo_url'] ?? undefined,
     models: r['models'] ?? [],
     listingsCount: r['listings_count'] ?? 0,
-  };
-}
-
-export function toBanner(r: Row): PromoBanner {
-  return {
-    id: r['id'],
-    title: r['title'],
-    subtitle: r['subtitle'],
-    imageUrl: r['image_url'],
-    ctaLabel: r['cta_label'] ?? undefined,
-    deepLink: r['deep_link'] ?? undefined,
   };
 }
 

@@ -1,8 +1,5 @@
-import { registerLocaleData } from '@angular/common';
-import localeEsMx from '@angular/common/locales/es-MX';
 import {
   ApplicationConfig,
-  LOCALE_ID,
   inject,
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
@@ -14,11 +11,9 @@ import { SessionStore } from './core/auth/session.store';
 import { ThemeService } from './core/theme/theme.service';
 import { provideDummyData } from './data/providers';
 
-registerLocaleData(localeEsMx);
-
 export const appConfig: ApplicationConfig = {
   providers: [
-    { provide: LOCALE_ID, useValue: 'es-MX' },
+    // LOCALE_ID and locale data come from the localize build (angular.json → i18n).
     provideBrowserGlobalErrorListeners(),
     provideRouter(
       routes,

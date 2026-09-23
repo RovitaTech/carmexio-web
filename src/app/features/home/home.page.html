@@ -1,65 +1,31 @@
-<section class="hero">
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <span class="pill soft">✓ Cada auto verificado por Carmexio</span>
-      <h1>Encuentra tu próximo <em>auto soñado</em></h1>
-      <p>
-        Seminuevos inspeccionados en 150 puntos. Nosotros coordinamos visitas, pruebas de manejo y
-        papeles.
-      </p>
-      <form class="search" role="search" (submit)="$event.preventDefault(); search(q.value)">
-        <label class="visually-hidden" for="hero-q">Buscar</label>
-        <input #q id="hero-q" type="search" placeholder="Marca, modelo o versión" />
-        <button class="btn primary" type="submit">Buscar</button>
-      </form>
-      <div class="chips">
-        @for (b of bodies; track b.value) {
-          <a class="chip" routerLink="/autos" [queryParams]="{ body: b.value }">{{ b.label }}</a>
-        }
-      </div>
-    </div>
-    @if (banners.value()?.[0]; as banner) {
-      <img class="hero-img" [src]="banner.imageUrl" alt="" />
-    }
-  </div>
-</section>
+<cx-home-hero />
 
-@if (banners.value(); as list) {
-  <section class="container section banners" aria-labelledby="promos-title">
-    <h2 id="promos-title" class="visually-hidden">Promociones</h2>
-    @for (b of list; track b.id) {
-      @let link = bannerLink(b.deepLink);
-      <a class="banner card" [routerLink]="link.path" [queryParams]="link.query">
-        <img [src]="b.imageUrl" alt="" loading="lazy" />
-        <div>
-          <h3>{{ b.title }}</h3>
-          <p>{{ b.subtitle }}</p>
-          @if (b.ctaLabel) {
-            <span class="pill">{{ b.ctaLabel }} →</span>
-          }
-        </div>
+@if (topBrands().length) {
+  <section class="container section" aria-labelledby="brands-title">
+    <div class="section-head">
+      <h2 id="brands-title" i18n="@@home.brands">Marcas más buscadas</h2>
+      <a routerLink="/autos" i18n="@@common.seeAll">Ver todos</a>
+    </div>
+    <div class="brands">
+      @for (b of topBrands(); track b.id) {
+        <cx-brand-card [brand]="b" />
+      }
+      <a class="all-brands" routerLink="/autos">
+        <strong i18n="@@home.allBrands.title">Todas las marcas</strong>
+        <span i18n="@@home.allBrands.text">{{ totalCars() }} autos verificados</span>
+        <span class="go">
+          <ng-container i18n="@@home.allBrands.cta">Explorar</ng-container>
+          <cx-icon name="arrowRight" [size]="18" />
+        </span>
       </a>
-    }
+    </div>
   </section>
 }
 
-<section class="container section">
-  <div class="section-head"><h2>Marcas más buscadas</h2></div>
-  <div class="brands">
-    @for (b of topBrands(); track b.id) {
-      <a class="brand" routerLink="/autos" [queryParams]="{ brand: b.name }">
-        <span class="mono">{{ b.name.slice(0, 2).toUpperCase() }}</span>
-        <strong>{{ b.name }}</strong>
-        <small>{{ b.listingsCount }} autos</small>
-      </a>
-    }
-  </div>
-</section>
-
-<section class="container section">
+<section class="container section" aria-labelledby="featured-title">
   <div class="section-head">
-    <h2>Destacados y certificados</h2>
-    <a routerLink="/autos" [queryParams]="{ featured: true }">Ver todos</a>
+    <h2 id="featured-title" i18n="@@home.featured">Destacados y certificados</h2>
+    <a routerLink="/autos" [queryParams]="{ featured: true }" i18n="@@common.seeAll">Ver todos</a>
   </div>
   <div class="grid-cars">
     @for (car of featured.value() ?? []; track car.id) {
@@ -72,14 +38,37 @@
   </div>
 </section>
 
-<section class="how">
+@if (offers().length) {
+  <section class="offers-band" aria-labelledby="offers-title">
+    <div class="container section">
+      <div class="section-head">
+        <div>
+          <h2 id="offers-title" i18n="@@home.offers">Ofertas del mes</h2>
+          <p class="sub">{{ content.text('offers.intro') }}</p>
+        </div>
+        <a routerLink="/ofertas" i18n="@@home.allOffers">Todas las ofertas</a>
+      </div>
+      <div class="offers">
+        @for (o of offers(); track o.id) {
+          <cx-offer-card [offer]="o" />
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<section class="how" aria-labelledby="how-title">
   <div class="container section">
-    <div class="section-head"><h2>Así funciona Carmexio</h2></div>
+    <div class="section-head">
+      <h2 id="how-title" i18n="@@home.how">Así funciona Carmexio</h2>
+      <a routerLink="/como-funciona" i18n="@@home.howMore">Conoce el proceso</a>
+    </div>
     <ol class="steps">
       @for (s of steps; track s.title; let i = $index) {
         <li class="card">
-          <span class="step-icon" aria-hidden="true">{{ s.icon }}</span>
-          <strong>{{ i + 1 }}. {{ s.title }}</strong>
+          <span class="step-icon"><cx-icon [name]="s.icon" [size]="24" /></span>
+          <span class="step-n">0{{ i + 1 }}</span>
+          <strong>{{ s.title }}</strong>
           <p>{{ s.text }}</p>
         </li>
       }
@@ -87,28 +76,45 @@
   </div>
 </section>
 
-<section class="container section">
-  <div class="section-head"><h2>Compra por presupuesto</h2></div>
+<section class="container section" aria-labelledby="budget-title">
+  <div class="section-head">
+    <h2 id="budget-title" i18n="@@home.budget">Compra por presupuesto</h2>
+  </div>
   <div class="budgets">
-    @for (b of budgets; track b.value + b.label; let i = $index) {
+    @for (b of budgets; track b.max; let i = $index) {
       <a
         class="budget card"
         [class.highlight]="i === 1"
         routerLink="/autos"
         [queryParams]="b.query"
       >
-        <small>{{ b.label }}</small
-        ><strong>{{ b.value }}</strong>
+        <small i18n="@@home.budget.upTo">Hasta</small><strong>{{ b.value }}</strong>
       </a>
     }
+    <a class="budget card" routerLink="/autos" [queryParams]="{ minPrice: 1000000 }">
+      <small i18n="@@home.budget.over">Más de</small><strong>{{ overBudget }}</strong>
+    </a>
   </div>
 </section>
 
-@defer (on viewport) {
-  <section class="container section">
+@if (viewed.value()?.length) {
+  <section class="container section" aria-labelledby="viewed-title">
     <div class="section-head">
-      <h2>Recién llegados</h2>
-      <a routerLink="/autos">Ver todos</a>
+      <h2 id="viewed-title" i18n="@@home.viewed">Vistos recientemente</h2>
+    </div>
+    <div class="rail">
+      @for (car of viewed.value(); track car.id) {
+        <cx-car-card [car]="car" />
+      }
+    </div>
+  </section>
+}
+
+@defer (on viewport) {
+  <section class="container section" aria-labelledby="recent-title">
+    <div class="section-head">
+      <h2 id="recent-title" i18n="@@home.recent">Recién llegados</h2>
+      <a routerLink="/autos" i18n="@@common.seeAll">Ver todos</a>
     </div>
     <div class="grid-cars">
       @for (car of recent.value() ?? []; track car.id) {
@@ -120,18 +126,37 @@
   <div class="container section"><cx-skeleton height="320px" radius="20px" /></div>
 }
 
-<section class="container section">
+@if (strip().length) {
+  <section class="container section banners" aria-labelledby="promos-title">
+    <h2 id="promos-title" class="visually-hidden" i18n="@@home.promos">Promociones</h2>
+    @for (b of strip(); track b.id) {
+      @let target = link(b.link) ?? { path: '/autos' };
+      <a class="banner card" [routerLink]="target.path" [queryParams]="target.query">
+        <img [src]="b.mediaKind === 'image' ? b.mediaUrl : b.posterUrl" alt="" loading="lazy" />
+        <div>
+          <h3>{{ content.t(b.title) }}</h3>
+          <p>{{ content.t(b.subtitle) }}</p>
+          @if (b.ctaLabel) {
+            <span class="pill">{{ content.t(b.ctaLabel) }} →</span>
+          }
+        </div>
+      </a>
+    }
+  </section>
+}
+
+<section class="container section" aria-labelledby="locations-title">
   <div class="section-head">
-    <h2>Nuestras sucursales</h2>
-    <a routerLink="/sucursales">Ver sucursales</a>
+    <h2 id="locations-title" i18n="@@home.showrooms">Nuestras sucursales</h2>
+    <a routerLink="/sucursales" i18n="@@home.allShowrooms">Ver sucursales</a>
   </div>
   <div class="locations">
     @for (l of locations.value() ?? []; track l.id) {
       <a class="location" routerLink="/autos" [queryParams]="{ city: l.city }">
         <img [src]="l.imageUrl" alt="" loading="lazy" />
         <div>
-          <strong>{{ l.name }}</strong
-          ><small>{{ l.hours }}</small>
+          <strong>{{ l.name }}</strong>
+          <small>{{ l.hours }}</small>
         </div>
       </a>
     }
@@ -141,9 +166,12 @@
 <section class="container section">
   <div class="sell-cta">
     <div>
-      <h2>¿Vendes tu auto?</h2>
-      <p>Publícalo gratis. Carmexio lo verifica, encuentra compradores y coordina cada visita.</p>
+      <h2>{{ content.text('home.sell.title') }}</h2>
+      <p>{{ content.text('home.sell.subtitle') }}</p>
     </div>
-    <a class="btn primary" routerLink="/vender">Publicar mi auto</a>
+    <a class="btn primary" routerLink="/vender">
+      <ng-container i18n="@@home.sell.cta">Publicar mi auto</ng-container>
+      <cx-icon name="arrowRight" [size]="18" />
+    </a>
   </div>
 </section>

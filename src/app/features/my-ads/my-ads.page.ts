@@ -11,9 +11,13 @@ import { valueOr } from '../../core/utils/resource';
 
 type Tab = 'live' | 'review' | 'sold';
 const TABS: { id: Tab; label: string; statuses: ListingStatus[] }[] = [
-  { id: 'live', label: 'Publicados', statuses: ['active'] },
-  { id: 'review', label: 'En revisión', statuses: ['pending', 'rejected'] },
-  { id: 'sold', label: 'Vendidos', statuses: ['sold'] },
+  { id: 'live', label: $localize`:@@myads.publicados:Publicados`, statuses: ['active'] },
+  {
+    id: 'review',
+    label: $localize`:@@myads.en-revision:En revisión`,
+    statuses: ['pending', 'rejected'],
+  },
+  { id: 'sold', label: $localize`:@@myads.vendidos:Vendidos`, statuses: ['sold'] },
 ];
 
 @Component({
@@ -22,11 +26,11 @@ const TABS: { id: Tab; label: string; statuses: ListingStatus[] }[] = [
   template: `
     <div class="container page">
       <header>
-        <h1>Mis anuncios</h1>
-        <a class="btn primary" routerLink="/vender">+ Publicar auto</a>
+        <h1 i18n="@@myads.mis-anuncios">Mis anuncios</h1>
+        <a class="btn primary" routerLink="/vender" i18n="@@myads.publicar-auto">+ Publicar auto</a>
       </header>
       @if (enviado()) {
-        <p class="notice" role="status">
+        <p class="notice" role="status" i18n="@@myads.anuncio-enviado-carmexio-lo-revisara">
           ¡Anuncio enviado! Carmexio lo revisará y te escribirá en Mensajes para agendar la
           inspección.
         </p>
@@ -53,16 +57,16 @@ const TABS: { id: Tab; label: string; statuses: ListingStatus[] }[] = [
         @for (car of visible(); track car.id) {
           <article class="card ad">
             <a [routerLink]="['/autos', slug(car)]"
-                ><img
-                  [src]="car.images[0]"
-                  [alt]="'Ver anuncio: ' + car.brand + ' ' + car.model + ' ' + car.year"
-              /></a>
+              ><img
+                [src]="car.images[0]"
+                [alt]="'Ver anuncio: ' + car.brand + ' ' + car.model + ' ' + car.year"
+            /></a>
             <div class="info">
               <h2>{{ car.brand }} {{ car.model }} {{ car.year }}</h2>
               <strong>{{ formatPrice(car.price) }}</strong>
               <cx-status-pill [status]="car.status" audience="owner" />
               @if (car.status === 'pending') {
-                <p>
+                <p i18n="@@myads.carmexio-esta-revisando-tus-fotos">
                   Carmexio está revisando tus fotos. Te escribiremos en Mensajes para la inspección.
                 </p>
               }
@@ -70,27 +74,46 @@ const TABS: { id: Tab; label: string; statuses: ListingStatus[] }[] = [
                 <p class="reason">{{ car.rejectionReason }}</p>
               }
               @if (car.status === 'active') {
-                <p class="muted">
+                <p class="muted" i18n="@@myads.vistas-guardados">
                   {{ car.viewsCount }} vistas · {{ car.favoritesCount }} guardados
                 </p>
               }
               <div class="actions">
                 @if (car.status !== 'sold') {
                   <a class="btn outline" [routerLink]="['/vender', car.id, 'editar']">
-                    {{ car.status === 'rejected' ? 'Corregir y reenviar' : 'Editar' }}
+                    @if (car.status === 'rejected') {
+                      <ng-container i18n="@@myads.fixResubmit">Corregir y reenviar</ng-container>
+                    } @else {
+                      <ng-container i18n="@@myads.edit">Editar</ng-container>
+                    }
                   </a>
                 }
                 @if (car.status === 'active') {
-                  <button class="btn outline" type="button" (click)="setStatus(car, 'sold')">
+                  <button
+                    class="btn outline"
+                    type="button"
+                    (click)="setStatus(car, 'sold')"
+                    i18n="@@myads.marcar-vendido"
+                  >
                     Marcar vendido
                   </button>
                 }
                 @if (car.status === 'sold') {
-                  <button class="btn outline" type="button" (click)="setStatus(car, 'pending')">
+                  <button
+                    class="btn outline"
+                    type="button"
+                    (click)="setStatus(car, 'pending')"
+                    i18n="@@myads.volver-a-publicar"
+                  >
                     Volver a publicar
                   </button>
                 }
-                <button class="btn outline danger" type="button" (click)="remove(car)">
+                <button
+                  class="btn outline danger"
+                  type="button"
+                  (click)="remove(car)"
+                  i18n="@@myads.eliminar"
+                >
                   Eliminar
                 </button>
               </div>
@@ -99,8 +122,11 @@ const TABS: { id: Tab; label: string; statuses: ListingStatus[] }[] = [
         } @empty {
           <cx-empty-state
             icon="📣"
+            i18n-title="@@myads.nada-por-aqui"
             title="Nada por aquí"
+            i18n-message="@@myads.publica-tu-auto-y-carmexio"
             message="Publica tu auto y Carmexio se encarga del resto."
+            i18n-actionLabel="@@myads.publicar-auto-2"
             actionLabel="Publicar auto"
             (action)="sell()"
           />
@@ -192,7 +218,10 @@ export class MyAdsPage {
   });
 
   constructor() {
-    inject(SeoService).set({ title: 'Mis anuncios', noindex: true });
+    inject(SeoService).set({
+      title: $localize`:@@myads.mis-anuncios-2:Mis anuncios`,
+      noindex: true,
+    });
   }
 
   protected count(statuses: ListingStatus[]): number {
@@ -200,15 +229,25 @@ export class MyAdsPage {
   }
 
   protected setStatus(car: Car, status: OwnerStatusChange): Promise<void> {
-    const done = status === 'sold' ? 'Marcado como vendido.' : 'Enviado a revisión de Carmexio.';
+    const done =
+      status === 'sold'
+        ? $localize`:@@myads.marcado-como-vendido:Marcado como vendido.`
+        : $localize`:@@myads.enviado-a-revision-de-carmexio:Enviado a revisión de Carmexio.`;
     return this.act(() => this.repo.setStatus(car.id, status), done);
   }
 
   protected remove(car: Car): Promise<void> {
-    if (!confirm(`¿Eliminar ${car.brand} ${car.model}? No se puede deshacer.`)) {
+    if (
+      !confirm(
+        $localize`:@@myads.confirmDelete:¿Eliminar ${car.brand}:brand: ${car.model}:model:? No se puede deshacer.`,
+      )
+    ) {
       return Promise.resolve();
     }
-    return this.act(() => this.repo.remove(car.id), 'Anuncio eliminado.');
+    return this.act(
+      () => this.repo.remove(car.id),
+      $localize`:@@myads.anuncio-eliminado:Anuncio eliminado.`,
+    );
   }
 
   private async act(action: () => Promise<void>, done: string): Promise<void> {

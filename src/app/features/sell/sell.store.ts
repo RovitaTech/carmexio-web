@@ -14,10 +14,10 @@ import { resizeImage } from './resize-image';
 
 export type SellStep = 'details' | 'photos' | 'pricing' | 'review';
 export const SELL_STEPS: { id: SellStep; label: string }[] = [
-  { id: 'details', label: 'Datos' },
-  { id: 'photos', label: 'Fotos' },
-  { id: 'pricing', label: 'Precio' },
-  { id: 'review', label: 'Revisión' },
+  { id: 'details', label: $localize`:@@sell.datos:Datos` },
+  { id: 'photos', label: $localize`:@@sell.fotos:Fotos` },
+  { id: 'pricing', label: $localize`:@@sell.precio:Precio` },
+  { id: 'review', label: $localize`:@@sell.revision:Revisión` },
 ];
 
 export interface AngleShot {
@@ -29,26 +29,26 @@ export interface AngleShot {
 
 /** Same values the app stores in `listings.features`. */
 export const FEATURES: { value: string; label: string }[] = [
-  ['Air conditioning', 'Aire acondicionado'],
-  ['Leather seats', 'Asientos de piel'],
-  ['Sunroof', 'Quemacocos'],
-  ['Navigation', 'Navegación'],
-  ['Apple CarPlay', 'Apple CarPlay'],
-  ['Android Auto', 'Android Auto'],
-  ['Rear camera', 'Cámara de reversa'],
-  ['360° camera', 'Cámara 360°'],
-  ['Parking sensors', 'Sensores de estacionamiento'],
-  ['Cruise control', 'Control crucero'],
-  ['Adaptive cruise', 'Crucero adaptativo'],
-  ['Heated seats', 'Asientos con calefacción'],
-  ['Keyless entry', 'Acceso sin llave'],
-  ['Push start', 'Encendido por botón'],
-  ['Alloy wheels', 'Rines de aluminio'],
+  ['Air conditioning', $localize`:@@sell.aire-acondicionado:Aire acondicionado`],
+  ['Leather seats', $localize`:@@sell.asientos-de-piel:Asientos de piel`],
+  ['Sunroof', $localize`:@@sell.quemacocos:Quemacocos`],
+  ['Navigation', $localize`:@@sell.navegacion:Navegación`],
+  ['Apple CarPlay', $localize`:@@sell.apple-carplay:Apple CarPlay`],
+  ['Android Auto', $localize`:@@sell.android-auto:Android Auto`],
+  ['Rear camera', $localize`:@@sell.camara-de-reversa:Cámara de reversa`],
+  ['360° camera', $localize`:@@sell.camara-360:Cámara 360°`],
+  ['Parking sensors', $localize`:@@sell.sensores-de-estacionamiento:Sensores de estacionamiento`],
+  ['Cruise control', $localize`:@@sell.control-crucero:Control crucero`],
+  ['Adaptive cruise', $localize`:@@sell.crucero-adaptativo:Crucero adaptativo`],
+  ['Heated seats', $localize`:@@sell.asientos-con-calefaccion:Asientos con calefacción`],
+  ['Keyless entry', $localize`:@@sell.acceso-sin-llave:Acceso sin llave`],
+  ['Push start', $localize`:@@sell.encendido-por-boton:Encendido por botón`],
+  ['Alloy wheels', $localize`:@@sell.rines-de-aluminio:Rines de aluminio`],
   ['4x4', '4x4'],
-  ['Tow hitch', 'Enganche'],
-  ['Lane assist', 'Asistente de carril'],
-  ['Blind spot monitor', 'Monitor de punto ciego'],
-  ['Wireless charging', 'Carga inalámbrica'],
+  ['Tow hitch', $localize`:@@sell.enganche:Enganche`],
+  ['Lane assist', $localize`:@@sell.asistente-de-carril:Asistente de carril`],
+  ['Blind spot monitor', $localize`:@@sell.monitor-de-punto-ciego:Monitor de punto ciego`],
+  ['Wireless charging', $localize`:@@sell.carga-inalambrica:Carga inalámbrica`],
 ].map(([value, label]) => ({ value, label }));
 
 /** Sell wizard ViewModel (provided per page instance). */
@@ -126,7 +126,10 @@ export class SellStore {
     } catch (e) {
       this.setShot(angle, {
         preview,
-        error: e instanceof AppError ? e.message : 'No se pudo subir la foto.',
+        error:
+          e instanceof AppError
+            ? e.message
+            : $localize`:@@sell.no-se-pudo-subir-la:No se pudo subir la foto.`,
       });
     }
   }
@@ -134,28 +137,31 @@ export class SellStore {
   validate(step: SellStep): string | null {
     switch (step) {
       case 'details': {
-        if (!this.brand()) return 'Elige la marca';
-        if (!this.model().trim()) return 'Elige el modelo';
-        if (!this.year()) return 'Elige el año';
-        if (!this.bodyType()) return 'Elige la carrocería';
+        if (!this.brand()) return $localize`:@@sell.elige-la-marca:Elige la marca`;
+        if (!this.model().trim()) return $localize`:@@sell.elige-el-modelo:Elige el modelo`;
+        if (!this.year()) return $localize`:@@sell.elige-el-ano:Elige el año`;
+        if (!this.bodyType()) return $localize`:@@sell.elige-la-carroceria:Elige la carrocería`;
         const km = this.mileageKm();
-        return km == null || km < 0 || km > 1_500_000 ? 'Ingresa un kilometraje válido' : null;
+        return km == null || km < 0 || km > 1_500_000
+          ? $localize`:@@sell.ingresa-un-kilometraje-valido:Ingresa un kilometraje válido`
+          : null;
       }
       case 'photos': {
         if (Object.values(this.shots()).some((s) => s?.uploading))
-          return 'Espera a que terminen de subir las fotos';
+          return $localize`:@@sell.espera-a-que-terminen-de:Espera a que terminen de subir las fotos`;
         const missing = this.missingAngles();
         return missing.length
-          ? `Toma la foto: ${missing[0].label} (faltan ${missing.length})`
+          ? $localize`:@@sell.takePhoto:Toma la foto: ${missing[0].label}:angle: (faltan ${missing.length}:count:)`
           : null;
       }
       case 'pricing': {
         const price = this.price();
         if (price == null || price < 20_000 || price > 50_000_000)
           return 'Ingresa un precio entre $20,000 y $50,000,000';
-        if (!this.locationId()) return 'Elige una sucursal Carmexio';
+        if (!this.locationId())
+          return $localize`:@@sell.elige-una-sucursal-carmexio:Elige una sucursal Carmexio`;
         return this.description().trim().length < 20
-          ? 'Describe tu auto en al menos 20 caracteres'
+          ? $localize`:@@sell.describe-tu-auto-en-al:Describe tu auto en al menos 20 caracteres`
           : null;
       }
       case 'review':
@@ -192,7 +198,11 @@ export class SellStore {
       const id = this.editingId();
       return await (id ? this.repo.update(id, draft) : this.repo.create(draft));
     } catch (e) {
-      this.error.set(e instanceof AppError ? e.message : 'No pudimos enviar tu anuncio.');
+      this.error.set(
+        e instanceof AppError
+          ? e.message
+          : $localize`:@@sell.no-pudimos-enviar-tu-anuncio:No pudimos enviar tu anuncio.`,
+      );
       return null;
     } finally {
       this.submitting.set(false);

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/carmexio-web/browser",
+  "functions": {
+    "api/ssr.mjs": {
+      "includeFiles": "dist/carmexio-web/server/**",
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/ssr" }],
+  "headers": [
+    {
+      "source": "/(.*)\\.(js|css|woff2|png|svg|jpg|webp)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
+}

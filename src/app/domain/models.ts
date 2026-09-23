@@ -8,33 +8,33 @@ export type ListingStatus = 'active' | 'pending' | 'sold' | 'rejected';
 export type SortOption = 'newest' | 'priceLow' | 'priceHigh' | 'mileageLow' | 'yearNew';
 
 export const FUEL_LABELS: Record<FuelType, string> = {
-  gasoline: 'Gasolina',
-  diesel: 'Diésel',
-  hybrid: 'Híbrido',
-  electric: 'Eléctrico',
-  lpg: 'Gas LP',
+  gasoline: $localize`:@@fuel.gasoline:Gasolina`,
+  diesel: $localize`:@@fuel.diesel:Diésel`,
+  hybrid: $localize`:@@fuel.hybrid:Híbrido`,
+  electric: $localize`:@@fuel.electric:Eléctrico`,
+  lpg: $localize`:@@fuel.lpg:Gas LP`,
 };
 
 export const TRANSMISSION_LABELS: Record<Transmission, string> = {
-  automatic: 'Automática',
-  manual: 'Manual',
+  automatic: $localize`:@@transmission.automatic:Automática`,
+  manual: $localize`:@@transmission.manual:Manual`,
 };
 
 export const BODY_LABELS: Record<BodyType, string> = {
-  suv: 'SUV',
-  pickup: 'Pickup',
-  sedan: 'Sedán',
-  hatchback: 'Hatchback',
-  coupe: 'Coupé',
-  van: 'Van',
-  convertible: 'Convertible',
+  suv: $localize`:@@body.suv:SUV`,
+  pickup: $localize`:@@body.pickup:Pickup`,
+  sedan: $localize`:@@body.sedan:Sedán`,
+  hatchback: $localize`:@@body.hatchback:Hatchback`,
+  coupe: $localize`:@@body.coupe:Coupé`,
+  van: $localize`:@@body.van:Van`,
+  convertible: $localize`:@@body.convertible:Convertible`,
 };
 
 export const STATUS_OWNER_LABELS: Record<ListingStatus, string> = {
-  active: 'Publicado',
-  pending: 'En revisión por Carmexio',
-  sold: 'Vendido',
-  rejected: 'Cambios solicitados',
+  active: $localize`:@@status.active:Publicado`,
+  pending: $localize`:@@status.pending:En revisión por Carmexio`,
+  sold: $localize`:@@status.sold:Vendido`,
+  rejected: $localize`:@@status.rejected:Cambios solicitados`,
 };
 
 /** Staff-facing status names (portal, review queue). */
@@ -46,34 +46,70 @@ export const STATUS_STAFF_LABELS: Record<ListingStatus, string> = {
 };
 
 export const SORT_LABELS: Record<SortOption, string> = {
-  newest: 'Más recientes',
-  priceLow: 'Precio: menor a mayor',
-  priceHigh: 'Precio: mayor a menor',
-  mileageLow: 'Menor kilometraje',
-  yearNew: 'Modelo más reciente',
+  newest: $localize`:@@sort.newest:Más recientes`,
+  priceLow: $localize`:@@sort.priceLow:Precio: menor a mayor`,
+  priceHigh: $localize`:@@sort.priceHigh:Precio: mayor a menor`,
+  mileageLow: $localize`:@@sort.mileageLow:Menor kilometraje`,
+  yearNew: $localize`:@@sort.yearNew:Modelo más reciente`,
 };
 
 /** Mandatory photo angles, in canonical order (`listings.image_angles`). */
 export const PHOTO_ANGLES = [
-  { value: 'front', label: 'Frente', instruction: 'A 3 m de frente, auto completo.' },
-  { value: 'front_left', label: 'Frente ¾ izq.', instruction: 'Esquina a 45°, ruedas visibles.' },
+  {
+    value: 'front',
+    label: $localize`:@@angle.front.label:Frente`,
+    instruction: $localize`:@@angle.front.hint:A 3 m de frente, auto completo.`,
+  },
+  {
+    value: 'front_left',
+    label: $localize`:@@angle.front_left.label:Frente ¾ izq.`,
+    instruction: $localize`:@@angle.front_left.hint:Esquina a 45°, ruedas visibles.`,
+  },
   {
     value: 'left_side',
-    label: 'Lado izquierdo',
-    instruction: 'Perfil completo, puertas cerradas.',
+    label: $localize`:@@angle.left_side.label:Lado izquierdo`,
+    instruction: $localize`:@@angle.left_side.hint:Perfil completo, puertas cerradas.`,
   },
-  { value: 'rear', label: 'Trasera', instruction: 'De frente a la parte trasera, placa visible.' },
-  { value: 'rear_right', label: 'Trasera ¾ der.', instruction: 'Esquina trasera a 45°.' },
-  { value: 'right_side', label: 'Lado derecho', instruction: 'Perfil completo, puertas cerradas.' },
-  { value: 'dashboard', label: 'Tablero', instruction: 'Motor encendido, kilometraje legible.' },
+  {
+    value: 'rear',
+    label: $localize`:@@angle.rear.label:Trasera`,
+    instruction: $localize`:@@angle.rear.hint:De frente a la parte trasera, placa visible.`,
+  },
+  {
+    value: 'rear_right',
+    label: $localize`:@@angle.rear_right.label:Trasera ¾ der.`,
+    instruction: $localize`:@@angle.rear_right.hint:Esquina trasera a 45°.`,
+  },
+  {
+    value: 'right_side',
+    label: $localize`:@@angle.right_side.label:Lado derecho`,
+    instruction: $localize`:@@angle.right_side.hint:Perfil completo, puertas cerradas.`,
+  },
+  {
+    value: 'dashboard',
+    label: $localize`:@@angle.dashboard.label:Tablero`,
+    instruction: $localize`:@@angle.dashboard.hint:Motor encendido, kilometraje legible.`,
+  },
   {
     value: 'front_seats',
-    label: 'Asientos delanteros',
-    instruction: 'Desde la puerta del conductor.',
+    label: $localize`:@@angle.front_seats.label:Asientos delanteros`,
+    instruction: $localize`:@@angle.front_seats.hint:Desde la puerta del conductor.`,
   },
-  { value: 'rear_seats', label: 'Asientos traseros', instruction: 'Desde la puerta trasera.' },
-  { value: 'engine', label: 'Motor', instruction: 'Cofre abierto, motor completo.' },
-  { value: 'trunk', label: 'Cajuela / caja', instruction: 'Abierta y vacía.' },
+  {
+    value: 'rear_seats',
+    label: $localize`:@@angle.rear_seats.label:Asientos traseros`,
+    instruction: $localize`:@@angle.rear_seats.hint:Desde la puerta trasera.`,
+  },
+  {
+    value: 'engine',
+    label: $localize`:@@angle.engine.label:Motor`,
+    instruction: $localize`:@@angle.engine.hint:Cofre abierto, motor completo.`,
+  },
+  {
+    value: 'trunk',
+    label: $localize`:@@angle.trunk.label:Cajuela / caja`,
+    instruction: $localize`:@@angle.trunk.hint:Abierta y vacía.`,
+  },
 ] as const;
 
 export type PhotoAngle = (typeof PHOTO_ANGLES)[number]['value'];
@@ -132,15 +168,6 @@ export interface Brand {
   listingsCount: number;
 }
 
-export interface PromoBanner {
-  id: string;
-  title: string;
-  subtitle: string;
-  imageUrl: string;
-  ctaLabel?: string;
-  deepLink?: string;
-}
-
 export interface CarFilter {
   query?: string;
   brand?: string;
@@ -186,15 +213,15 @@ export type CarPanel =
 export type DefectSeverity = 'minor' | 'moderate' | 'major';
 
 export const DEFECT_CODES = {
-  P: { label: 'Pintura retocada', severity: 'minor' },
-  A1: { label: 'Rayón pequeño', severity: 'minor' },
-  A2: { label: 'Rayón', severity: 'moderate' },
-  A3: { label: 'Rayón grande', severity: 'moderate' },
-  U1: { label: 'Abolladura pequeña', severity: 'moderate' },
-  B2: { label: 'Abolladura con rayón', severity: 'major' },
-  S1: { label: 'Óxido', severity: 'major' },
-  '•': { label: 'Detalles menores', severity: 'minor' },
-} as const satisfies Record<string, { label: string; severity: DefectSeverity }>;
+  P: { label: $localize`:@@defect.P:Pintura retocada`, severity: 'minor' },
+  A1: { label: $localize`:@@defect.A1:Rayón pequeño`, severity: 'minor' },
+  A2: { label: $localize`:@@defect.A2:Rayón`, severity: 'moderate' },
+  A3: { label: $localize`:@@defect.A3:Rayón grande`, severity: 'moderate' },
+  U1: { label: $localize`:@@defect.U1:Abolladura pequeña`, severity: 'moderate' },
+  B2: { label: $localize`:@@defect.B2:Abolladura con rayón`, severity: 'major' },
+  S1: { label: $localize`:@@defect.S1:Óxido`, severity: 'major' },
+  '•': { label: $localize`:@@defect.dot:Detalles menores`, severity: 'minor' },
+} satisfies Record<string, { label: string; severity: DefectSeverity }>;
 
 export type DefectCode = keyof typeof DEFECT_CODES;
 export type CheckStatus = 'ok' | 'attention' | 'fail';

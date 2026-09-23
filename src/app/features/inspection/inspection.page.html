@@ -1,5 +1,7 @@
 <div class="container page">
-  <a class="back" [routerLink]="['/autos', slug()]">← Volver al auto</a>
+  <a class="back" [routerLink]="['/autos', slug()]" i18n="@@inspection.volver-al-auto"
+    >← Volver al auto</a
+  >
 
   @if (report.isLoading()) {
     <cx-skeleton height="180px" radius="28px" />
@@ -7,13 +9,13 @@
     <header class="score">
       <cx-score-ring [score]="r.overallScore" [size]="96" />
       <div>
-        <h1>Calificación general</h1>
+        <h1 i18n="@@inspection.calificacion-general">Calificación general</h1>
         @if (r.summary) {
           <p>{{ r.summary }}</p>
         }
-        <small
-          >Inspeccionado el {{ r.inspectedAt | date: 'longDate'
-          }}{{ branch() ? ' · ' + branch()!.name : '' }} · {{ r.inspectorName }}</small
+        <small i18n="@@inspection.inspectedOn"
+          >Inspeccionado el {{ r.inspectedAt | date: 'longDate' }}{{ branchSuffix() }} ·
+          {{ r.inspectorName }}</small
         >
       </div>
     </header>
@@ -21,17 +23,19 @@
     <div class="grid">
       <section class="card block">
         <div class="head">
-          <h2>Carrocería</h2>
+          <h2 i18n="@@inspection.carroceria">Carrocería</h2>
           <label class="toggle"
             ><input
               type="checkbox"
               [checked]="showMinor()"
               (change)="showMinor.set(!showMinor())"
             />
-            Detalles menores</label
+            <span i18n="@@inspection.minorMarks">Detalles menores</span></label
           >
         </div>
-        <p class="muted">Toca un panel para ver sus detalles.</p>
+        <p class="muted" i18n="@@inspection.toca-un-panel-para-ver">
+          Toca un panel para ver sus detalles.
+        </p>
         <cx-body-diagram
           [defects]="r.bodyDefects"
           [showMinor]="showMinor()"
@@ -45,7 +49,7 @@
                 <b>{{ d.code }}</b> · {{ codeLabel(d.code) }}{{ d.note ? ' — ' + d.note : '' }}
               </p>
             } @empty {
-              <p>✓ Sin daños en este panel.</p>
+              <p i18n="@@inspection.sin-danos-en-este-panel">✓ Sin daños en este panel.</p>
             }
           </div>
         }
@@ -61,14 +65,14 @@
 
       <section class="card block">
         <div class="head">
-          <h2>Checklist</h2>
+          <h2 i18n="@@inspection.checklist">Checklist</h2>
           <label class="toggle"
             ><input
               type="checkbox"
               [checked]="issuesOnly()"
               (change)="issuesOnly.set(!issuesOnly())"
             />
-            Solo observaciones</label
+            <span i18n="@@inspection.issuesOnly">Solo observaciones</span></label
           >
         </div>
         @for (c of categories(); track c.name) {
@@ -95,7 +99,9 @@
   } @else {
     <cx-empty-state
       icon="📋"
+      i18n-title="@@inspection.inspeccion-pendiente"
       title="Inspección pendiente"
+      i18n-message="@@inspection.carmexio-aun-no-publica-el"
       message="Carmexio aún no publica el reporte de este auto."
     />
   }

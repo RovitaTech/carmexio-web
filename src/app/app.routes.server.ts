@@ -9,6 +9,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'como-funciona', renderMode: RenderMode.Prerender },
   { path: 'sucursales', renderMode: RenderMode.Prerender },
   { path: 'autos', renderMode: RenderMode.Server },
+  { path: 'ofertas', renderMode: RenderMode.Server },
   { path: 'autos/:slug', renderMode: RenderMode.Server },
   { path: 'autos/:slug/inspeccion', renderMode: RenderMode.Server },
   { path: 'entrar', renderMode: RenderMode.Client },
@@ -23,5 +24,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'cuenta', renderMode: RenderMode.Client },
   { path: 'staff', renderMode: RenderMode.Client },
   { path: 'staff/**', renderMode: RenderMode.Client },
+  { path: 'admin', renderMode: RenderMode.Client },
+  { path: 'admin/**', renderMode: RenderMode.Client },
   { path: '**', renderMode: RenderMode.Server },
 ];

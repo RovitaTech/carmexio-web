@@ -7,31 +7,51 @@ import { SeoService } from '../../core/seo/seo.service';
   imports: [RouterLink],
   template: `
     <div class="container page">
-      <h1>Cómo funciona Carmexio</h1>
-      <p class="lead">
+      <h1 i18n="@@static.como-funciona-carmexio">Cómo funciona Carmexio</h1>
+      <p class="lead" i18n="@@static.carmexio-es-la-agencia-verificamos">
         Carmexio es la agencia: verificamos cada auto y atendemos a cada comprador.
       </p>
       <div class="cols">
         <section class="card block">
-          <h2>Si vendes</h2>
+          <h2 i18n="@@static.si-vendes">Si vendes</h2>
           <ol>
-            <li>Crea tu cuenta y publica tu auto gratis.</li>
-            <li>Toma las 11 fotos guiadas (frente, costados, tablero, motor…).</li>
-            <li>Elige la sucursal Carmexio y lleva el auto a inspección.</li>
-            <li>Publicamos tu auto con reporte verificado.</li>
-            <li>Atendemos a los compradores y coordinamos visitas y pago.</li>
+            <li i18n="@@static.crea-tu-cuenta-y-publica">
+              Crea tu cuenta y publica tu auto gratis.
+            </li>
+            <li i18n="@@static.toma-las-11-fotos-guiadas">
+              Toma las 11 fotos guiadas (frente, costados, tablero, motor…).
+            </li>
+            <li i18n="@@static.elige-la-sucursal-carmexio-y">
+              Elige la sucursal Carmexio y lleva el auto a inspección.
+            </li>
+            <li i18n="@@static.publicamos-tu-auto-con-reporte">
+              Publicamos tu auto con reporte verificado.
+            </li>
+            <li i18n="@@static.atendemos-a-los-compradores-y">
+              Atendemos a los compradores y coordinamos visitas y pago.
+            </li>
           </ol>
-          <a class="btn primary" routerLink="/vender">Vender mi auto</a>
+          <a class="btn primary" routerLink="/vender" i18n="@@static.vender-mi-auto"
+            >Vender mi auto</a
+          >
         </section>
         <section class="card block">
-          <h2>Si compras</h2>
+          <h2 i18n="@@static.si-compras">Si compras</h2>
           <ol>
-            <li>Explora autos verificados con reporte de inspección.</li>
-            <li>Chatea, llama o escribe por WhatsApp a la sucursal.</li>
-            <li>Agendamos tu visita y prueba de manejo.</li>
-            <li>Revisamos papeles (factura, tenencias, REPUVE) contigo.</li>
+            <li i18n="@@static.explora-autos-verificados-con-reporte">
+              Explora autos verificados con reporte de inspección.
+            </li>
+            <li i18n="@@static.chatea-llama-o-escribe-por">
+              Chatea, llama o escribe por WhatsApp a la sucursal.
+            </li>
+            <li i18n="@@static.agendamos-tu-visita-y-prueba">
+              Agendamos tu visita y prueba de manejo.
+            </li>
+            <li i18n="@@static.revisamos-papeles-factura-tenencias-repuve">
+              Revisamos papeles (factura, tenencias, REPUVE) contigo.
+            </li>
           </ol>
-          <a class="btn outline" routerLink="/autos">Ver autos</a>
+          <a class="btn outline" routerLink="/autos" i18n="@@static.ver-autos">Ver autos</a>
         </section>
       </div>
     </div>
@@ -69,8 +89,8 @@ import { SeoService } from '../../core/seo/seo.service';
 export class HowItWorksPage {
   constructor() {
     inject(SeoService).set({
-      title: 'Cómo funciona',
-      description: 'Vende tu auto con Carmexio o compra un seminuevo verificado e inspeccionado.',
+      title: $localize`:@@static.como-funciona:Cómo funciona`,
+      description: $localize`:@@static.vende-tu-auto-con-carmexio:Vende tu auto con Carmexio o compra un seminuevo verificado e inspeccionado.`,
     });
   }
 }
@@ -81,8 +101,8 @@ export class HowItWorksPage {
   template: `
     <div class="container page">
       <h1>404</h1>
-      <p>Esta página no existe.</p>
-      <a class="btn primary" routerLink="/">Ir al inicio</a>
+      <p i18n="@@static.esta-pagina-no-existe">Esta página no existe.</p>
+      <a class="btn primary" routerLink="/" i18n="@@static.ir-al-inicio">Ir al inicio</a>
     </div>
   `,
   styles: `
@@ -101,7 +121,10 @@ export class HowItWorksPage {
 export class NotFoundPage {
   constructor() {
     const seo = inject(SeoService);
-    seo.set({ title: 'Página no encontrada', noindex: true });
+    seo.set({
+      title: $localize`:@@static.pagina-no-encontrada:Página no encontrada`,
+      noindex: true,
+    });
     seo.setStatus(404);
   }
 }

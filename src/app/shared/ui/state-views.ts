@@ -54,6 +54,7 @@ export class EmptyState {
       icon="⚠️"
       [title]="title()"
       [message]="message()"
+      i18n-actionLabel="@@common.retry"
       actionLabel="Reintentar"
       (action)="retry.emit()"
     />
@@ -61,10 +62,13 @@ export class EmptyState {
 })
 export class ErrorState {
   readonly error = input<unknown>();
-  readonly title = input('No pudimos cargar esta sección');
+  readonly title = input($localize`:@@error.section:No pudimos cargar esta sección`);
   readonly retry = output<void>();
   protected readonly message = computed(() =>
-    errorMessage(this.error(), 'Revisa tu conexión e intenta de nuevo.'),
+    errorMessage(
+      this.error(),
+      $localize`:@@error.connection:Revisa tu conexión e intenta de nuevo.`,
+    ),
   );
 }
 
@@ -105,7 +109,7 @@ export class Skeleton {
       [attr.width]="size()"
       [attr.height]="size()"
       role="img"
-      [attr.aria-label]="'Calificación ' + score() + ' de 10'"
+      [attr.aria-label]="ariaLabel()"
     >
       <circle
         cx="18"
@@ -135,6 +139,9 @@ export class Skeleton {
 export class ScoreRing {
   readonly score = input.required<number>();
   readonly size = input(64);
+  protected readonly ariaLabel = computed(
+    () => $localize`:@@score.aria:Calificación ${this.score()}:score: de 10`,
+  );
   protected color() {
     const s = this.score();
     return s >= 8.5 ? 'var(--cx-success)' : s >= 7 ? 'var(--cx-warning)' : 'var(--cx-error)';

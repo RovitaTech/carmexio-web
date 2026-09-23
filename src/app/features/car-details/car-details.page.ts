@@ -27,13 +27,15 @@ import {
 import { LISTING_REPOSITORY } from '../../domain/repositories';
 import { ChatInboxStore } from '../../core/state/chat-inbox.store';
 import { FavoritesStore } from '../../core/state/favorites.store';
+import { RecentlyViewedStore } from '../../core/state/recently-viewed.store';
 import { CarCard } from '../../shared/ui/car-card';
+import { FinancingCalculator } from './financing-calculator';
 import { EmptyState, ScoreRing, Skeleton } from '../../shared/ui/state-views';
 import { optional, valueOr } from '../../core/utils/resource';
 
 @Component({
   selector: 'cx-car-details-page',
-  imports: [RouterLink, CarCard, EmptyState, ScoreRing, Skeleton],
+  imports: [RouterLink, CarCard, FinancingCalculator, EmptyState, ScoreRing, Skeleton],
   templateUrl: './car-details.page.html',
   styleUrl: './car-details.page.scss',
 })
@@ -45,6 +47,7 @@ export class CarDetailsPage {
   private readonly router = inject(Router);
   private readonly seo = inject(SeoService);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly recentlyViewed = inject(RecentlyViewedStore);
   private readonly inbox = inject(ChatInboxStore);
   protected readonly session = inject(SessionStore);
   protected readonly favorites = inject(FavoritesStore);
@@ -73,32 +76,37 @@ export class CarDetailsPage {
     if (!car) return [];
     return car.images.map((url, i) => ({
       url,
-      label: PHOTO_ANGLES.find((a) => a.value === car.imageAngles[i])?.label ?? `Foto ${i + 1}`,
+      label:
+        PHOTO_ANGLES.find((a) => a.value === car.imageAngles[i])?.label ??
+        $localize`:@@car.photoN:Foto ${i + 1}:n:`,
     }));
   });
   protected readonly specs = computed(() => {
     const c = valueOr(this.car, undefined);
     if (!c) return [];
     return [
-      { label: 'Año', value: String(c.year) },
-      { label: 'Kilometraje', value: formatKm(c.mileageKm) },
-      { label: 'Combustible', value: FUEL_LABELS[c.fuelType] },
-      { label: 'Transmisión', value: TRANSMISSION_LABELS[c.transmission] },
+      { label: $localize`:@@car.ano:Año`, value: String(c.year) },
+      { label: $localize`:@@car.kilometraje:Kilometraje`, value: formatKm(c.mileageKm) },
+      { label: $localize`:@@car.combustible:Combustible`, value: FUEL_LABELS[c.fuelType] },
+      {
+        label: $localize`:@@car.transmision:Transmisión`,
+        value: TRANSMISSION_LABELS[c.transmission],
+      },
     ];
   });
   protected readonly overview = computed(() => {
     const c = valueOr(this.car, undefined);
     if (!c) return [];
     return [
-      ['Marca', c.brand],
-      ['Modelo', c.model],
-      ['Versión', c.version ?? '—'],
-      ['Carrocería', BODY_LABELS[c.bodyType]],
-      ['Motor', c.engineCc ? `${c.engineCc} cc` : '—'],
-      ['Color', c.exteriorColor ?? '—'],
-      ['Dueños', c.owners != null ? String(c.owners) : '—'],
-      ['Sucursal', c.location?.name ?? c.city],
-      ['ID del anuncio', c.id.toUpperCase()],
+      [$localize`:@@car.marca:Marca`, c.brand],
+      [$localize`:@@car.modelo:Modelo`, c.model],
+      [$localize`:@@car.version:Versión`, c.version ?? '—'],
+      [$localize`:@@car.carroceria:Carrocería`, BODY_LABELS[c.bodyType]],
+      [$localize`:@@car.motor:Motor`, c.engineCc ? `${c.engineCc} cc` : '—'],
+      [$localize`:@@car.color:Color`, c.exteriorColor ?? '—'],
+      [$localize`:@@car.duenos:Dueños`, c.owners != null ? String(c.owners) : '—'],
+      [$localize`:@@car.sucursal:Sucursal`, c.location?.name ?? c.city],
+      [$localize`:@@car.id-del-anuncio:ID del anuncio`, c.id.toUpperCase()],
     ];
   });
 
@@ -112,15 +120,21 @@ export class CarDetailsPage {
       if (c) this.setSeo(c);
       else if (this.car.error()) {
         const error = this.car.error();
-        this.seo.set({ title: 'Auto no disponible', noindex: true });
+        this.seo.set({
+          title: $localize`:@@car.auto-no-disponible:Auto no disponible`,
+          noindex: true,
+        });
         this.seo.setStatus(error instanceof AppError && error.kind === 'notFound' ? 404 : 503);
       }
     });
     // Browser only, so SSR renders and crawlers don't inflate the view count.
     effect(() => {
       const id = valueOr(this.car, undefined)?.id;
-      if (id && this.isBrowser)
-        untracked(() => void this.listings.recordView(id).catch(() => undefined));
+      if (!id || !this.isBrowser) return;
+      untracked(() => {
+        void this.listings.recordView(id).catch(() => undefined);
+        this.recentlyViewed.track(id);
+      });
     });
   }
 
@@ -130,7 +144,7 @@ export class CarDetailsPage {
 
   protected whatsappUrl(car: Car): string {
     const text = encodeURIComponent(
-      `Hola Carmexio, me interesa el ${car.brand} ${car.model} ${car.year} (anuncio ${car.id.toUpperCase()}).`,
+      $localize`:@@car.whatsappMessage:Hola Carmexio, me interesa el ${car.brand}:brand: ${car.model}:model: ${car.year}:year: (anuncio ${car.id.toUpperCase()}:id:).`,
     );
     return `https://wa.me/${car.location?.whatsapp ?? ''}?text=${text}`;
   }
@@ -159,7 +173,7 @@ export class CarDetailsPage {
     const title = `${c.brand} ${c.model} ${c.year}`;
     this.seo.set({
       title: `${title} · ${formatPrice(c.price)}`,
-      description: `${title} ${c.version ?? ''}, ${formatKm(c.mileageKm)}, verificado por ${c.location?.name ?? 'Carmexio'}.`,
+      description: $localize`:@@car.seo.description:${title}:title: ${c.version ?? ''}:version:, ${formatKm(c.mileageKm)}:km:, verificado por ${c.location?.name ?? 'Carmexio'}:branch:.`,
       image: c.images[0],
       path: `/autos/${carSlug(c)}`,
       noindex: c.status !== 'active',

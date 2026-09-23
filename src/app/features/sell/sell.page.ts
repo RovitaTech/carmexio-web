@@ -59,7 +59,10 @@ export class SellPage {
   );
 
   constructor() {
-    inject(SeoService).set({ title: 'Vende tu auto', noindex: true });
+    inject(SeoService).set({
+      title: $localize`:@@sell.vende-tu-auto:Vende tu auto`,
+      noindex: true,
+    });
     effect(() => {
       const car = valueOr(this.existing, undefined);
       if (car) this.store.load(car);

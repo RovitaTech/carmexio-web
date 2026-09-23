@@ -1,0 +1,131 @@
+<a class="back" routerLink="/admin/anuncios">← Anuncios</a>
+
+<header class="head">
+  <div>
+    <h1>{{ isNew() ? 'Nuevo anuncio' : 'Editar anuncio' }}</h1>
+    <p class="muted">{{ hint() }}</p>
+  </div>
+</header>
+
+@if (existing.error()) {
+  <cx-error-state [error]="existing.error()" (retry)="existing.reload()" />
+} @else if (!loaded()) {
+  <cx-skeleton height="480px" radius="20px" />
+} @else {
+  <div class="editor">
+    <form class="card form" novalidate (submit)="$event.preventDefault(); save()">
+      <div class="grid-2">
+        <div class="field">
+          <label for="placement">Ubicación</label>
+          <select id="placement" [formField]="ad.placement">
+            @for (p of placements; track p.id) {
+              <option [value]="p.id">{{ p.label }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label for="kind">Tipo</label>
+          <select id="kind" [formField]="ad.mediaKind">
+            <option value="image">Imagen</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+      </div>
+
+      <cx-media-picker
+        [formField]="ad.mediaUrl"
+        [label]="model().mediaKind === 'video' ? 'Video' : 'Imagen'"
+        [accept]="model().mediaKind"
+        (picked)="mediaPicked($event)"
+      />
+      @if (ad.mediaUrl().touched() && ad.mediaUrl().invalid()) {
+        <p class="error">{{ ad.mediaUrl().errors()[0].message }}</p>
+      }
+      @if (model().mediaKind === 'video') {
+        <cx-media-picker [formField]="ad.posterUrl" label="Portada del video" accept="image" />
+        @if (ad.posterUrl().invalid()) {
+          <p class="error">{{ ad.posterUrl().errors()[0].message }}</p>
+        }
+      }
+
+      <cx-localized-field [formField]="ad.title" label="Título" [charLimit]="90" />
+      @if (ad.title.es().touched() && ad.title.es().invalid()) {
+        <p class="error">{{ ad.title.es().errors()[0].message }}</p>
+      }
+      <cx-localized-field
+        [formField]="ad.subtitle"
+        label="Subtítulo"
+        [multiline]="true"
+        [charLimit]="200"
+      />
+      <cx-localized-field [formField]="ad.ctaLabel" label="Texto del botón" [charLimit]="30" />
+
+      <div class="field">
+        <label for="link">Enlace</label>
+        <input id="link" placeholder="/autos?body=pickup" [formField]="ad.link" />
+        @if (ad.link().invalid()) {
+          <span class="error">{{ ad.link().errors()[0].message }}</span>
+        }
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="starts">Mostrar desde</label>
+          <input id="starts" type="datetime-local" [formField]="ad.startsAt" />
+        </div>
+        <div class="field">
+          <label for="ends">Mostrar hasta</label>
+          <input id="ends" type="datetime-local" [formField]="ad.endsAt" />
+          @if (ad.endsAt().invalid()) {
+            <span class="error">{{ ad.endsAt().errors()[0].message }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="order">Orden</label>
+          <input id="order" type="number" [formField]="ad.sortOrder" />
+        </div>
+        <label class="check">
+          <input type="checkbox" [formField]="ad.isActive" />
+          Activo en el sitio
+        </label>
+      </div>
+
+      <div class="bar">
+        <a class="btn outline" routerLink="/admin/anuncios">Cancelar</a>
+        <button class="btn primary" type="submit" [disabled]="ad().submitting()">
+          {{ ad().submitting() ? 'Guardando…' : 'Guardar anuncio' }}
+        </button>
+      </div>
+    </form>
+
+    <aside class="preview" aria-label="Vista previa">
+      <span class="label">Vista previa</span>
+      <div class="slide" [class.hero]="model().placement === 'home_hero'">
+        @if (preview().video) {
+          <video
+            [src]="preview().video"
+            [poster]="preview().image"
+            muted
+            autoplay
+            loop
+            playsinline
+          ></video>
+        } @else if (preview().image) {
+          <img [src]="preview().image" alt="" />
+        }
+        <div class="copy">
+          <strong>{{ preview().title }}</strong>
+          @if (preview().subtitle) {
+            <span>{{ preview().subtitle }}</span>
+          }
+          @if (preview().cta) {
+            <span class="cta">{{ preview().cta }} →</span>
+          }
+        </div>
+      </div>
+    </aside>
+  </div>
+}

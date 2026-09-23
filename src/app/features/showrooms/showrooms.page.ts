@@ -12,8 +12,10 @@ import { ErrorState } from '../../shared/ui/state-views';
   imports: [RouterLink, ErrorState],
   template: `
     <div class="container page">
-      <h1>Nuestras sucursales</h1>
-      <p>Cada auto se inspecciona y se entrega en una sucursal Carmexio.</p>
+      <h1 i18n="@@showrooms.nuestras-sucursales">Nuestras sucursales</h1>
+      <p i18n="@@showrooms.cada-auto-se-inspecciona-y">
+        Cada auto se inspecciona y se entrega en una sucursal Carmexio.
+      </p>
       @if (locations.error()) {
         <cx-error-state [error]="locations.error()" (retry)="locations.reload()" />
       }
@@ -26,7 +28,14 @@ import { ErrorState } from '../../shared/ui/state-views';
               <p>{{ l.address }}</p>
               <p>{{ l.hours }} · {{ l.phone }}</p>
               <div class="actions">
-                <button class="btn primary" type="button" (click)="chat(l)">Chatear</button>
+                <button
+                  class="btn primary"
+                  type="button"
+                  (click)="chat(l)"
+                  i18n="@@showrooms.chatear"
+                >
+                  Chatear
+                </button>
                 <a
                   class="btn whatsapp"
                   [href]="'https://wa.me/' + l.whatsapp"
@@ -34,10 +43,19 @@ import { ErrorState } from '../../shared/ui/state-views';
                   rel="noopener"
                   >WhatsApp</a
                 >
-                <a class="btn outline" [href]="mapsUrl(l)" target="_blank" rel="noopener"
+                <a
+                  class="btn outline"
+                  [href]="mapsUrl(l)"
+                  target="_blank"
+                  rel="noopener"
+                  i18n="@@showrooms.directions"
                   >Cómo llegar</a
                 >
-                <a class="btn outline" routerLink="/autos" [queryParams]="{ city: l.city }"
+                <a
+                  class="btn outline"
+                  routerLink="/autos"
+                  [queryParams]="{ city: l.city }"
+                  i18n="@@showrooms.inventory"
                   >Ver inventario</a
                 >
               </div>
@@ -96,8 +114,8 @@ export class ShowroomsPage {
 
   constructor() {
     inject(SeoService).set({
-      title: 'Sucursales',
-      description: 'Sucursales Carmexio en CDMX, Guadalajara, Querétaro y Tijuana.',
+      title: $localize`:@@showrooms.sucursales:Sucursales`,
+      description: $localize`:@@showrooms.sucursales-carmexio-en-cdmx-guadalajara:Sucursales Carmexio en CDMX, Guadalajara, Querétaro y Tijuana.`,
     });
   }
 

@@ -1,16 +1,18 @@
-import { DummyDb } from '../app/data/dummy/dummy-db';
-import { DummyListingRepository } from '../app/data/dummy/dummy-listing.repository';
+import { activeListings } from './sitemap-source';
 import { listingEntries, renderSitemap } from './sitemap';
 
 describe('sitemap', () => {
-  it('lists static pages plus every active car and its inspection report', async () => {
-    const entries = await listingEntries(new DummyListingRepository(new DummyDb(0)));
+  it('lists static pages and every active car, in Spanish and English', async () => {
+    const entries = listingEntries(await activeListings());
     const xml = renderSitemap('https://carmexio.mx', entries);
     expect(xml).toContain('<loc>https://carmexio.mx</loc>');
-    expect(xml).toContain('<loc>https://carmexio.mx/sucursales</loc>');
+    expect(xml).toContain('<loc>https://carmexio.mx/en</loc>');
+    expect(xml).toContain('<loc>https://carmexio.mx/ofertas</loc>');
+    expect(xml).toContain('<loc>https://carmexio.mx/en/sucursales</loc>');
     expect(xml).toMatch(/<loc>https:\/\/carmexio\.mx\/autos\/car-1--[a-z0-9-]+<\/loc>/);
-    expect(xml).toContain('/inspeccion</loc>');
+    expect(xml).toMatch(/<loc>https:\/\/carmexio\.mx\/en\/autos\/car-1--[a-z0-9-]+\/inspeccion<\/loc>/);
     expect(entries.length).toBeGreaterThan(20);
+    expect(xml).not.toContain('car-26'); // pending ad
   });
 
   it('escapes XML', () => {

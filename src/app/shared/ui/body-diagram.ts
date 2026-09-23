@@ -6,21 +6,87 @@ export const PANEL_LAYOUT: Record<
   CarPanel,
   { x: number; y: number; w: number; h: number; label: string }
 > = {
-  front_bumper: { x: 100, y: 0, w: 120, h: 26, label: 'Defensa delantera' },
-  hood: { x: 95, y: 32, w: 130, h: 88, label: 'Cofre' },
-  roof: { x: 105, y: 170, w: 110, h: 104, label: 'Toldo' },
-  trunk: { x: 100, y: 322, w: 120, h: 62, label: 'Cajuela' },
-  rear_bumper: { x: 100, y: 392, w: 120, h: 26, label: 'Defensa trasera' },
-  front_left_fender: { x: 22, y: 36, w: 60, h: 84, label: 'Salpicadera del. izq.' },
-  front_left_door: { x: 22, y: 126, w: 60, h: 92, label: 'Puerta del. izq.' },
-  rear_left_door: { x: 22, y: 224, w: 60, h: 88, label: 'Puerta tras. izq.' },
-  rear_left_quarter: { x: 22, y: 318, w: 60, h: 84, label: 'Costado tras. izq.' },
-  left_rocker: { x: 4, y: 126, w: 12, h: 186, label: 'Estribo izq.' },
-  front_right_fender: { x: 238, y: 36, w: 60, h: 84, label: 'Salpicadera del. der.' },
-  front_right_door: { x: 238, y: 126, w: 60, h: 92, label: 'Puerta del. der.' },
-  rear_right_door: { x: 238, y: 224, w: 60, h: 88, label: 'Puerta tras. der.' },
-  rear_right_quarter: { x: 238, y: 318, w: 60, h: 84, label: 'Costado tras. der.' },
-  right_rocker: { x: 304, y: 126, w: 12, h: 186, label: 'Estribo der.' },
+  front_bumper: {
+    x: 100,
+    y: 0,
+    w: 120,
+    h: 26,
+    label: $localize`:@@panel.front_bumper:Defensa delantera`,
+  },
+  hood: { x: 95, y: 32, w: 130, h: 88, label: $localize`:@@panel.hood:Cofre` },
+  roof: { x: 105, y: 170, w: 110, h: 104, label: $localize`:@@panel.roof:Toldo` },
+  trunk: { x: 100, y: 322, w: 120, h: 62, label: $localize`:@@panel.trunk:Cajuela` },
+  rear_bumper: {
+    x: 100,
+    y: 392,
+    w: 120,
+    h: 26,
+    label: $localize`:@@panel.rear_bumper:Defensa trasera`,
+  },
+  front_left_fender: {
+    x: 22,
+    y: 36,
+    w: 60,
+    h: 84,
+    label: $localize`:@@panel.front_left_fender:Salpicadera del. izq.`,
+  },
+  front_left_door: {
+    x: 22,
+    y: 126,
+    w: 60,
+    h: 92,
+    label: $localize`:@@panel.front_left_door:Puerta del. izq.`,
+  },
+  rear_left_door: {
+    x: 22,
+    y: 224,
+    w: 60,
+    h: 88,
+    label: $localize`:@@panel.rear_left_door:Puerta tras. izq.`,
+  },
+  rear_left_quarter: {
+    x: 22,
+    y: 318,
+    w: 60,
+    h: 84,
+    label: $localize`:@@panel.rear_left_quarter:Costado tras. izq.`,
+  },
+  left_rocker: { x: 4, y: 126, w: 12, h: 186, label: $localize`:@@panel.left_rocker:Estribo izq.` },
+  front_right_fender: {
+    x: 238,
+    y: 36,
+    w: 60,
+    h: 84,
+    label: $localize`:@@panel.front_right_fender:Salpicadera del. der.`,
+  },
+  front_right_door: {
+    x: 238,
+    y: 126,
+    w: 60,
+    h: 92,
+    label: $localize`:@@panel.front_right_door:Puerta del. der.`,
+  },
+  rear_right_door: {
+    x: 238,
+    y: 224,
+    w: 60,
+    h: 88,
+    label: $localize`:@@panel.rear_right_door:Puerta tras. der.`,
+  },
+  rear_right_quarter: {
+    x: 238,
+    y: 318,
+    w: 60,
+    h: 84,
+    label: $localize`:@@panel.rear_right_quarter:Costado tras. der.`,
+  },
+  right_rocker: {
+    x: 304,
+    y: 126,
+    w: 12,
+    h: 186,
+    label: $localize`:@@panel.right_rocker:Estribo der.`,
+  },
 };
 
 export const SEVERITY_COLOR: Record<DefectSeverity, string> = {
@@ -35,7 +101,12 @@ const ORDER: DefectSeverity[] = ['minor', 'moderate', 'major'];
 @Component({
   selector: 'cx-body-diagram',
   template: `
-    <svg viewBox="-4 -4 328 428" role="group" aria-label="Diagrama de carrocería">
+    <svg
+      viewBox="-4 -4 328 428"
+      role="group"
+      i18n-aria-label="@@diagram.label"
+      aria-label="Diagrama de carrocería"
+    >
       <rect x="102" y="126" width="116" height="38" rx="10" class="glass" />
       <rect x="106" y="280" width="108" height="36" rx="10" class="glass" />
       @for (p of panels(); track p.id) {

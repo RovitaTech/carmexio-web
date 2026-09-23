@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /staff
+Disallow: /admin
 Disallow: /cuenta
 Disallow: /mensajes
 Disallow: /mis-anuncios
@@ -10,4 +11,4 @@ Disallow: /entrar
 Disallow: /registro
 Disallow: /recuperar
 
-Sitemap: https://carmexio.mx/sitemap.xml
+Sitemap: https://carmexio.vercel.app/sitemap.xml

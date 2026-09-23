@@ -64,7 +64,18 @@ module.exports = defineConfig([
   layer(['src/app/features/**/*.ts'], 'Features use repository tokens, not implementations.', [
     { regex: '/data/' },
     SUPABASE,
-    { regex: '^\\.\\./(?!\\.\\.)[^/]+/', message: 'Features must not import other features.' },
+  ]),
+  // No feature imports another feature. Depth-aware: from a feature's root `../x/`
+  // leaves the feature; one folder deeper it takes `../../x/`.
+  layer(['src/app/features/*/*.ts'], 'Features must not import other features.', [
+    { regex: '^\\.\\./(?!\\.\\.)[^/]+/' },
+    { regex: '/data/' },
+    SUPABASE,
+  ]),
+  layer(['src/app/features/*/*/*.ts'], 'Features must not import other features.', [
+    { regex: '^\\.\\./\\.\\./(?!\\.\\.)[^/]+/' },
+    { regex: '/data/' },
+    SUPABASE,
   ]),
   layer(['src/app/data/dummy/**/*.ts'], 'Dummy data must stay deletable on its own.', [
     { regex: '/supabase/' },

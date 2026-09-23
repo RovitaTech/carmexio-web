@@ -49,7 +49,10 @@ export class FavoritesStore {
       await (adding ? this.repo.add(id) : this.repo.remove(id));
     } catch (e) {
       this.ids.set(previous);
-      this.toast.error(e, 'No pudimos actualizar tus guardados.');
+      this.toast.error(
+        e,
+        $localize`:@@session.no-pudimos-actualizar-tus-guardados:No pudimos actualizar tus guardados.`,
+      );
     }
   }
 }

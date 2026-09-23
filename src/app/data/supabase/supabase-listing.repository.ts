@@ -9,18 +9,13 @@ import {
   Page,
 } from '../../domain/models';
 import { CatalogRepository, ListingRepository } from '../../domain/repositories';
-import { Row, draftToRow, toBanner, toBrand, toCar, toInspection, toLocation } from '../mappers';
+import { Row, draftToRow, toBrand, toCar, toInspection, toLocation } from '../mappers';
 import { applyListingFilter } from './listing-query';
 import { LISTING_IMAGES_BUCKET, LISTING_SELECT } from './supabase-constants';
 import { check, toAppError, unwrap } from './supabase-errors';
 
 export class SupabaseCatalogRepository implements CatalogRepository {
   constructor(private readonly db: SupabaseClient) {}
-
-  async banners() {
-    const rows = unwrap(await this.db.from('banners').select('*').order('sort_order'));
-    return rows.map(toBanner);
-  }
 
   async brands() {
     const rows = unwrap(await this.db.from('brands').select('*').order('sort_order'));
@@ -75,8 +70,19 @@ export class SupabaseListingRepository implements ListingRepository {
   async byId(id: string) {
     const { data, error } = await this.listings.select(LISTING_SELECT).eq('id', id).maybeSingle();
     if (error) throw toAppError(error);
-    if (!data) throw new AppError('Este auto ya no está publicado.', 'notFound');
+    if (!data)
+      throw new AppError(
+        $localize`:@@errors.este-auto-ya-no-esta:Este auto ya no está publicado.`,
+        'notFound',
+      );
     return toCar(data);
+  }
+
+  async byIds(ids: readonly string[]) {
+    if (!ids.length) return [];
+    const rows = unwrap(await this.active().in('id', [...ids]));
+    const cars = rows.map(toCar);
+    return ids.map((id) => cars.find((c: Car) => c.id === id)).filter((c): c is Car => !!c);
   }
 
   async recordView(id: string) {
@@ -158,7 +164,11 @@ export class SupabaseListingRepository implements ListingRepository {
   private async userId(): Promise<string> {
     const { data } = await this.db.auth.getSession();
     const id = data.session?.user.id;
-    if (!id) throw new AppError('Inicia sesión para continuar.', 'auth');
+    if (!id)
+      throw new AppError(
+        $localize`:@@errors.inicia-sesion-para-continuar:Inicia sesión para continuar.`,
+        'auth',
+      );
     return id;
   }
 }

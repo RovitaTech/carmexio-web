@@ -1,0 +1,191 @@
+<header
+  class="header"
+  [class.overlay]="overlay()"
+  [class.solid]="!overlay()"
+  [class.compact]="scrolled()"
+>
+  <div class="container bar">
+    <button
+      type="button"
+      class="icon-btn menu-btn"
+      aria-controls="site-drawer"
+      (click)="openDrawer()"
+      i18n-aria-label="@@nav.openMenu"
+      aria-label="Abrir menú"
+    >
+      <cx-icon name="menu" />
+    </button>
+
+    <a class="brand" routerLink="/" i18n-aria-label="@@nav.home" aria-label="Carmexio inicio">
+      <cx-logo [size]="30" [white]="overlay()" [collapseOnPhone]="true" />
+    </a>
+
+    <nav class="nav" i18n-aria-label="@@nav.main" aria-label="Principal">
+      <div class="buy">
+        <button
+          type="button"
+          class="nav-link"
+          aria-controls="buy-menu"
+          [attr.aria-expanded]="buyOpen()"
+          (click)="toggleBuy()"
+        >
+          <ng-container i18n="@@nav.buy">Comprar</ng-container>
+          <cx-icon name="chevronDown" [size]="16" />
+        </button>
+        @if (buyOpen()) {
+          <div id="buy-menu" class="mega card">
+            <div class="col">
+              <h2 i18n="@@nav.byBody">Por carrocería</h2>
+              @for (b of bodies; track b.value) {
+                <a routerLink="/autos" [queryParams]="{ body: b.value }">{{ b.label }}</a>
+              }
+            </div>
+            <div class="col">
+              <h2 i18n="@@nav.topBrands">Marcas populares</h2>
+              @for (b of topBrands(); track b.id) {
+                <a routerLink="/autos" [queryParams]="{ brand: b.name }">
+                  <span class="brand-name"
+                    ><cx-brand-logo [name]="b.name" [logoUrl]="b.logoUrl" [size]="20" />{{
+                      b.name
+                    }}</span
+                  >
+                  <small>{{ b.listingsCount }}</small>
+                </a>
+              } @empty {
+                <span class="muted" i18n="@@common.loading">Cargando…</span>
+              }
+            </div>
+            <div class="col">
+              <h2 i18n="@@nav.byBudget">Por presupuesto</h2>
+              @for (b of budgets; track b.max) {
+                <a routerLink="/autos" [queryParams]="{ maxPrice: b.max }">{{ b.label }}</a>
+              }
+            </div>
+            <a class="promo" routerLink="/autos" [queryParams]="{ verified: true }">
+              <cx-icon name="shield" [size]="28" />
+              <strong i18n="@@nav.certified.title">Carmexio Certificado</strong>
+              <span i18n="@@nav.certified.text"
+                >Inspección de 150 puntos y garantía de 6 meses.</span
+              >
+              <span class="go">
+                <ng-container i18n="@@nav.certified.cta">Ver certificados</ng-container>
+                <cx-icon name="arrowRight" [size]="16" />
+              </span>
+            </a>
+            <a class="all" routerLink="/autos">
+              <ng-container i18n="@@nav.allCars">Ver todos los autos</ng-container>
+              <cx-icon name="arrowRight" [size]="16" />
+            </a>
+          </div>
+        }
+      </div>
+      <a class="nav-link" routerLink="/ofertas" routerLinkActive="active" i18n="@@nav.offers"
+        >Ofertas</a
+      >
+      <a class="nav-link" routerLink="/sucursales" routerLinkActive="active" i18n="@@nav.showrooms"
+        >Sucursales</a
+      >
+      <a
+        class="nav-link"
+        routerLink="/como-funciona"
+        routerLinkActive="active"
+        i18n="@@nav.howItWorks"
+        >Cómo funciona</a
+      >
+      @if (session.isStaff()) {
+        <a class="nav-link" routerLink="/staff" routerLinkActive="active">Staff</a>
+      }
+    </nav>
+
+    <div class="actions">
+      <cx-lang-switch class="lang" />
+      <a
+        class="icon-btn hide-sm"
+        routerLink="/favoritos"
+        i18n-aria-label="@@nav.favorites"
+        aria-label="Guardados"
+      >
+        <cx-icon name="heart" />
+      </a>
+      <a
+        class="icon-btn"
+        routerLink="/mensajes"
+        i18n-aria-label="@@nav.messages"
+        aria-label="Mensajes"
+      >
+        <cx-icon name="chat" />
+        @if (inbox.unread()) {
+          <span class="badge">{{ inbox.unread() }}</span>
+        }
+      </a>
+      @if (session.user(); as user) {
+        <a
+          class="avatar"
+          routerLink="/cuenta"
+          i18n-aria-label="@@nav.account"
+          aria-label="Mi cuenta"
+          >{{ user.fullName.charAt(0) }}</a
+        >
+      } @else {
+        <a class="btn ghost sm" routerLink="/entrar" i18n="@@nav.signIn">Entrar</a>
+      }
+      <a class="btn primary sm cta" routerLink="/vender">
+        <ng-container i18n="@@nav.sellCta">Vende tu auto</ng-container>
+        <cx-icon name="arrowRight" [size]="18" />
+      </a>
+    </div>
+  </div>
+</header>
+
+<dialog #drawer id="site-drawer" class="drawer" i18n-aria-label="@@nav.menu" aria-label="Menú">
+  <div class="drawer-head">
+    <cx-logo [size]="28" />
+    <button
+      type="button"
+      class="icon-btn"
+      (click)="closeDrawer()"
+      i18n-aria-label="@@nav.closeMenu"
+      aria-label="Cerrar menú"
+    >
+      <cx-icon name="close" />
+    </button>
+  </div>
+  <nav class="drawer-nav" i18n-aria-label="@@nav.main" aria-label="Principal">
+    <a routerLink="/autos"
+      ><cx-icon name="car" /><ng-container i18n="@@nav.buyCars">Comprar autos</ng-container></a
+    >
+    <a routerLink="/vender"
+      ><cx-icon name="plus" /><ng-container i18n="@@nav.sell">Vender mi auto</ng-container></a
+    >
+    <a routerLink="/ofertas"
+      ><cx-icon name="tag" /><ng-container i18n="@@nav.offers">Ofertas</ng-container></a
+    >
+    <a routerLink="/sucursales"
+      ><cx-icon name="pin" /><ng-container i18n="@@nav.showrooms">Sucursales</ng-container></a
+    >
+    <a routerLink="/como-funciona"
+      ><cx-icon name="shield" /><ng-container i18n="@@nav.howItWorks"
+        >Cómo funciona</ng-container
+      ></a
+    >
+    <a routerLink="/favoritos"
+      ><cx-icon name="heart" /><ng-container i18n="@@nav.favorites">Guardados</ng-container></a
+    >
+  </nav>
+  <div class="drawer-bodies">
+    @for (b of bodies; track b.value) {
+      <a class="chip" routerLink="/autos" [queryParams]="{ body: b.value }">{{ b.label }}</a>
+    }
+  </div>
+  <div class="drawer-foot">
+    <cx-lang-switch />
+    <label class="theme">
+      <span i18n="@@theme.label">Tema</span>
+      <select [value]="theme.mode()" (change)="setTheme($any($event.target).value)">
+        @for (m of themeModes; track m.value) {
+          <option [value]="m.value">{{ m.label }}</option>
+        }
+      </select>
+    </label>
+  </div>
+</dialog>

@@ -20,7 +20,10 @@ export class DummyAuthRepository implements AuthRepository {
     await this.db.delay(2);
     const normalized = email.trim().toLowerCase();
     if (this.db.passwords.get(normalized) !== password) {
-      throw new AppError('Correo o contraseña incorrectos.', 'auth');
+      throw new AppError(
+        $localize`:@@errors.correo-o-contrasena-incorrectos:Correo o contraseña incorrectos.`,
+        'auth',
+      );
     }
     const profile = this.db.profiles.find((p) => p['email'] === normalized)!;
     this.db.currentUserId = profile['id'];
@@ -31,7 +34,10 @@ export class DummyAuthRepository implements AuthRepository {
     await this.db.delay(2);
     const normalized = email.trim().toLowerCase();
     if (this.db.passwords.has(normalized)) {
-      throw new AppError('Ya existe una cuenta con este correo.', 'auth');
+      throw new AppError(
+        $localize`:@@errors.ya-existe-una-cuenta-con:Ya existe una cuenta con este correo.`,
+        'auth',
+      );
     }
     const id = this.db.nextId('user');
     this.db.passwords.set(normalized, password);
@@ -125,7 +131,11 @@ export class DummyChatRepository implements ChatRepository {
 
   private row(id: string): Row {
     const row = this.db.conversations.find((c) => c['id'] === id);
-    if (!row) throw new AppError('Conversación no encontrada.', 'notFound');
+    if (!row)
+      throw new AppError(
+        $localize`:@@errors.conversacion-no-encontrada:Conversación no encontrada.`,
+        'notFound',
+      );
     return row;
   }
 
@@ -151,7 +161,11 @@ export class DummyChatRepository implements ChatRepository {
       'listingId' in target
         ? this.db.listing(target.listingId)?.['location_id']
         : target.locationId;
-    if (!locationId) throw new AppError('Anuncio no encontrado.', 'notFound');
+    if (!locationId)
+      throw new AppError(
+        $localize`:@@errors.anuncio-no-encontrado:Anuncio no encontrado.`,
+        'notFound',
+      );
     const existing = this.db.conversations.find(
       (c) =>
         c['user_id'] === user && c['listing_id'] === listingId && c['location_id'] === locationId,
@@ -187,7 +201,11 @@ export class DummyChatRepository implements ChatRepository {
 
   async send(id: string, body: string) {
     const text = body.trim();
-    if (!text) throw new AppError('El mensaje está vacío.', 'validation');
+    if (!text)
+      throw new AppError(
+        $localize`:@@errors.el-mensaje-esta-vacio:El mensaje está vacío.`,
+        'validation',
+      );
     this.insert(id, requireUser(this.db), text, false);
     await this.db.delay(0.3);
     setTimeout(() => {

@@ -9,7 +9,7 @@ import {
   Page,
 } from '../../domain/models';
 import { CatalogRepository, ListingRepository } from '../../domain/repositories';
-import { Row, draftToRow, toBanner, toBrand, toCar, toInspection, toLocation } from '../mappers';
+import { Row, draftToRow, toBrand, toCar, toInspection, toLocation } from '../mappers';
 import { DummyDb, requireUser } from './dummy-db';
 
 export const SORTS: Record<string, (a: Row, b: Row) => number> = {
@@ -22,11 +22,6 @@ export const SORTS: Record<string, (a: Row, b: Row) => number> = {
 
 export class DummyCatalogRepository implements CatalogRepository {
   constructor(private readonly db: DummyDb) {}
-
-  async banners() {
-    await this.db.delay(0.5);
-    return this.db.banners.map(toBanner);
-  }
 
   async brands() {
     await this.db.delay(0.5);
@@ -93,8 +88,19 @@ export class DummyListingRepository implements ListingRepository {
   async byId(id: string) {
     await this.db.delay(0.6);
     const row = this.db.listing(id);
-    if (!row) throw new AppError('Este auto ya no está publicado.', 'notFound');
+    if (!row)
+      throw new AppError(
+        $localize`:@@errors.este-auto-ya-no-esta:Este auto ya no está publicado.`,
+        'notFound',
+      );
     return toCar(this.db.withLocation(row));
+  }
+
+  async byIds(ids: readonly string[]) {
+    await this.db.delay(0.5);
+    return this.cars(
+      ids.map((id) => this.db.listing(id)).filter((r): r is Row => !!r && r['status'] === 'active'),
+    );
   }
 
   async recordView(id: string) {
@@ -170,7 +176,10 @@ export class DummyListingRepository implements ListingRepository {
     await this.db.delay(0.6);
     const row = this.owned(id);
     if (status === 'sold' && row['status'] !== 'active') {
-      throw new AppError('Solo un anuncio publicado se puede marcar como vendido.', 'validation');
+      throw new AppError(
+        $localize`:@@errors.solo-un-anuncio-publicado-se:Solo un anuncio publicado se puede marcar como vendido.`,
+        'validation',
+      );
     }
     row['status'] = status;
     row['rejection_reason'] = null;
@@ -185,9 +194,16 @@ export class DummyListingRepository implements ListingRepository {
 
   private owned(id: string): Row {
     const row = this.db.listing(id);
-    if (!row) throw new AppError('Anuncio no encontrado.', 'notFound');
+    if (!row)
+      throw new AppError(
+        $localize`:@@errors.anuncio-no-encontrado:Anuncio no encontrado.`,
+        'notFound',
+      );
     if (row['seller_id'] !== requireUser(this.db)) {
-      throw new AppError('Solo puedes editar tus anuncios.', 'auth');
+      throw new AppError(
+        $localize`:@@errors.solo-puedes-editar-tus-anuncios:Solo puedes editar tus anuncios.`,
+        'auth',
+      );
     }
     return row;
   }

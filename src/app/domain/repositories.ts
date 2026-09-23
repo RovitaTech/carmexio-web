@@ -13,17 +13,16 @@ import type {
   OwnerStatusChange,
   Page,
   ProfileChanges,
-  PromoBanner,
   StaffListingFilter,
   StaffStats,
 } from './models';
+import type { Advertisement, Draft, MediaAsset, Offer, SiteAlert, SiteContent } from './content';
 
 /**
  * Repository contracts. Implementations: `data/dummy` (now) and
  * `data/supabase` (when the backend is live). Methods reject with `AppError`.
  */
 export interface CatalogRepository {
-  banners(): Promise<PromoBanner[]>;
   brands(): Promise<Brand[]>;
   locations(): Promise<DealerLocation[]>;
 }
@@ -33,6 +32,8 @@ export interface ListingRepository {
   recent(limit?: number): Promise<Car[]>;
   search(filter: CarFilter, page: number, pageSize: number): Promise<Page<Car>>;
   byId(id: string): Promise<Car>;
+  /** Active cars among `ids`, in the given order (missing/sold ones are skipped). */
+  byIds(ids: readonly string[]): Promise<Car[]>;
   /** Counts a real visitor view (browser only — never on server renders). */
   recordView(id: string): Promise<void>;
   similar(car: Car, limit?: number): Promise<Car[]>;
@@ -75,6 +76,29 @@ export interface ChatRepository {
   markRead(conversationId: string): Promise<void>;
 }
 
+/** Public site content (alerts, ads, offers, copy overrides) — live items only. */
+export interface ContentRepository {
+  siteContent(): Promise<SiteContent>;
+}
+
+/** Admin-only content management (RLS `is_admin()`); lists include inactive items. */
+export interface CmsRepository {
+  media(): Promise<MediaAsset[]>;
+  uploadMedia(file: Blob, name: string): Promise<MediaAsset>;
+  deleteMedia(id: string): Promise<void>;
+  ads(): Promise<Advertisement[]>;
+  saveAd(ad: Draft<Advertisement>): Promise<Advertisement>;
+  deleteAd(id: string): Promise<void>;
+  alerts(): Promise<SiteAlert[]>;
+  saveAlert(alert: Draft<SiteAlert>): Promise<SiteAlert>;
+  deleteAlert(id: string): Promise<void>;
+  offers(): Promise<Offer[]>;
+  saveOffer(offer: Draft<Offer>): Promise<Offer>;
+  deleteOffer(id: string): Promise<void>;
+  texts(): Promise<SiteContent['texts']>;
+  saveTexts(texts: SiteContent['texts']): Promise<void>;
+}
+
 /** Carmexio staff operations (RLS: branch staff, or admins for every branch). */
 export interface StaffRepository {
   /** Pending ads, oldest first; all branches when `locationId` is omitted. */
@@ -93,4 +117,6 @@ export const LISTING_REPOSITORY = new InjectionToken<ListingRepository>('Listing
 export const AUTH_REPOSITORY = new InjectionToken<AuthRepository>('AuthRepository');
 export const FAVORITES_REPOSITORY = new InjectionToken<FavoritesRepository>('FavoritesRepository');
 export const CHAT_REPOSITORY = new InjectionToken<ChatRepository>('ChatRepository');
+export const CONTENT_REPOSITORY = new InjectionToken<ContentRepository>('ContentRepository');
+export const CMS_REPOSITORY = new InjectionToken<CmsRepository>('CmsRepository');
 export const STAFF_REPOSITORY = new InjectionToken<StaffRepository>('StaffRepository');

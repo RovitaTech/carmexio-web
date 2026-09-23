@@ -3,6 +3,8 @@ import {
   AUTH_REPOSITORY,
   CATALOG_REPOSITORY,
   CHAT_REPOSITORY,
+  CMS_REPOSITORY,
+  CONTENT_REPOSITORY,
   FAVORITES_REPOSITORY,
   LISTING_REPOSITORY,
   STAFF_REPOSITORY,
@@ -15,6 +17,11 @@ import {
 } from './dummy/dummy-account.repositories';
 import { DummyCatalogRepository, DummyListingRepository } from './dummy/dummy-listing.repository';
 import { DummyStaffRepository } from './dummy/dummy-staff.repository';
+import { DummyCmsRepository, DummyContentRepository } from './dummy/dummy-content.repository';
+import {
+  SupabaseCmsRepository,
+  SupabaseContentRepository,
+} from './supabase/supabase-content.repository';
 import { APP_CONFIG } from '../core/config/app-config';
 import {
   SupabaseAuthRepository,
@@ -53,6 +60,8 @@ export function provideDummyData(options: DummyDataOptions = {}): EnvironmentPro
     },
     { provide: CHAT_REPOSITORY, useFactory: () => new DummyChatRepository(inject(DummyDb)) },
     { provide: STAFF_REPOSITORY, useFactory: () => new DummyStaffRepository(inject(DummyDb)) },
+    { provide: CONTENT_REPOSITORY, useFactory: () => new DummyContentRepository(inject(DummyDb)) },
+    { provide: CMS_REPOSITORY, useFactory: () => new DummyCmsRepository(inject(DummyDb)) },
   ]);
 }
 
@@ -90,6 +99,14 @@ export function provideSupabaseData(): EnvironmentProviders {
     {
       provide: STAFF_REPOSITORY,
       useFactory: () => new SupabaseStaffRepository(inject(SUPABASE_CLIENT)),
+    },
+    {
+      provide: CONTENT_REPOSITORY,
+      useFactory: () => new SupabaseContentRepository(inject(SUPABASE_CLIENT)),
+    },
+    {
+      provide: CMS_REPOSITORY,
+      useFactory: () => new SupabaseCmsRepository(inject(SUPABASE_CLIENT)),
     },
   ]);
 }

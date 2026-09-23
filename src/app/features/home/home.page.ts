@@ -1,23 +1,30 @@
 import { Component, computed, inject, resource } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { SeoService } from '../../core/seo/seo.service';
+import { ContentStore } from '../../core/state/content.store';
+import { RecentlyViewedStore } from '../../core/state/recently-viewed.store';
 import { compactPrice } from '../../core/utils/format';
-import { BODY_LABELS, BodyType } from '../../domain/models';
-import { CATALOG_REPOSITORY, LISTING_REPOSITORY } from '../../domain/repositories';
-import { CarCard } from '../../shared/ui/car-card';
-import { Skeleton } from '../../shared/ui/state-views';
+import { webLink } from '../../core/utils/links';
 import { optional, valueOr } from '../../core/utils/resource';
+import { CATALOG_REPOSITORY, LISTING_REPOSITORY } from '../../domain/repositories';
+import { BrandCard } from '../../shared/ui/brand-card';
+import { CarCard } from '../../shared/ui/car-card';
+import { Icon, IconName } from '../../shared/ui/icon';
+import { OfferCard } from '../../shared/ui/offer-card';
+import { Skeleton } from '../../shared/ui/state-views';
+import { HomeHero } from './home-hero';
 
 @Component({
   selector: 'cx-home-page',
-  imports: [RouterLink, CarCard, Skeleton],
+  imports: [RouterLink, BrandCard, CarCard, Icon, OfferCard, Skeleton, HomeHero],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
 })
 export class HomePage {
   private readonly listings = inject(LISTING_REPOSITORY);
   private readonly catalog = inject(CATALOG_REPOSITORY);
-  private readonly router = inject(Router);
+  private readonly recentlyViewed = inject(RecentlyViewedStore);
+  protected readonly content = inject(ContentStore);
 
   protected readonly featured = resource({
     id: 'home:featured',
@@ -31,61 +38,63 @@ export class HomePage {
     id: 'home:brands',
     loader: () => optional(this.catalog.brands(), []),
   });
-  protected readonly banners = resource({
-    id: 'home:banners',
-    loader: () => optional(this.catalog.banners(), []),
-  });
   protected readonly locations = resource({
     id: 'home:locations',
     loader: () => optional(this.catalog.locations(), []),
   });
+  /** Browser-only history, so no SSR id. */
+  protected readonly viewed = resource({
+    params: () => (this.recentlyViewed.ids().length ? this.recentlyViewed.ids() : undefined),
+    loader: ({ params }) => optional(this.listings.byIds(params), []),
+  });
 
+  protected readonly strip = computed(() => this.content.ads('home_strip'));
+  protected readonly offers = computed(() => this.content.offers().slice(0, 3));
   protected readonly topBrands = computed(() =>
     valueOr(this.brands, [])
       .filter((b) => b.listingsCount > 0)
       .sort((a, b) => b.listingsCount - a.listingsCount)
-      .slice(0, 10),
+      .slice(0, 11),
   );
-
-  protected readonly bodies = (Object.keys(BODY_LABELS) as BodyType[])
-    .filter((b) => b !== 'convertible')
-    .map((value) => ({ value, label: BODY_LABELS[value] }));
+  protected readonly totalCars = computed(() =>
+    valueOr(this.brands, []).reduce((sum, b) => sum + b.listingsCount, 0),
+  );
+  protected readonly link = webLink;
 
   protected readonly budgets = [
-    { label: 'Hasta', value: compactPrice(250_000), query: { maxPrice: 250000 } },
-    { label: 'Hasta', value: compactPrice(500_000), query: { minPrice: 250000, maxPrice: 500000 } },
-    {
-      label: 'Hasta',
-      value: compactPrice(1_000_000),
-      query: { minPrice: 500000, maxPrice: 1000000 },
-    },
-    { label: 'Más de', value: compactPrice(1_000_000), query: { minPrice: 1000000 } },
-  ];
+    { max: 250_000, query: { maxPrice: 250000 } },
+    { max: 500_000, query: { minPrice: 250000, maxPrice: 500000 } },
+    { max: 1_000_000, query: { minPrice: 500000, maxPrice: 1000000 } },
+  ].map((b) => ({ ...b, value: compactPrice(b.max) }));
+  protected readonly overBudget = compactPrice(1_000_000);
 
-  protected readonly steps = [
+  protected readonly steps: { icon: IconName; title: string; text: string }[] = [
     {
-      icon: '📸',
-      title: 'Publica gratis',
-      text: 'Toma las 11 fotos guiadas y completa los datos.',
+      icon: 'plus',
+      title: $localize`:@@how.1.title:Publica gratis`,
+      text: $localize`:@@how.1.text:Toma las 11 fotos guiadas y completa los datos.`,
     },
     {
-      icon: '🔍',
-      title: 'Verificamos',
-      text: 'Carmexio revisa tu anuncio y lo inspecciona en sucursal.',
+      icon: 'search',
+      title: $localize`:@@how.2.title:Verificamos`,
+      text: $localize`:@@how.2.text:Carmexio revisa tu anuncio y lo inspecciona en sucursal.`,
     },
-    { icon: '✅', title: 'Sale publicado', text: 'Con reporte de inspección de 150 puntos.' },
     {
-      icon: '🤝',
-      title: 'Nosotros vendemos',
-      text: 'Atendemos a los compradores y agendamos visitas.',
+      icon: 'shield',
+      title: $localize`:@@how.3.title:Sale publicado`,
+      text: $localize`:@@how.3.text:Con reporte de inspección de 150 puntos.`,
+    },
+    {
+      icon: 'chat',
+      title: $localize`:@@how.4.title:Nosotros vendemos`,
+      text: $localize`:@@how.4.text:Atendemos a los compradores y agendamos visitas.`,
     },
   ];
 
   constructor() {
     inject(SeoService).set({
-      title: 'Autos seminuevos verificados',
-      description:
-        'Compra autos seminuevos verificados e inspeccionados por Carmexio en CDMX, Guadalajara, Querétaro y Tijuana.',
+      title: $localize`:@@home.seo.title:Autos seminuevos verificados`,
+      description: $localize`:@@home.seo.description:Compra autos seminuevos verificados e inspeccionados por Carmexio en CDMX, Guadalajara, Querétaro y Tijuana.`,
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'AutoDealer',
@@ -93,18 +102,5 @@ export class HomePage {
         url: 'https://carmexio.mx',
       },
     });
-  }
-
-  /** Maps app deep links (`/search?body=pickup`, `/sell`) to web routes. */
-  protected bannerLink(deepLink?: string): { path: string; query: Record<string, string> } {
-    const [path, qs] = (deepLink ?? '/search').split('?');
-    return {
-      path: path === '/sell' ? '/vender' : '/autos',
-      query: Object.fromEntries(new URLSearchParams(qs ?? '')),
-    };
-  }
-
-  protected search(query: string): void {
-    void this.router.navigate(['/autos'], { queryParams: query.trim() ? { q: query.trim() } : {} });
   }
 }

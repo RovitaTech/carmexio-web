@@ -1,33 +1,46 @@
-import { Component, inject, resource } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { SessionStore } from '../core/auth/session.store';
-import { ThemeMode, ThemeService } from '../core/theme/theme.service';
-import { CATALOG_REPOSITORY } from '../domain/repositories';
-import { ChatInboxStore } from '../core/state/chat-inbox.store';
-import { Logo } from '../shared/ui/logo';
-import { ToastOutlet } from '../shared/ui/toast-outlet';
-import { RouteProgress } from './route-progress';
-import { optional } from '../core/utils/resource';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { AlertBar } from './alert-bar';
+import { SiteFooter } from './site-footer';
+import { SiteHeader } from './site-header';
+import { TabBar } from './tab-bar';
 
+/** Public site layout (route component for everything except /admin). */
 @Component({
   selector: 'cx-shell',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, Logo, RouteProgress, ToastOutlet],
-  templateUrl: './shell.html',
-  styleUrl: './shell.scss',
+  imports: [RouterOutlet, AlertBar, SiteHeader, SiteFooter, TabBar],
+  template: `
+    <a class="skip" href="#main" i18n="@@nav.skip">Saltar al contenido</a>
+    <cx-alert-bar />
+    <cx-site-header />
+    <main id="main"><router-outlet /></main>
+    <cx-site-footer />
+    <cx-tab-bar />
+  `,
+  styles: `
+    :host {
+      display: block;
+    }
+    .skip {
+      position: absolute;
+      left: -999px;
+      z-index: 100;
+    }
+    .skip:focus {
+      left: 12px;
+      top: 12px;
+      padding: 8px 12px;
+      background: var(--cx-surface);
+    }
+    main {
+      min-height: 70vh;
+      padding-bottom: 90px;
+    }
+    @media (min-width: 1024px) {
+      main {
+        padding-bottom: 0;
+      }
+    }
+  `,
 })
-export class Shell {
-  protected readonly session = inject(SessionStore);
-  protected readonly inbox = inject(ChatInboxStore);
-  protected readonly theme = inject(ThemeService);
-  private readonly catalog = inject(CATALOG_REPOSITORY);
-
-  protected readonly locations = resource({
-    id: 'shell:locations',
-    loader: () => optional(this.catalog.locations(), []),
-  });
-  protected readonly year = new Date().getFullYear();
-
-  protected setTheme(mode: string): void {
-    this.theme.apply(mode as ThemeMode);
-  }
-}
+export class Shell {}

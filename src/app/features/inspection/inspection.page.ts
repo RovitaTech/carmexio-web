@@ -44,6 +44,10 @@ export class InspectionPage {
   protected readonly branch = computed(() =>
     this.locations.value()?.find((l) => l.id === this.report.value()?.locationId),
   );
+  protected readonly branchSuffix = computed(() => {
+    const name = this.branch()?.name;
+    return name ? ` · ${name}` : '';
+  });
   protected readonly selectedDefects = computed(() => {
     const panel = this.selected();
     return panel ? (this.report.value()?.bodyDefects ?? []).filter((d) => d.panel === panel) : [];
@@ -69,9 +73,8 @@ export class InspectionPage {
 
   constructor() {
     inject(SeoService).set({
-      title: 'Reporte de inspección',
-      description:
-        'Inspección Carmexio de 150 puntos: carrocería, motor, suspensión, interiores y documentos.',
+      title: $localize`:@@inspection.reporte-de-inspeccion:Reporte de inspección`,
+      description: $localize`:@@inspection.inspeccion-carmexio-de-150-puntos:Inspección Carmexio de 150 puntos: carrocería, motor, suspensión, interiores y documentos.`,
     });
   }
 

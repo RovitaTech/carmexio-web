@@ -12,13 +12,15 @@ import { valueOr } from '../../core/utils/resource';
   imports: [CarCard, EmptyState, ErrorState, Skeleton],
   template: `
     <div class="container page">
-      <h1>Autos guardados</h1>
+      <h1 i18n="@@favorites.autos-guardados">Autos guardados</h1>
       @if (cars.error()) {
         <cx-error-state [error]="cars.error()" (retry)="cars.reload()" />
       } @else if (cars.isLoading() && !cars.hasValue()) {
         <cx-skeleton height="320px" radius="20px" />
       } @else if (visible().length) {
-        <h2 class="visually-hidden">Lista de autos guardados</h2>
+        <h2 class="visually-hidden" i18n="@@favorites.lista-de-autos-guardados">
+          Lista de autos guardados
+        </h2>
         <div class="grid-cars">
           @for (car of visible(); track car.id) {
             <cx-car-card [car]="car" />
@@ -27,8 +29,11 @@ import { valueOr } from '../../core/utils/resource';
       } @else {
         <cx-empty-state
           icon="♡"
+          i18n-title="@@favorites.aun-no-guardas-autos"
           title="Aún no guardas autos"
+          i18n-message="@@favorites.toca-el-corazon-en-cualquier"
           message="Toca el corazón en cualquier auto para verlo aquí."
+          i18n-actionLabel="@@favorites.ver-autos"
           actionLabel="Ver autos"
           (action)="browse()"
         />
@@ -55,7 +60,7 @@ export class FavoritesPage {
   );
 
   constructor() {
-    inject(SeoService).set({ title: 'Guardados', noindex: true });
+    inject(SeoService).set({ title: $localize`:@@favorites.guardados:Guardados`, noindex: true });
   }
 
   protected browse(): void {

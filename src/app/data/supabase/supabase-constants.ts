@@ -5,3 +5,5 @@ export const CONVERSATION_SELECT =
 
 export const LISTING_IMAGES_BUCKET = 'listing-images';
 export const AVATARS_BUCKET = 'avatars';
+/** Admin uploads: photos and videos for ads, offers and the hero. */
+export const SITE_MEDIA_BUCKET = 'site-media';

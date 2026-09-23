@@ -13,10 +13,10 @@ import { FavoritesStore } from '../../core/state/favorites.store';
         <img [src]="car().images[0]" [alt]="title()" loading="lazy" />
         <div class="badges">
           @if (car().isFeatured) {
-            <span class="pill gold">★ Destacado</span>
+            <span class="pill gold" i18n="@@car.featured">★ Destacado</span>
           }
           @if (car().isVerified) {
-            <span class="pill">✓ Certificado</span>
+            <span class="pill" i18n="@@car.certified">✓ Certificado</span>
           }
         </div>
         <span class="meta">{{ body() }} · {{ fuel() }}</span>
@@ -25,7 +25,7 @@ import { FavoritesStore } from '../../core/state/favorites.store';
         class="fav"
         type="button"
         [attr.aria-pressed]="saved()"
-        [attr.aria-label]="saved() ? 'Quitar de favoritos' : 'Guardar en favoritos'"
+        [attr.aria-label]="saved() ? unsaveLabel : saveLabel"
         (click)="favorites.toggle(car().id)"
       >
         {{ saved() ? '♥' : '♡' }}
@@ -128,6 +128,8 @@ import { FavoritesStore } from '../../core/state/favorites.store';
   `,
 })
 export class CarCard {
+  protected readonly saveLabel = $localize`:@@car.save:Guardar en favoritos`;
+  protected readonly unsaveLabel = $localize`:@@car.unsave:Quitar de favoritos`;
   readonly car = input.required<Car>();
   protected readonly favorites = inject(FavoritesStore);
 

@@ -1,20 +1,21 @@
 <div class="container page">
   <header class="top">
-    <h1>Autos en venta</h1>
+    <h1 i18n="@@search.autos-en-venta">Autos en venta</h1>
     <form
       class="search"
       role="search"
       (submit)="$event.preventDefault(); update({ query: q.value })"
     >
-      <label class="visually-hidden" for="search-q">Buscar</label>
+      <label class="visually-hidden" for="search-q" i18n="@@search.buscar">Buscar</label>
       <input
         #q
         id="search-q"
         type="search"
         [value]="filter().query ?? ''"
+        i18n-placeholder="@@search.marca-modelo-o-version"
         placeholder="Marca, modelo o versión"
       />
-      <button class="btn primary" type="submit">Buscar</button>
+      <button class="btn primary" type="submit" i18n="@@search.buscar">Buscar</button>
     </form>
     <div class="toolbar">
       <button
@@ -23,13 +24,13 @@
         [attr.aria-expanded]="filtersOpen()"
         (click)="filtersOpen.set(!filtersOpen())"
       >
-        Filtros
+        <ng-container i18n="@@search.filters">Filtros</ng-container>
         @if (activeCount()) {
           ({{ activeCount() }})
         }
       </button>
       <label class="sort">
-        <span class="visually-hidden">Ordenar</span>
+        <span class="visually-hidden" i18n="@@search.ordenar">Ordenar</span>
         <select [value]="filter().sort" (change)="update({ sort: $any($event.target).value })">
           @for (s of sorts; track s[0]) {
             <option [value]="s[0]">{{ s[1] }}</option>
@@ -37,47 +38,54 @@
         </select>
       </label>
       @if (activeCount()) {
-        <button class="chip" type="button" (click)="clear()">Limpiar filtros ✕</button>
+        <button class="chip" type="button" (click)="clear()" i18n="@@search.limpiar-filtros">
+          Limpiar filtros ✕
+        </button>
       }
     </div>
   </header>
 
   <div class="layout">
-    <aside class="filters card" [class.open]="filtersOpen()" aria-label="Filtros">
+    <aside
+      class="filters card"
+      [class.open]="filtersOpen()"
+      i18n-aria-label="@@search.filtros"
+      aria-label="Filtros"
+    >
       <div class="field">
-        <label for="f-body">Carrocería</label>
+        <label for="f-body" i18n="@@search.carroceria">Carrocería</label>
         <select
           id="f-body"
           [value]="filter().bodyType ?? ''"
           (change)="update({ bodyType: $any(optional($any($event.target).value)) })"
         >
-          <option value="">Todas</option>
+          <option value="" i18n="@@search.todas">Todas</option>
           @for (b of bodies; track b[0]) {
             <option [value]="b[0]">{{ b[1] }}</option>
           }
         </select>
       </div>
       <div class="field">
-        <label for="f-brand">Marca</label>
+        <label for="f-brand" i18n="@@search.marca">Marca</label>
         <select
           id="f-brand"
           [value]="filter().brand ?? ''"
           (change)="update({ brand: optional($any($event.target).value) })"
         >
-          <option value="">Todas</option>
+          <option value="" i18n="@@search.todas">Todas</option>
           @for (b of brands.value() ?? []; track b.id) {
             <option [value]="b.name">{{ b.name }}</option>
           }
         </select>
       </div>
       <div class="field">
-        <label for="f-city">Sucursal Carmexio</label>
+        <label for="f-city" i18n="@@search.sucursal-carmexio">Sucursal Carmexio</label>
         <select
           id="f-city"
           [value]="filter().city ?? ''"
           (change)="update({ city: optional($any($event.target).value) })"
         >
-          <option value="">Todas</option>
+          <option value="" i18n="@@search.todas">Todas</option>
           @for (l of locations.value() ?? []; track l.id) {
             <option [value]="l.city">{{ l.name }}</option>
           }
@@ -85,26 +93,26 @@
       </div>
       <div class="row">
         <div class="field">
-          <label for="f-min">Precio mín.</label>
+          <label for="f-min" i18n="@@search.precio-min">Precio mín.</label>
           <select
             id="f-min"
             [value]="filter().minPrice ?? ''"
             (change)="update({ minPrice: optionalNumber($any($event.target).value) })"
           >
-            <option value="">Cualquiera</option>
+            <option value="" i18n="@@search.cualquiera">Cualquiera</option>
             @for (p of priceSteps; track p) {
               <option [value]="p">{{ '$' + p / 1000 + 'K' }}</option>
             }
           </select>
         </div>
         <div class="field">
-          <label for="f-max">Precio máx.</label>
+          <label for="f-max" i18n="@@search.precio-max">Precio máx.</label>
           <select
             id="f-max"
             [value]="filter().maxPrice ?? ''"
             (change)="update({ maxPrice: optionalNumber($any($event.target).value) })"
           >
-            <option value="">Cualquiera</option>
+            <option value="" i18n="@@search.cualquiera">Cualquiera</option>
             @for (p of priceSteps; track p) {
               <option [value]="p">{{ '$' + p / 1000 + 'K' }}</option>
             }
@@ -112,26 +120,26 @@
         </div>
       </div>
       <div class="field">
-        <label for="f-fuel">Combustible</label>
+        <label for="f-fuel" i18n="@@search.combustible">Combustible</label>
         <select
           id="f-fuel"
           [value]="filter().fuelType ?? ''"
           (change)="update({ fuelType: $any(optional($any($event.target).value)) })"
         >
-          <option value="">Todos</option>
+          <option value="" i18n="@@search.todos">Todos</option>
           @for (f of fuels; track f[0]) {
             <option [value]="f[0]">{{ f[1] }}</option>
           }
         </select>
       </div>
       <div class="field">
-        <label for="f-trans">Transmisión</label>
+        <label for="f-trans" i18n="@@search.transmision">Transmisión</label>
         <select
           id="f-trans"
           [value]="filter().transmission ?? ''"
           (change)="update({ transmission: $any(optional($any($event.target).value)) })"
         >
-          <option value="">Todas</option>
+          <option value="" i18n="@@search.todas">Todas</option>
           @for (t of transmissions; track t[0]) {
             <option [value]="t[0]">{{ t[1] }}</option>
           }
@@ -143,22 +151,27 @@
           [checked]="filter().verifiedOnly"
           (change)="update({ verifiedOnly: $any($event.target).checked })"
         />
-        Solo Carmexio Certificados
+        <span i18n="@@search.certifiedOnly">Solo Carmexio Certificados</span>
       </label>
     </aside>
 
     <section class="results" aria-live="polite" aria-labelledby="results-title">
-      <h2 id="results-title" class="visually-hidden">Resultados</h2>
+      <h2 id="results-title" class="visually-hidden" i18n="@@search.resultados">Resultados</h2>
       @if (results.error()) {
         <cx-empty-state
           icon="⚠️"
+          i18n-title="@@search.no-pudimos-cargar-los-autos"
           title="No pudimos cargar los autos"
+          i18n-message="@@search.revisa-tu-conexion-e-intenta"
           message="Revisa tu conexión e intenta de nuevo."
+          i18n-actionLabel="@@search.reintentar"
           actionLabel="Reintentar"
           (action)="results.reload()"
         />
       } @else if (results.value(); as page) {
-        <p class="count">{{ page.items.length }}{{ page.hasMore ? '+' : '' }} autos encontrados</p>
+        <p class="count" i18n="@@search.autos-encontrados">
+          {{ page.items.length }}{{ page.hasMore ? '+' : '' }} autos encontrados
+        </p>
         @if (page.items.length) {
           <div class="grid-cars">
             @for (car of page.items; track car.id) {
@@ -172,15 +185,21 @@
               [disabled]="results.isLoading()"
               (click)="loadMore()"
             >
-              {{ results.isLoading() ? 'Cargando…' : 'Cargar más' }}
+              @if (results.isLoading()) {
+                <ng-container i18n="@@common.loading">Cargando…</ng-container>
+              } @else {
+                <ng-container i18n="@@search.loadMore">Cargar más</ng-container>
+              }
             </button>
           }
         } @else {
           <cx-empty-state
             icon="🔍"
+            i18n-title="@@search.no-encontramos-autos"
             title="No encontramos autos"
+            i18n-message="@@search.prueba-otra-busqueda-o-quita"
             message="Prueba otra búsqueda o quita filtros."
-            [actionLabel]="activeCount() ? 'Limpiar filtros' : undefined"
+            [actionLabel]="activeCount() ? clearLabel : undefined"
             (action)="clear()"
           />
         }

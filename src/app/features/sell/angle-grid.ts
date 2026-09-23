@@ -17,7 +17,7 @@ import { SellStore } from './sell.store';
     <ul class="grid">
       @for (a of slots(); track a.value) {
         <li class="slot" [class.done]="a.done" [class.failed]="a.shot?.error">
-          <label [attr.aria-label]="a.label + (a.done ? ', listo' : ', tomar foto')">
+          <label [attr.aria-label]="a.label + ', ' + (a.done ? doneLabel : takeLabel)">
             <input
               type="file"
               accept="image/*"
@@ -29,7 +29,9 @@ import { SellStore } from './sell.store';
             @if (a.image) {
               <img [src]="a.image" alt="" />
             } @else {
-              <span class="empty" aria-hidden="true">📷<small>Toca para tomar</small></span>
+              <span class="empty" aria-hidden="true"
+                >📷<small i18n="@@sell.toca-para-tomar">Toca para tomar</small></span
+              >
             }
             @if (a.shot?.uploading) {
               <span class="overlay"><span class="spinner"></span></span>
@@ -38,7 +40,7 @@ import { SellStore } from './sell.store';
               <span class="check" aria-hidden="true">✓</span>
             }
             @if (a.shot?.error) {
-              <span class="retry">Reintentar</span>
+              <span class="retry" i18n="@@sell.reintentar">Reintentar</span>
             }
           </label>
           <div class="meta">
@@ -53,7 +55,7 @@ import { SellStore } from './sell.store';
                   class="visually-hidden"
                   (change)="onFile(a.value, $event)"
                 />
-                Volver a tomar
+                <span i18n="@@sell.retake">Volver a tomar</span>
               </label>
             }
           </div>
@@ -199,6 +201,8 @@ import { SellStore } from './sell.store';
   `,
 })
 export class AngleGrid {
+  protected readonly doneLabel = $localize`:@@sell.angleDone:listo`;
+  protected readonly takeLabel = $localize`:@@sell.angleTake:tomar foto`;
   protected readonly store = inject(SellStore);
   protected readonly total = PHOTO_ANGLES.length;
 

@@ -1,0 +1,152 @@
+<section
+  class="hero"
+  aria-roledescription="carrusel"
+  i18n-aria-roledescription="@@hero.carousel"
+  i18n-aria-label="@@hero.label"
+  aria-label="Destacados de Carmexio"
+>
+  <div class="slides">
+    @for (s of slides(); track s.id; let i = $index) {
+      <div
+        class="slide"
+        [class.on]="i === index()"
+        role="group"
+        aria-roledescription="diapositiva"
+        i18n-aria-roledescription="@@hero.slide"
+        [attr.aria-hidden]="i !== index()"
+        [attr.aria-label]="i + 1 + ' / ' + slides().length"
+      >
+        @if (s.mediaKind === 'video') {
+          <video
+            [src]="s.mediaUrl"
+            [poster]="s.posterUrl"
+            muted
+            loop
+            playsinline
+            [autoplay]="i === index() && !paused()"
+            preload="metadata"
+          ></video>
+        } @else {
+          <img [ngSrc]="s.mediaUrl" alt="" fill [priority]="i === 0" sizes="100vw" />
+        }
+      </div>
+    }
+  </div>
+  <div class="scrim"></div>
+
+  <div class="container inner">
+    <div class="copy">
+      <span class="eyebrow">
+        <cx-icon name="shield" [size]="16" />
+        {{ content.text('home.hero.eyebrow') }}
+      </span>
+      <h1>
+        {{ content.text('home.hero.title') }}
+        <em>{{ content.text('home.hero.highlight') }}</em>
+      </h1>
+      <p class="lead">{{ content.text('home.hero.subtitle') }}</p>
+
+      <form
+        class="finder"
+        role="search"
+        (submit)="$event.preventDefault(); search(q.value, body.value, budget.value)"
+      >
+        <label class="q">
+          <span class="visually-hidden" i18n="@@hero.search.label">Buscar</span>
+          <cx-icon name="search" />
+          <input
+            #q
+            type="search"
+            i18n-placeholder="@@hero.search.placeholder"
+            placeholder="Marca, modelo o versión"
+          />
+        </label>
+        <label>
+          <span class="visually-hidden" i18n="@@hero.body">Carrocería</span>
+          <select #body>
+            <option value="" i18n="@@hero.anyBody">Carrocería</option>
+            @for (b of bodies; track b.value) {
+              <option [value]="b.value">{{ b.label }}</option>
+            }
+          </select>
+        </label>
+        <label>
+          <span class="visually-hidden" i18n="@@hero.budget">Presupuesto</span>
+          <select #budget>
+            <option value="" i18n="@@hero.anyBudget">Presupuesto</option>
+            @for (b of budgets; track b.max) {
+              <option [value]="b.max" i18n="@@hero.budget.upTo">Hasta {{ b.label }}</option>
+            }
+          </select>
+        </label>
+        <button class="btn primary" type="submit">
+          <ng-container i18n="@@hero.search.submit">Buscar autos</ng-container>
+          <cx-icon name="arrowRight" [size]="18" />
+        </button>
+      </form>
+
+      <dl class="stats">
+        @for (s of stats; track s.value) {
+          <div>
+            <dt>{{ content.text(s.label) }}</dt>
+            <dd>{{ content.text(s.value) }}</dd>
+          </div>
+        }
+      </dl>
+    </div>
+
+    @if (active(); as slide) {
+      <div class="caption" aria-live="polite">
+        <div class="caption-text">
+          <strong>{{ content.t(slide.title) }}</strong>
+          @if (slide.subtitle) {
+            <span>{{ content.t(slide.subtitle) }}</span>
+          }
+          @if (link(); as l) {
+            @if (l.href) {
+              <a [href]="l.href" target="_blank" rel="noopener" class="cta">
+                {{ content.t(slide.ctaLabel) }} <cx-icon name="arrowRight" [size]="16" />
+              </a>
+            } @else {
+              <a [routerLink]="l.path" [queryParams]="l.query" class="cta">
+                {{ content.t(slide.ctaLabel) }} <cx-icon name="arrowRight" [size]="16" />
+              </a>
+            }
+          }
+        </div>
+        @if (slides().length > 1) {
+          <div class="controls">
+            <span class="count">
+              <b>{{ counter(index() + 1) }}</b> / {{ counter(slides().length) }}
+            </span>
+            <button
+              type="button"
+              (click)="go(-1)"
+              i18n-aria-label="@@hero.prev"
+              aria-label="Anterior"
+            >
+              <cx-icon name="chevronLeft" />
+            </button>
+            <button
+              type="button"
+              (click)="go(1)"
+              i18n-aria-label="@@hero.next"
+              aria-label="Siguiente"
+            >
+              <cx-icon name="chevronRight" />
+            </button>
+            <button
+              type="button"
+              (click)="paused.set(!paused())"
+              [attr.aria-pressed]="paused()"
+              i18n-aria-label="@@hero.pause"
+              aria-label="Pausar carrusel"
+            >
+              <cx-icon [name]="paused() ? 'play' : 'pause'" [size]="18" />
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

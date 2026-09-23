@@ -3,6 +3,7 @@
 import seed from './seed.json';
 import { AppError } from '../../domain/models';
 import { Row } from '../mappers';
+import { contentSeed } from './content-seed';
 
 /** Shifts every timestamp so the seed always looks "fresh". */
 function shiftDates<T>(value: T, offsetMs: number): T {
@@ -25,7 +26,8 @@ export class DummyDb {
   readonly profiles: Row[];
   readonly locations: Row[];
   readonly brands: Row[];
-  readonly banners: Row[];
+  /** Web-only CMS tables (banners, site_alerts, offers, media_assets, site_texts). */
+  readonly content = contentSeed();
   readonly listings: Row[];
   readonly inspections: Row[];
   readonly conversations: Row[];
@@ -42,7 +44,6 @@ export class DummyDb {
     this.profiles = data.profiles as Row[];
     this.locations = data.locations as Row[];
     this.brands = data.brands as Row[];
-    this.banners = data.banners as Row[];
     this.listings = data.listings as Row[];
     this.inspections = data.inspection_reports as Row[];
     this.conversations = data.conversations as Row[];
@@ -85,6 +86,22 @@ export class DummyDb {
 }
 
 export function requireUser(db: DummyDb): string {
-  if (!db.currentUserId) throw new AppError('Inicia sesión para continuar.', 'auth');
+  if (!db.currentUserId)
+    throw new AppError(
+      $localize`:@@errors.inicia-sesion-para-continuar:Inicia sesión para continuar.`,
+      'auth',
+    );
   return db.currentUserId;
+}
+
+/** RLS `is_admin()`. */
+export function requireAdmin(db: DummyDb): string {
+  const id = requireUser(db);
+  if (db.profiles.find((p) => p['id'] === id)?.['role'] !== 'admin') {
+    throw new AppError(
+      $localize`:@@errors.solo-un-administrador-puede-hacer:Solo un administrador puede hacer esto.`,
+      'auth',
+    );
+  }
+  return id;
 }

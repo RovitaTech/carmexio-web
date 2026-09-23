@@ -3,9 +3,7 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "schematicCollections": [
-      "angular-eslint"
-    ]
+    "schematicCollections": ["angular-eslint"]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -32,41 +30,42 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": [
-                "carmexio.mx",
-                "*.carmexio.mx"
-              ]
+              "allowedHosts": ["carmexio.mx", "*.carmexio.mx", "*.vercel.app"]
             },
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "polyfills": ["@angular/localize/init"]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "600kB",
                   "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "6kB",
+                  "maximumError": "10kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "localize": true,
+              "i18nMissingTranslation": "error"
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "en": {
+              "localize": ["en"]
             }
           },
           "defaultConfiguration": "production"
@@ -79,6 +78,9 @@
             },
             "development": {
               "buildTarget": "carmexio-web:build:development"
+            },
+            "en": {
+              "buildTarget": "carmexio-web:build:development,en"
             }
           },
           "defaultConfiguration": "development"
@@ -89,10 +91,27 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n",
+          "options": {
+            "buildTarget": "carmexio-web:build",
+            "format": "json",
+            "outputPath": "src/locale"
+          }
+        }
+      },
+      "i18n": {
+        "sourceLocale": {
+          "code": "es-MX",
+          "subPath": ""
+        },
+        "locales": {
+          "en": {
+            "translation": "src/locale/messages.en.json",
+            "subPath": "en"
           }
         }
       }

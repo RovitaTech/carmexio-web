@@ -1,8 +1,11 @@
 @if (car.error()) {
   <cx-empty-state
     icon="🚫"
+    i18n-title="@@car.este-auto-ya-no-esta"
     title="Este auto ya no está disponible"
+    i18n-message="@@car.puede-que-ya-se-haya"
     message="Puede que ya se haya vendido."
+    i18n-actionLabel="@@car.ver-mas-autos"
     actionLabel="Ver más autos"
     (action)="browse()"
   />
@@ -15,15 +18,24 @@
           <p class="reason">{{ c.rejectionReason }}</p>
         }
         <div class="owner-actions">
-          <a class="btn outline" [routerLink]="['/vender', c.id, 'editar']">Editar</a>
-          <button class="btn outline" type="button" (click)="chat(c)">Hablar con Carmexio</button>
+          <a class="btn outline" [routerLink]="['/vender', c.id, 'editar']" i18n="@@car.editar"
+            >Editar</a
+          >
+          <button
+            class="btn outline"
+            type="button"
+            (click)="chat(c)"
+            i18n="@@car.hablar-con-carmexio"
+          >
+            Hablar con Carmexio
+          </button>
         </div>
       </div>
     }
 
     <div class="layout">
       <div class="main">
-        <section class="gallery" aria-label="Fotos">
+        <section class="gallery" i18n-aria-label="@@car.fotos" aria-label="Fotos">
           @if (photos()[photo()]; as p) {
             <figure class="hero-photo">
               <img [src]="p.url" [alt]="c.brand + ' ' + c.model + ' — ' + p.label" />
@@ -48,19 +60,21 @@
         <section class="card block">
           <div class="badges">
             @if (c.isFeatured) {
-              <span class="pill gold">★ Destacado</span>
+              <span class="pill gold" i18n="@@car.destacado">★ Destacado</span>
             }
             @if (c.isVerified) {
-              <span class="pill">✓ Carmexio Certificado</span>
+              <span class="pill" i18n="@@car.carmexio-certificado">✓ Carmexio Certificado</span>
             }
-            <span class="pill soft">Verificado por Carmexio</span>
+            <span class="pill soft" i18n="@@car.verificado-por-carmexio"
+              >Verificado por Carmexio</span
+            >
           </div>
           <h1>{{ c.brand }} {{ c.model }} {{ c.year }}</h1>
           @if (c.version) {
             <p>{{ c.version }}</p>
           }
-          <p class="price">{{ formatPrice(c.price) }} <small>MXN</small></p>
-          <p class="muted">
+          <p class="price">{{ formatPrice(c.price) }} <small i18n="@@car.mxn">MXN</small></p>
+          <p class="muted" i18n="@@car.vistas">
             {{ c.location?.name ?? c.city }} · {{ timeAgo(c.createdAt) }} ·
             {{ c.viewsCount }} vistas
           </p>
@@ -79,15 +93,17 @@
           <a class="card block inspection" [routerLink]="['/autos', slug(), 'inspeccion']">
             <cx-score-ring [score]="c.inspectionScore" />
             <div>
-              <h2>Inspección Carmexio</h2>
-              <p>Diagrama de carrocería, checklist de 150 puntos y documentos.</p>
-              <span class="link">Ver reporte completo →</span>
+              <h2 i18n="@@car.inspeccion-carmexio">Inspección Carmexio</h2>
+              <p i18n="@@car.diagrama-de-carroceria-checklist-de">
+                Diagrama de carrocería, checklist de 150 puntos y documentos.
+              </p>
+              <span class="link" i18n="@@car.ver-reporte-completo">Ver reporte completo →</span>
             </div>
           </a>
         }
 
         <section class="card block">
-          <h2>Ficha técnica</h2>
+          <h2 i18n="@@car.ficha-tecnica">Ficha técnica</h2>
           <dl class="overview">
             @for (row of overview(); track row[0]) {
               <dt>{{ row[0] }}</dt>
@@ -98,7 +114,7 @@
 
         @if (c.features.length) {
           <section class="card block">
-            <h2>Equipamiento</h2>
+            <h2 i18n="@@car.equipamiento">Equipamiento</h2>
             <div class="features">
               @for (f of c.features; track f) {
                 <span class="chip">✓ {{ f }}</span>
@@ -109,7 +125,7 @@
 
         @if (c.description) {
           <section class="card block">
-            <h2>Descripción</h2>
+            <h2 i18n="@@car.descripcion">Descripción</h2>
             <p>{{ c.description }}</p>
           </section>
         }
@@ -122,13 +138,13 @@
             <div class="dealer">
               <img src="/images/logo_mark.png" alt="" width="40" height="30" />
               <div>
-                <strong>Vendido por {{ l.name }}</strong>
+                <strong i18n="@@car.vendido-por">Vendido por {{ l.name }}</strong>
                 <p>{{ l.address }}</p>
                 <p>{{ l.hours }}</p>
               </div>
             </div>
           }
-          <p class="note">
+          <p class="note" i18n="@@car.carmexio-coordina-visitas-y-pruebas">
             Carmexio coordina visitas y pruebas de manejo. Nunca contactarás al dueño directamente.
           </p>
           @if (!isOwner()) {
@@ -137,6 +153,7 @@
               type="button"
               [disabled]="starting()"
               (click)="chat(c)"
+              i18n="@@car.chatear-con-carmexio"
             >
               💬 Chatear con Carmexio
             </button>
@@ -144,7 +161,10 @@
               >WhatsApp</a
             >
             @if (c.location; as l) {
-              <a class="btn outline block" [href]="'tel:' + l.phone.replaceAll(' ', '')"
+              <a
+                class="btn outline block"
+                [href]="'tel:' + l.phone.replaceAll(' ', '')"
+                i18n="@@car.callBranch"
                 >Llamar a la sucursal</a
               >
             }
@@ -156,17 +176,26 @@
               (click)="favorites.toggle(c.id)"
               [attr.aria-pressed]="favorites.ids().has(c.id)"
             >
-              {{ favorites.ids().has(c.id) ? '♥ Guardado' : '♡ Guardar' }}
+              @if (favorites.ids().has(c.id)) {
+                <ng-container i18n="@@car.saved">♥ Guardado</ng-container>
+              } @else {
+                <ng-container i18n="@@car.saveShort">♡ Guardar</ng-container>
+              }
             </button>
-            <button class="btn outline" type="button" (click)="share(c)">Compartir</button>
+            <button class="btn outline" type="button" (click)="share(c)" i18n="@@car.compartir">
+              Compartir
+            </button>
           </div>
         </div>
+        @if (!isOwner() && c.status === 'active') {
+          <cx-financing-calculator [price]="c.price" (apply)="chat(c)" />
+        }
       </aside>
     </div>
 
     @if (similar.value()?.length) {
       <section class="section">
-        <div class="section-head"><h2>Autos similares</h2></div>
+        <div class="section-head"><h2 i18n="@@car.autos-similares">Autos similares</h2></div>
         <div class="grid-cars">
           @for (s of similar.value(); track s.id) {
             <cx-car-card [car]="s" />

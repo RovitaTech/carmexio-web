@@ -9,7 +9,11 @@ import { check, toAppError, unwrap } from './supabase-errors';
 async function requireUserId(db: SupabaseClient): Promise<string> {
   const { data } = await db.auth.getSession();
   const id = data.session?.user.id;
-  if (!id) throw new AppError('Inicia sesión para continuar.', 'auth');
+  if (!id)
+    throw new AppError(
+      $localize`:@@errors.inicia-sesion-para-continuar:Inicia sesión para continuar.`,
+      'auth',
+    );
   return id;
 }
 
@@ -191,7 +195,11 @@ export class SupabaseChatRepository implements ChatRepository {
 
   async send(conversationId: string, body: string) {
     const text = body.trim();
-    if (!text) throw new AppError('El mensaje está vacío.', 'validation');
+    if (!text)
+      throw new AppError(
+        $localize`:@@errors.el-mensaje-esta-vacio:El mensaje está vacío.`,
+        'validation',
+      );
     const senderId = await requireUserId(this.db);
     check(
       await this.db.from('messages').insert({

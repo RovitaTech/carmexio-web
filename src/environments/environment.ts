@@ -6,7 +6,8 @@ import type { AppConfig } from '../app/core/config/app-config';
  * the values in the host's environment and generate this file at build time.
  */
 export const environment: AppConfig = {
-  siteUrl: 'https://carmexio.mx',
+  // Vercel domain until carmexio.mx is connected (then update robots.txt too).
+  siteUrl: 'https://carmexio.vercel.app',
   supabase: {
     url: '',
     publishableKey: '',

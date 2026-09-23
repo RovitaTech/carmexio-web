@@ -58,12 +58,12 @@ export class SearchPage {
     150000, 250000, 400000, 600000, 800000, 1000000, 1500000, 3000000,
   ];
   protected readonly filtersOpen = signal(false);
+  protected readonly clearLabel = $localize`:@@search.clearFilters:Limpiar filtros`;
 
   constructor() {
     inject(SeoService).set({
-      title: 'Autos seminuevos en venta',
-      description:
-        'Busca autos seminuevos verificados por Carmexio por marca, precio, año y sucursal.',
+      title: $localize`:@@search.autos-seminuevos-en-venta:Autos seminuevos en venta`,
+      description: $localize`:@@search.busca-autos-seminuevos-verificados-por:Busca autos seminuevos verificados por Carmexio por marca, precio, año y sucursal.`,
     });
   }
 

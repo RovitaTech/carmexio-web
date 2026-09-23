@@ -1,6 +1,10 @@
 <div class="container page">
   <header>
-    <h1>{{ store.editingId() ? 'Editar anuncio' : 'Vende tu auto' }}</h1>
+    @if (store.editingId()) {
+      <h1 i18n="@@sell.editTitle">Editar anuncio</h1>
+    } @else {
+      <h1 i18n="@@sell.title">Vende tu auto</h1>
+    }
     <ol class="stepper">
       @for (s of steps; track s.id; let i = $index) {
         <li
@@ -16,23 +20,23 @@
   <section class="card body">
     @switch (store.step()) {
       @case ('details') {
-        <h2>Datos del auto</h2>
+        <h2 i18n="@@sell.datos-del-auto">Datos del auto</h2>
         <div class="grid2">
           <div class="field">
-            <label for="brand">Marca</label>
+            <label for="brand" i18n="@@sell.marca">Marca</label>
             <select
               id="brand"
               [value]="store.brand()"
               (change)="store.selectBrand($any($event.target).value)"
             >
-              <option value="">Elige</option>
+              <option value="" i18n="@@sell.elige">Elige</option>
               @for (b of brands.value() ?? []; track b.id) {
                 <option [value]="b.name">{{ b.name }}</option>
               }
             </select>
           </div>
           <div class="field">
-            <label for="model">Modelo</label>
+            <label for="model" i18n="@@sell.modelo">Modelo</label>
             <input
               id="model"
               list="models"
@@ -47,20 +51,20 @@
             </datalist>
           </div>
           <div class="field">
-            <label for="year">Año</label>
+            <label for="year" i18n="@@sell.ano">Año</label>
             <select
               id="year"
               [value]="store.year() ?? ''"
               (change)="store.year.set(num($any($event.target).value))"
             >
-              <option value="">Elige</option>
+              <option value="" i18n="@@sell.elige">Elige</option>
               @for (y of years; track y) {
                 <option [value]="y">{{ y }}</option>
               }
             </select>
           </div>
           <div class="field">
-            <label for="version">Versión (opcional)</label>
+            <label for="version" i18n="@@sell.version-opcional">Versión (opcional)</label>
             <input
               id="version"
               [value]="store.version()"
@@ -68,7 +72,7 @@
             />
           </div>
           <div class="field">
-            <label for="km">Kilometraje</label>
+            <label for="km" i18n="@@sell.kilometraje">Kilometraje</label>
             <input
               id="km"
               inputmode="numeric"
@@ -77,7 +81,7 @@
             />
           </div>
           <div class="field">
-            <label for="cc">Motor (cc, opcional)</label>
+            <label for="cc" i18n="@@sell.motor-cc-opcional">Motor (cc, opcional)</label>
             <input
               id="cc"
               inputmode="numeric"
@@ -86,7 +90,7 @@
             />
           </div>
           <div class="field">
-            <label for="color">Color</label>
+            <label for="color" i18n="@@sell.color">Color</label>
             <input
               id="color"
               [value]="store.color()"
@@ -95,7 +99,7 @@
           </div>
         </div>
         <fieldset>
-          <legend>Carrocería</legend>
+          <legend i18n="@@sell.carroceria">Carrocería</legend>
           @for (b of bodies; track b[0]) {
             <button
               type="button"
@@ -108,7 +112,7 @@
           }
         </fieldset>
         <fieldset>
-          <legend>Combustible</legend>
+          <legend i18n="@@sell.combustible">Combustible</legend>
           @for (f of fuels; track f[0]) {
             <button
               type="button"
@@ -121,7 +125,7 @@
           }
         </fieldset>
         <fieldset>
-          <legend>Transmisión</legend>
+          <legend i18n="@@sell.transmision">Transmisión</legend>
           @for (t of transmissions; track t[0]) {
             <button
               type="button"
@@ -135,21 +139,21 @@
         </fieldset>
       }
       @case ('photos') {
-        <h2>Fotografía cada ángulo</h2>
-        <p>
+        <h2 i18n="@@sell.fotografia-cada-angulo">Fotografía cada ángulo</h2>
+        <p i18n="@@sell.carmexio-verifica-tu-con-estas">
           Carmexio verifica tu {{ store.brand() }} {{ store.model() }} con estas fotos. Son
           obligatorias las {{ angles.length }}.
         </p>
         <cx-angle-grid />
       }
       @case ('pricing') {
-        <h2>Precio y sucursal</h2>
-        <p>
+        <h2 i18n="@@sell.precio-y-sucursal">Precio y sucursal</h2>
+        <p i18n="@@sell.elige-la-sucursal-donde-llevaras">
           Elige la sucursal donde llevarás el auto a inspección. Ellos atenderán a los compradores.
         </p>
         <div class="grid2">
           <div class="field">
-            <label for="price">Precio (MXN)</label>
+            <label for="price" i18n="@@sell.precio-mxn">Precio (MXN)</label>
             <input
               id="price"
               inputmode="numeric"
@@ -158,13 +162,13 @@
             />
           </div>
           <div class="field">
-            <label for="branch">Sucursal Carmexio</label>
+            <label for="branch" i18n="@@sell.sucursal-carmexio">Sucursal Carmexio</label>
             <select
               id="branch"
               [value]="store.locationId() ?? ''"
               (change)="store.locationId.set($any($event.target).value || null)"
             >
-              <option value="">Elige</option>
+              <option value="" i18n="@@sell.elige">Elige</option>
               @for (l of locations.value() ?? []; track l.id) {
                 <option [value]="l.id">{{ l.name }}</option>
               }
@@ -175,7 +179,7 @@
           </div>
         </div>
         <fieldset>
-          <legend>Equipamiento</legend>
+          <legend i18n="@@sell.equipamiento">Equipamiento</legend>
           @for (f of features; track f.value) {
             <button
               type="button"
@@ -188,19 +192,22 @@
           }
         </fieldset>
         <div class="field">
-          <label for="desc">Descripción ({{ store.description().length }}/1500)</label>
+          <label for="desc" i18n="@@sell.descripcion-1500"
+            >Descripción ({{ store.description().length }}/1500)</label
+          >
           <textarea
             id="desc"
             rows="6"
             maxlength="1500"
             [value]="store.description()"
             (input)="store.description.set($any($event.target).value)"
+            i18n-placeholder="@@sell.servicios-estado-papeles-motivo-de"
             placeholder="Servicios, estado, papeles, motivo de venta…"
           ></textarea>
         </div>
       }
       @case ('review') {
-        <h2>Revisa y envía</h2>
+        <h2 i18n="@@sell.revisa-y-envia">Revisa y envía</h2>
         <div class="thumbs">
           @for (a of angles; track a.value) {
             @let shot = store.shots()[a.value];
@@ -209,17 +216,23 @@
         </div>
         <p class="title">{{ store.brand() }} {{ store.model() }} {{ store.year() }}</p>
         @if (store.price(); as p) {
-          <p class="price">{{ formatPrice(p) }} MXN</p>
+          <p class="price" i18n="@@sell.mxn">{{ formatPrice(p) }} MXN</p>
         }
-        <p>
+        <p i18n="@@sell.de-fotos-equipamientos">
           {{ store.doneShots() }} de {{ angles.length }} fotos · {{ branch()?.name }} ·
           {{ store.features().length }} equipamientos
         </p>
         <ol class="next">
-          <li>Carmexio revisa tus fotos y datos.</li>
-          <li>Llevas el auto a la sucursal para la inspección.</li>
-          <li>Tu anuncio se publica con reporte verificado.</li>
-          <li>Nosotros atendemos a los compradores y agendamos visitas.</li>
+          <li i18n="@@sell.carmexio-revisa-tus-fotos-y">Carmexio revisa tus fotos y datos.</li>
+          <li i18n="@@sell.llevas-el-auto-a-la">
+            Llevas el auto a la sucursal para la inspección.
+          </li>
+          <li i18n="@@sell.tu-anuncio-se-publica-con">
+            Tu anuncio se publica con reporte verificado.
+          </li>
+          <li i18n="@@sell.nosotros-atendemos-a-los-compradores">
+            Nosotros atendemos a los compradores y agendamos visitas.
+          </li>
         </ol>
       }
     }
@@ -235,22 +248,25 @@
         type="button"
         [disabled]="store.submitting()"
         (click)="store.back()"
+        i18n="@@sell.atras"
       >
         Atrás
       </button>
     }
     @if (store.step() === 'review') {
       <button class="btn primary" type="button" [disabled]="store.submitting()" (click)="submit()">
-        {{
-          store.submitting()
-            ? 'Enviando…'
-            : store.editingId()
-              ? 'Reenviar a revisión'
-              : 'Enviar a revisión'
-        }}
+        @if (store.submitting()) {
+          <ng-container i18n="@@sell.sending">Enviando…</ng-container>
+        } @else if (store.editingId()) {
+          <ng-container i18n="@@sell.resubmit">Reenviar a revisión</ng-container>
+        } @else {
+          <ng-container i18n="@@sell.submit">Enviar a revisión</ng-container>
+        }
       </button>
     } @else {
-      <button class="btn primary" type="button" (click)="store.next()">Continuar</button>
+      <button class="btn primary" type="button" (click)="store.next()" i18n="@@sell.continuar">
+        Continuar
+      </button>
     }
   </footer>
 </div>
