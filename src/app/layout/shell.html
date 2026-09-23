@@ -1,0 +1,79 @@
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="header">
+  <div class="container bar">
+    <a routerLink="/" aria-label="Carmexio inicio"><cx-logo [size]="28" /></a>
+    <nav class="nav" aria-label="Principal">
+      <a routerLink="/autos" routerLinkActive="active">Comprar</a>
+      <a routerLink="/vender" routerLinkActive="active">Vender</a>
+      <a routerLink="/sucursales" routerLinkActive="active">Sucursales</a>
+      <a routerLink="/como-funciona" routerLinkActive="active">Cómo funciona</a>
+      @if (session.isStaff()) {
+        <a routerLink="/staff" routerLinkActive="active">Staff</a>
+      }
+    </nav>
+    <div class="actions">
+      <a class="icon-btn" routerLink="/favoritos" aria-label="Favoritos">♡</a>
+      <a class="icon-btn" routerLink="/mensajes" aria-label="Mensajes">
+        💬
+        @if (inbox.unread()) {
+          <span class="badge">{{ inbox.unread() }}</span>
+        }
+      </a>
+      @if (session.user(); as user) {
+        <a class="avatar" routerLink="/cuenta" [attr.aria-label]="'Cuenta de ' + user.fullName">
+          {{ user.fullName.charAt(0) }}
+        </a>
+      } @else {
+        <a class="btn primary sm" routerLink="/entrar">Entrar</a>
+      }
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <router-outlet />
+</main>
+
+<footer class="footer">
+  <div class="container cols">
+    <div>
+      <cx-logo [size]="28" [white]="true" />
+      <p>Autos seminuevos verificados por Carmexio. Nosotros coordinamos cada visita.</p>
+      <label class="theme">
+        Tema
+        <select [value]="theme.mode()" (change)="setTheme($any($event.target).value)">
+          <option value="system">Sistema</option>
+          <option value="light">Claro</option>
+          <option value="dark">Oscuro</option>
+        </select>
+      </label>
+    </div>
+    <div>
+      <h4>Sucursales</h4>
+      @for (l of locations.value() ?? []; track l.id) {
+        <p>
+          <strong>{{ l.name }}</strong
+          ><br />{{ l.hours }}
+        </p>
+      }
+    </div>
+    <div>
+      <h4>Carmexio</h4>
+      <a routerLink="/como-funciona">Cómo funciona</a>
+      <a routerLink="/vender">Vende tu auto</a>
+      <a href="https://www.instagram.com/carmexio.mx/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+  <p class="container copy">© {{ year }} Carmexio. Todos los derechos reservados.</p>
+</footer>
+
+<nav class="tabbar" aria-label="Navegación móvil">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+    >⌂<span>Inicio</span></a
+  >
+  <a routerLink="/autos" routerLinkActive="active">⌕<span>Buscar</span></a>
+  <a class="sell" routerLink="/vender" aria-label="Vender">＋</a>
+  <a routerLink="/mensajes" routerLinkActive="active">💬<span>Chats</span></a>
+  <a routerLink="/cuenta" routerLinkActive="active">☺<span>Cuenta</span></a>
+</nav>

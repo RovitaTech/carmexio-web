@@ -1,0 +1,180 @@
+@if (car.error()) {
+  <cx-empty-state
+    icon="🚫"
+    title="Este auto ya no está disponible"
+    message="Puede que ya se haya vendido."
+    actionLabel="Ver más autos"
+    (action)="browse()"
+  />
+} @else if (car.value(); as c) {
+  <div class="container page">
+    @if (isOwner()) {
+      <div class="owner card">
+        <span class="pill soft">{{ statusLabels[c.status] }}</span>
+        @if (c.rejectionReason) {
+          <p class="reason">{{ c.rejectionReason }}</p>
+        }
+        <div class="owner-actions">
+          <a class="btn outline" [routerLink]="['/vender', c.id, 'editar']">Editar</a>
+          <button class="btn outline" type="button" (click)="chat(c)">Hablar con Carmexio</button>
+        </div>
+      </div>
+    }
+
+    <div class="layout">
+      <div class="main">
+        <section class="gallery" aria-label="Fotos">
+          @if (photos()[photo()]; as p) {
+            <figure class="hero-photo">
+              <img [src]="p.url" [alt]="c.brand + ' ' + c.model + ' — ' + p.label" />
+              <figcaption>{{ p.label }} · {{ photo() + 1 }} / {{ photos().length }}</figcaption>
+            </figure>
+          }
+          <div class="thumbs" role="tablist">
+            @for (p of photos(); track p.url + $index; let i = $index) {
+              <button
+                type="button"
+                role="tab"
+                [attr.aria-selected]="i === photo()"
+                [attr.aria-label]="p.label"
+                (click)="photo.set(i)"
+              >
+                <img [src]="p.url" alt="" loading="lazy" />
+              </button>
+            }
+          </div>
+        </section>
+
+        <section class="card block">
+          <div class="badges">
+            @if (c.isFeatured) {
+              <span class="pill gold">★ Destacado</span>
+            }
+            @if (c.isVerified) {
+              <span class="pill">✓ Carmexio Certificado</span>
+            }
+            <span class="pill soft">Verificado por Carmexio</span>
+          </div>
+          <h1>{{ c.brand }} {{ c.model }} {{ c.year }}</h1>
+          @if (c.version) {
+            <p>{{ c.version }}</p>
+          }
+          <p class="price">{{ formatPrice(c.price) }} <small>MXN</small></p>
+          <p class="muted">
+            {{ c.location?.name ?? c.city }} · {{ timeAgo(c.createdAt) }} ·
+            {{ c.viewsCount }} vistas
+          </p>
+        </section>
+
+        <section class="specs">
+          @for (s of specs(); track s.label) {
+            <div class="card spec">
+              <strong>{{ s.value }}</strong
+              ><small>{{ s.label }}</small>
+            </div>
+          }
+        </section>
+
+        @if (c.inspectionScore != null) {
+          <a class="card block inspection" [routerLink]="['/autos', slug(), 'inspeccion']">
+            <cx-score-ring [score]="c.inspectionScore" />
+            <div>
+              <h2>Inspección Carmexio</h2>
+              <p>Diagrama de carrocería, checklist de 150 puntos y documentos.</p>
+              <span class="link">Ver reporte completo →</span>
+            </div>
+          </a>
+        }
+
+        <section class="card block">
+          <h2>Ficha técnica</h2>
+          <dl class="overview">
+            @for (row of overview(); track row[0]) {
+              <dt>{{ row[0] }}</dt>
+              <dd>{{ row[1] }}</dd>
+            }
+          </dl>
+        </section>
+
+        @if (c.features.length) {
+          <section class="card block">
+            <h2>Equipamiento</h2>
+            <div class="features">
+              @for (f of c.features; track f) {
+                <span class="chip">✓ {{ f }}</span>
+              }
+            </div>
+          </section>
+        }
+
+        @if (c.description) {
+          <section class="card block">
+            <h2>Descripción</h2>
+            <p>{{ c.description }}</p>
+          </section>
+        }
+      </div>
+
+      <aside class="side">
+        <div class="card block contact">
+          <p class="price">{{ formatPrice(c.price) }}</p>
+          @if (c.location; as l) {
+            <div class="dealer">
+              <img src="/images/logo_mark.png" alt="" width="40" height="30" />
+              <div>
+                <strong>Vendido por {{ l.name }}</strong>
+                <p>{{ l.address }}</p>
+                <p>{{ l.hours }}</p>
+              </div>
+            </div>
+          }
+          <p class="note">
+            Carmexio coordina visitas y pruebas de manejo. Nunca contactarás al dueño directamente.
+          </p>
+          @if (!isOwner()) {
+            <button
+              class="btn primary block"
+              type="button"
+              [disabled]="starting()"
+              (click)="chat(c)"
+            >
+              💬 Chatear con Carmexio
+            </button>
+            <a class="btn whatsapp block" [href]="whatsappUrl(c)" target="_blank" rel="noopener"
+              >WhatsApp</a
+            >
+            @if (c.location; as l) {
+              <a class="btn outline block" [href]="'tel:' + l.phone.replaceAll(' ', '')"
+                >Llamar a la sucursal</a
+              >
+            }
+          }
+          <div class="row">
+            <button
+              class="btn outline"
+              type="button"
+              (click)="favorites.toggle(c.id)"
+              [attr.aria-pressed]="favorites.ids().has(c.id)"
+            >
+              {{ favorites.ids().has(c.id) ? '♥ Guardado' : '♡ Guardar' }}
+            </button>
+            <button class="btn outline" type="button" (click)="share(c)">Compartir</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    @if (similar.value()?.length) {
+      <section class="section">
+        <div class="section-head"><h2>Autos similares</h2></div>
+        <div class="grid-cars">
+          @for (s of similar.value(); track s.id) {
+            <cx-car-card [car]="s" />
+          }
+        </div>
+      </section>
+    }
+  </div>
+} @else {
+  <div class="container page"><cx-skeleton height="420px" radius="28px" /></div>
+}

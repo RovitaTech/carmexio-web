@@ -1,0 +1,62 @@
+// Brand tokens — mirror ../carmexio/lib/core/theme/app_colors.dart.
+:root {
+  --cx-primary: #0085fe;
+  --cx-primary-dark: #0066d6;
+  --cx-accent: #00c2ff;
+  --cx-navy: #0a0f1c;
+  --cx-navy-soft: #0e2447;
+  --cx-success: #12b76a;
+  --cx-warning: #f79009;
+  --cx-error: #f04438;
+  --cx-gold: #ffb020;
+  --cx-whatsapp: #25d366;
+
+  --cx-bg: #f5f7fb;
+  --cx-surface: #ffffff;
+  --cx-surface-alt: #eef2f8;
+  --cx-border: #e3e8f0;
+  --cx-text: #0b1220;
+  --cx-text-2: #5b6475;
+  --cx-text-3: #98a2b3;
+  --cx-primary-soft: #e6f2ff;
+  --cx-shadow: 0 8px 24px rgb(11 18 32 / 8%);
+
+  --cx-gradient-primary: linear-gradient(135deg, #0085fe, #3d5afe);
+  --cx-gradient-hero: linear-gradient(135deg, #0a0f1c, #0e2447);
+  --cx-scrim: linear-gradient(180deg, transparent, rgb(0 0 0 / 70%));
+
+  --cx-radius-sm: 10px;
+  --cx-radius-md: 14px;
+  --cx-radius-lg: 20px;
+  --cx-radius-xl: 28px;
+  --cx-radius-pill: 999px;
+
+  --cx-font: 'Urbanist', system-ui, -apple-system, sans-serif;
+  --cx-max-width: 1280px;
+  --cx-gutter: 20px;
+
+  color-scheme: light;
+}
+
+@mixin dark-tokens {
+  --cx-bg: #0a0f1c;
+  --cx-surface: #121a2b;
+  --cx-surface-alt: #1a2438;
+  --cx-border: #24304a;
+  --cx-text: #f5f7fb;
+  --cx-text-2: #a4aec2;
+  --cx-text-3: #6b7690;
+  --cx-primary-soft: #0f2a4d;
+  --cx-shadow: 0 8px 24px rgb(0 0 0 / 35%);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include dark-tokens;
+  }
+}
+
+:root[data-theme='dark'] {
+  @include dark-tokens;
+}

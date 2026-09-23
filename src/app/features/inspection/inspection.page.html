@@ -1,0 +1,102 @@
+<div class="container page">
+  <a class="back" [routerLink]="['/autos', slug()]">← Volver al auto</a>
+
+  @if (report.isLoading()) {
+    <cx-skeleton height="180px" radius="28px" />
+  } @else if (report.value(); as r) {
+    <header class="score">
+      <cx-score-ring [score]="r.overallScore" [size]="96" />
+      <div>
+        <h1>Calificación general</h1>
+        @if (r.summary) {
+          <p>{{ r.summary }}</p>
+        }
+        <small
+          >Inspeccionado el {{ r.inspectedAt | date: 'longDate'
+          }}{{ branch() ? ' · ' + branch()!.name : '' }} · {{ r.inspectorName }}</small
+        >
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card block">
+        <div class="head">
+          <h2>Carrocería</h2>
+          <label class="toggle"
+            ><input
+              type="checkbox"
+              [checked]="showMinor()"
+              (change)="showMinor.set(!showMinor())"
+            />
+            Detalles menores</label
+          >
+        </div>
+        <p class="muted">Toca un panel para ver sus detalles.</p>
+        <cx-body-diagram
+          [defects]="r.bodyDefects"
+          [showMinor]="showMinor()"
+          (panelSelected)="selected.set($event)"
+        />
+        @if (selected(); as panel) {
+          <div class="panel-detail" role="status">
+            <strong>{{ panelLabel(panel) }}</strong>
+            @for (d of selectedDefects(); track $index) {
+              <p>
+                <b>{{ d.code }}</b> · {{ codeLabel(d.code) }}{{ d.note ? ' — ' + d.note : '' }}
+              </p>
+            } @empty {
+              <p>✓ Sin daños en este panel.</p>
+            }
+          </div>
+        }
+        <ul class="legend">
+          @for (l of legend; track l.code) {
+            <li>
+              <span class="code" [style.color]="l.color">{{ l.code }}</span
+              >{{ l.label }}
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="card block">
+        <div class="head">
+          <h2>Checklist</h2>
+          <label class="toggle"
+            ><input
+              type="checkbox"
+              [checked]="issuesOnly()"
+              (change)="issuesOnly.set(!issuesOnly())"
+            />
+            Solo observaciones</label
+          >
+        </div>
+        @for (c of categories(); track c.name) {
+          <details>
+            <summary>
+              <span>{{ c.name }}</span>
+              <span class="pct" [style.color]="barColor(c)">{{ c.score }}%</span>
+              <span class="bar"
+                ><span [style.width.%]="c.score" [style.background]="barColor(c)"></span
+              ></span>
+            </summary>
+            <ul>
+              @for (i of c.items; track i.name) {
+                <li [class]="i.status">
+                  <span aria-hidden="true">{{ statusIcon[i.status] }}</span
+                  >{{ i.name }}
+                </li>
+              }
+            </ul>
+          </details>
+        }
+      </section>
+    </div>
+  } @else {
+    <cx-empty-state
+      icon="📋"
+      title="Inspección pendiente"
+      message="Carmexio aún no publica el reporte de este auto."
+    />
+  }
+</div>

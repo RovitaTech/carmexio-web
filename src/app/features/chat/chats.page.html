@@ -1,0 +1,84 @@
+<div class="container page" [class.thread-open]="id()">
+  <aside class="inbox card" aria-label="Conversaciones">
+    <h1>Mensajes</h1>
+    @for (c of inbox.conversations(); track c.id) {
+      <a class="row" [routerLink]="['/mensajes', c.id]" [class.active]="c.id === id()">
+        <img class="thumb" [src]="c.listingImage ?? '/images/logo_mark.png'" alt="" />
+        <div class="text">
+          <strong>{{ c.location.name }}</strong>
+          <small class="car">{{
+            c.listingTitle
+              ? c.listingTitle + ' · ' + compactPrice(c.listingPrice ?? 0)
+              : 'Consulta general'
+          }}</small>
+          <small>{{ c.lastMessage ?? 'Escríbenos' }}</small>
+        </div>
+        <div class="side">
+          <small>{{ timeAgo(c.lastMessageAt) }}</small>
+          @if (c.unreadCount) {
+            <span class="badge">{{ c.unreadCount }}</span>
+          }
+        </div>
+      </a>
+    } @empty {
+      <cx-empty-state
+        icon="💬"
+        title="Sin conversaciones"
+        message="Abre un auto y toca “Chatear con Carmexio”."
+      />
+    }
+  </aside>
+
+  <section class="thread card" aria-live="polite">
+    @if (active(); as c) {
+      <header>
+        <a class="back" routerLink="/mensajes" aria-label="Volver">←</a>
+        <img src="/images/logo_mark.png" alt="" width="36" height="27" />
+        <div>
+          <strong>{{ c.location.name }}</strong>
+          <small>Asesor Carmexio · responde en ~1 h</small>
+        </div>
+        @if (c.listingId) {
+          <a class="car-link" [routerLink]="['/autos', c.listingId]">{{ c.listingTitle }} →</a>
+        }
+      </header>
+      <ol class="messages">
+        @for (m of messages(); track m.id) {
+          <li [class.mine]="!m.fromDealer">
+            <p>{{ m.body }}</p>
+            <small
+              >{{ m.createdAt | date: 'short'
+              }}{{ !m.fromDealer ? (m.readAt ? ' ✓✓' : ' ✓') : '' }}</small
+            >
+          </li>
+        }
+      </ol>
+      @if (messages().length < 3) {
+        <div class="quick">
+          @for (q of quickReplies; track q) {
+            <button class="chip" type="button" (click)="send(q)">{{ q }}</button>
+          }
+        </div>
+      }
+      <form class="composer" (submit)="$event.preventDefault(); send()">
+        <label class="visually-hidden" for="msg">Mensaje</label>
+        <input
+          id="msg"
+          [value]="draft()"
+          (input)="draft.set($any($event.target).value)"
+          placeholder="Escribe un mensaje…"
+          maxlength="1000"
+        />
+        <button class="btn primary" type="submit" [disabled]="!draft().trim() || sending()">
+          Enviar
+        </button>
+      </form>
+    } @else {
+      <cx-empty-state
+        icon="💬"
+        title="Elige una conversación"
+        message="Carmexio responde y coordina visitas y pruebas de manejo."
+      />
+    }
+  </section>
+</div>

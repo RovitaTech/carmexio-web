@@ -1,0 +1,195 @@
+<div class="container page">
+  <header class="top">
+    <h1>Autos en venta</h1>
+    <form
+      class="search"
+      role="search"
+      (submit)="$event.preventDefault(); update({ query: q.value })"
+    >
+      <label class="visually-hidden" for="search-q">Buscar</label>
+      <input
+        #q
+        id="search-q"
+        type="search"
+        [value]="filter().query ?? ''"
+        placeholder="Marca, modelo o versión"
+      />
+      <button class="btn primary" type="submit">Buscar</button>
+    </form>
+    <div class="toolbar">
+      <button
+        class="chip filters-toggle"
+        type="button"
+        [attr.aria-expanded]="filtersOpen()"
+        (click)="filtersOpen.set(!filtersOpen())"
+      >
+        Filtros
+        @if (activeCount()) {
+          ({{ activeCount() }})
+        }
+      </button>
+      <label class="sort">
+        <span class="visually-hidden">Ordenar</span>
+        <select [value]="filter().sort" (change)="update({ sort: $any($event.target).value })">
+          @for (s of sorts; track s[0]) {
+            <option [value]="s[0]">{{ s[1] }}</option>
+          }
+        </select>
+      </label>
+      @if (activeCount()) {
+        <button class="chip" type="button" (click)="clear()">Limpiar filtros ✕</button>
+      }
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="filters card" [class.open]="filtersOpen()" aria-label="Filtros">
+      <div class="field">
+        <label for="f-body">Carrocería</label>
+        <select
+          id="f-body"
+          [value]="filter().bodyType ?? ''"
+          (change)="update({ bodyType: $any(optional($any($event.target).value)) })"
+        >
+          <option value="">Todas</option>
+          @for (b of bodies; track b[0]) {
+            <option [value]="b[0]">{{ b[1] }}</option>
+          }
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-brand">Marca</label>
+        <select
+          id="f-brand"
+          [value]="filter().brand ?? ''"
+          (change)="update({ brand: optional($any($event.target).value) })"
+        >
+          <option value="">Todas</option>
+          @for (b of brands.value() ?? []; track b.id) {
+            <option [value]="b.name">{{ b.name }}</option>
+          }
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-city">Sucursal Carmexio</label>
+        <select
+          id="f-city"
+          [value]="filter().city ?? ''"
+          (change)="update({ city: optional($any($event.target).value) })"
+        >
+          <option value="">Todas</option>
+          @for (l of locations.value() ?? []; track l.id) {
+            <option [value]="l.city">{{ l.name }}</option>
+          }
+        </select>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="f-min">Precio mín.</label>
+          <select
+            id="f-min"
+            [value]="filter().minPrice ?? ''"
+            (change)="update({ minPrice: optionalNumber($any($event.target).value) })"
+          >
+            <option value="">Cualquiera</option>
+            @for (p of priceSteps; track p) {
+              <option [value]="p">{{ '$' + p / 1000 + 'K' }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-max">Precio máx.</label>
+          <select
+            id="f-max"
+            [value]="filter().maxPrice ?? ''"
+            (change)="update({ maxPrice: optionalNumber($any($event.target).value) })"
+          >
+            <option value="">Cualquiera</option>
+            @for (p of priceSteps; track p) {
+              <option [value]="p">{{ '$' + p / 1000 + 'K' }}</option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-fuel">Combustible</label>
+        <select
+          id="f-fuel"
+          [value]="filter().fuelType ?? ''"
+          (change)="update({ fuelType: $any(optional($any($event.target).value)) })"
+        >
+          <option value="">Todos</option>
+          @for (f of fuels; track f[0]) {
+            <option [value]="f[0]">{{ f[1] }}</option>
+          }
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-trans">Transmisión</label>
+        <select
+          id="f-trans"
+          [value]="filter().transmission ?? ''"
+          (change)="update({ transmission: $any(optional($any($event.target).value)) })"
+        >
+          <option value="">Todas</option>
+          @for (t of transmissions; track t[0]) {
+            <option [value]="t[0]">{{ t[1] }}</option>
+          }
+        </select>
+      </div>
+      <label class="check">
+        <input
+          type="checkbox"
+          [checked]="filter().verifiedOnly"
+          (change)="update({ verifiedOnly: $any($event.target).checked })"
+        />
+        Solo Carmexio Certificados
+      </label>
+    </aside>
+
+    <section class="results" aria-live="polite">
+      @if (results.error()) {
+        <cx-empty-state
+          icon="⚠️"
+          title="No pudimos cargar los autos"
+          message="Revisa tu conexión e intenta de nuevo."
+          actionLabel="Reintentar"
+          (action)="results.reload()"
+        />
+      } @else if (results.value(); as page) {
+        <p class="count">{{ page.items.length }}{{ page.hasMore ? '+' : '' }} autos encontrados</p>
+        @if (page.items.length) {
+          <div class="grid-cars">
+            @for (car of page.items; track car.id) {
+              <cx-car-card [car]="car" />
+            }
+          </div>
+          @if (page.hasMore) {
+            <button
+              class="btn outline more"
+              type="button"
+              [disabled]="results.isLoading()"
+              (click)="loadMore()"
+            >
+              {{ results.isLoading() ? 'Cargando…' : 'Cargar más' }}
+            </button>
+          }
+        } @else {
+          <cx-empty-state
+            icon="🔍"
+            title="No encontramos autos"
+            message="Prueba otra búsqueda o quita filtros."
+            [actionLabel]="activeCount() ? 'Limpiar filtros' : undefined"
+            (action)="clear()"
+          />
+        }
+      } @else {
+        <div class="grid-cars">
+          @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+            <cx-skeleton height="320px" radius="20px" />
+          }
+        </div>
+      }
+    </section>
+  </div>
+</div>

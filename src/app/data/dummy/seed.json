@@ -1,0 +1,5696 @@
+{
+  "exported_at": "2026-09-23T11:08:58.740280",
+  "demo": {
+    "email": "demo@carmexio.mx",
+    "password": "carmexio123",
+    "user_id": "user-demo"
+  },
+  "staff_id": "staff-carmexio",
+  "profiles": [
+    {
+      "id": "user-demo",
+      "email": "demo@carmexio.mx",
+      "full_name": "Alex Rivera",
+      "avatar_url": null,
+      "phone": "+52 55 1234 5678",
+      "whatsapp": "+5215512345678",
+      "city": "CDMX",
+      "is_verified": true,
+      "is_dealer": false,
+      "active_listings": 1,
+      "created_at": "2025-07-30T11:08:58.740535"
+    },
+    {
+      "id": "owner-jorge",
+      "full_name": "Jorge Ramírez",
+      "avatar_url": null,
+      "phone": "+52 55 8000 1001",
+      "whatsapp": "+5215580001001",
+      "city": "CDMX",
+      "is_verified": true,
+      "is_dealer": false,
+      "active_listings": 48,
+      "created_at": "2023-03-03T10:08:58.740552"
+    },
+    {
+      "id": "owner-lucia",
+      "full_name": "Lucía Torres",
+      "avatar_url": null,
+      "phone": "+52 33 8000 1002",
+      "whatsapp": "+5213380001002",
+      "city": "Guadalajara",
+      "is_verified": true,
+      "is_dealer": false,
+      "active_listings": 31,
+      "created_at": "2024-04-06T11:08:58.740565"
+    },
+    {
+      "id": "owner-carlos",
+      "full_name": "Carlos Méndez",
+      "avatar_url": null,
+      "phone": "+52 442 800 1003",
+      "whatsapp": "+5214428001003",
+      "city": "Querétaro",
+      "is_verified": true,
+      "is_dealer": false,
+      "active_listings": 22,
+      "created_at": "2024-10-23T11:08:58.740582"
+    },
+    {
+      "id": "owner-ana",
+      "full_name": "Ana Castillo",
+      "avatar_url": null,
+      "phone": "+52 664 800 1004",
+      "whatsapp": "+5216648001004",
+      "city": "Tijuana",
+      "is_verified": true,
+      "is_dealer": false,
+      "active_listings": 27,
+      "created_at": "2024-12-12T10:08:58.740593"
+    },
+    {
+      "id": "seller-mariana",
+      "full_name": "Mariana López",
+      "avatar_url": null,
+      "phone": "+52 81 5555 2211",
+      "whatsapp": "+5218155552211",
+      "city": "Monterrey",
+      "is_verified": true,
+      "is_dealer": false,
+      "active_listings": 1,
+      "created_at": "2026-02-25T10:08:58.740603"
+    },
+    {
+      "id": "seller-diego",
+      "full_name": "Diego Hernández",
+      "avatar_url": null,
+      "phone": "+52 222 555 7788",
+      "whatsapp": "+5212225557788",
+      "city": "Puebla",
+      "is_verified": false,
+      "is_dealer": false,
+      "active_listings": 1,
+      "created_at": "2026-06-20T11:08:58.740614"
+    },
+    {
+      "id": "seller-sofia",
+      "full_name": "Sofía Martínez",
+      "avatar_url": null,
+      "phone": "+52 55 5555 9090",
+      "whatsapp": "+5215555559090",
+      "city": "CDMX",
+      "is_verified": false,
+      "is_dealer": false,
+      "active_listings": 2,
+      "created_at": "2026-07-25T11:08:58.740625"
+    }
+  ],
+  "locations": [
+    {
+      "id": "loc-cdmx",
+      "name": "Carmexio CDMX",
+      "city": "CDMX",
+      "address": "Showroom address pending · Ciudad de México",
+      "phone": "+52 55 8000 1001",
+      "whatsapp": "5215580001001",
+      "hours": "Mon–Sat 10:00–19:00",
+      "latitude": 19.4326,
+      "longitude": -99.1332,
+      "image_url": "https://images.unsplash.com/photo-1552745998-234af3caf5b6?w=1200&q=80&auto=format&fit=crop",
+      "is_active": true,
+      "sort_order": 0
+    },
+    {
+      "id": "loc-gdl",
+      "name": "Carmexio Guadalajara",
+      "city": "Guadalajara",
+      "address": "Showroom address pending · Guadalajara, Jal.",
+      "phone": "+52 33 8000 1002",
+      "whatsapp": "5213380001002",
+      "hours": "Mon–Sat 10:00–19:00",
+      "latitude": 20.6597,
+      "longitude": -103.3496,
+      "image_url": "https://images.unsplash.com/photo-1506015391300-4802dc74de2e?w=1200&q=80&auto=format&fit=crop",
+      "is_active": true,
+      "sort_order": 1
+    },
+    {
+      "id": "loc-qro",
+      "name": "Carmexio Querétaro",
+      "city": "Querétaro",
+      "address": "Showroom address pending · Querétaro, Qro.",
+      "phone": "+52 442 800 1003",
+      "whatsapp": "5214428001003",
+      "hours": "Mon–Sat 10:00–18:00",
+      "latitude": 20.5888,
+      "longitude": -100.3899,
+      "image_url": "https://images.unsplash.com/photo-1531181616225-f8e50c1ab53e?w=1200&q=80&auto=format&fit=crop",
+      "is_active": true,
+      "sort_order": 2
+    },
+    {
+      "id": "loc-tij",
+      "name": "Carmexio Tijuana",
+      "city": "Tijuana",
+      "address": "Showroom address pending · Tijuana, B.C.",
+      "phone": "+52 664 800 1004",
+      "whatsapp": "5216648001004",
+      "hours": "Mon–Sat 10:00–18:00",
+      "latitude": 32.5149,
+      "longitude": -117.0382,
+      "image_url": "https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=1200&q=80&auto=format&fit=crop",
+      "is_active": true,
+      "sort_order": 3
+    }
+  ],
+  "brands": [
+    {
+      "id": "brand-toyota",
+      "name": "Toyota",
+      "logo_url": null,
+      "models": [
+        "Hilux",
+        "Tacoma",
+        "RAV4",
+        "Corolla",
+        "Camry",
+        "Tundra"
+      ],
+      "listings_count": 0,
+      "sort_order": 0
+    },
+    {
+      "id": "brand-nissan",
+      "name": "Nissan",
+      "logo_url": null,
+      "models": [
+        "Versa",
+        "Sentra",
+        "NP300",
+        "Frontier",
+        "Kicks",
+        "X-Trail"
+      ],
+      "listings_count": 0,
+      "sort_order": 1
+    },
+    {
+      "id": "brand-chevrolet",
+      "name": "Chevrolet",
+      "logo_url": null,
+      "models": [
+        "Silverado",
+        "Cheyenne",
+        "Colorado",
+        "Aveo",
+        "Tahoe"
+      ],
+      "listings_count": 0,
+      "sort_order": 2
+    },
+    {
+      "id": "brand-ford",
+      "name": "Ford",
+      "logo_url": null,
+      "models": [
+        "Lobo",
+        "Ranger",
+        "Explorer",
+        "Mustang",
+        "Bronco",
+        "Maverick"
+      ],
+      "listings_count": 0,
+      "sort_order": 3
+    },
+    {
+      "id": "brand-volkswagen",
+      "name": "Volkswagen",
+      "logo_url": null,
+      "models": [
+        "Jetta",
+        "Golf",
+        "Polo",
+        "Vento",
+        "Tiguan",
+        "Taos"
+      ],
+      "listings_count": 0,
+      "sort_order": 4
+    },
+    {
+      "id": "brand-ram",
+      "name": "RAM",
+      "logo_url": null,
+      "models": [
+        "1500",
+        "2500",
+        "700"
+      ],
+      "listings_count": 0,
+      "sort_order": 5
+    },
+    {
+      "id": "brand-mazda",
+      "name": "Mazda",
+      "logo_url": null,
+      "models": [
+        "2",
+        "3",
+        "CX-5",
+        "CX-30",
+        "CX-90"
+      ],
+      "listings_count": 0,
+      "sort_order": 6
+    },
+    {
+      "id": "brand-honda",
+      "name": "Honda",
+      "logo_url": null,
+      "models": [
+        "City",
+        "Civic",
+        "CR-V",
+        "HR-V",
+        "Accord"
+      ],
+      "listings_count": 0,
+      "sort_order": 7
+    },
+    {
+      "id": "brand-kia",
+      "name": "Kia",
+      "logo_url": null,
+      "models": [
+        "Rio",
+        "Forte",
+        "Seltos",
+        "Sportage",
+        "Sorento"
+      ],
+      "listings_count": 0,
+      "sort_order": 8
+    },
+    {
+      "id": "brand-hyundai",
+      "name": "Hyundai",
+      "logo_url": null,
+      "models": [
+        "Grand i10",
+        "Accent",
+        "Creta",
+        "Tucson",
+        "Santa Fe"
+      ],
+      "listings_count": 0,
+      "sort_order": 9
+    },
+    {
+      "id": "brand-jeep",
+      "name": "Jeep",
+      "logo_url": null,
+      "models": [
+        "Wrangler",
+        "Grand Cherokee",
+        "Compass",
+        "Gladiator"
+      ],
+      "listings_count": 0,
+      "sort_order": 10
+    },
+    {
+      "id": "brand-bmw",
+      "name": "BMW",
+      "logo_url": null,
+      "models": [
+        "Serie 3",
+        "Serie 4",
+        "M3",
+        "X3",
+        "X5"
+      ],
+      "listings_count": 0,
+      "sort_order": 11
+    },
+    {
+      "id": "brand-mercedes-benz",
+      "name": "Mercedes-Benz",
+      "logo_url": null,
+      "models": [
+        "Clase A",
+        "Clase C",
+        "AMG C63",
+        "GLC",
+        "GLE"
+      ],
+      "listings_count": 0,
+      "sort_order": 12
+    },
+    {
+      "id": "brand-audi",
+      "name": "Audi",
+      "logo_url": null,
+      "models": [
+        "A3",
+        "A4",
+        "Q5",
+        "R8"
+      ],
+      "listings_count": 0,
+      "sort_order": 13
+    },
+    {
+      "id": "brand-porsche",
+      "name": "Porsche",
+      "logo_url": null,
+      "models": [
+        "911",
+        "Cayenne",
+        "Macan",
+        "Taycan"
+      ],
+      "listings_count": 0,
+      "sort_order": 14
+    }
+  ],
+  "banners": [
+    {
+      "id": "banner-certified",
+      "title": "Carmexio Certified",
+      "subtitle": "150-point inspection and 6-month warranty on every car.",
+      "image_url": "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?w=1200&q=80&auto=format&fit=crop",
+      "cta_label": "Explore certified",
+      "deep_link": "/search?verified=true"
+    },
+    {
+      "id": "banner-pickups",
+      "title": "Pickup season",
+      "subtitle": "Work-ready trucks, inspected and ready to deliver.",
+      "image_url": "https://images.unsplash.com/photo-1552745998-234af3caf5b6?w=1200&q=80&auto=format&fit=crop",
+      "cta_label": "Shop pickups",
+      "deep_link": "/search?body=pickup"
+    },
+    {
+      "id": "banner-sell",
+      "title": "Sell your car in 48h",
+      "subtitle": "Post it free. We help with paperwork and payment.",
+      "image_url": "https://images.unsplash.com/photo-1612563893490-d86ed296e5e6?w=1200&q=80&auto=format&fit=crop",
+      "cta_label": "Start selling",
+      "deep_link": "/sell"
+    },
+    {
+      "id": "banner-delivery",
+      "title": "Delivery nationwide",
+      "subtitle": "We ship your next car to any state in Mexico.",
+      "image_url": "https://images.unsplash.com/photo-1649793395985-967862a3b73f?w=1200&q=80&auto=format&fit=crop",
+      "cta_label": "Browse cars",
+      "deep_link": "/search"
+    }
+  ],
+  "listings": [
+    {
+      "id": "car-1",
+      "seller_id": "owner-jorge",
+      "brand": "RAM",
+      "model": "1500",
+      "version": "Laramie Crew Cab 4x4",
+      "year": 2022,
+      "price": 889000,
+      "mileage_km": 38500,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "pickup",
+      "engine_cc": 5700,
+      "exterior_color": "Silver",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1649793395985-967862a3b73f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "4x4",
+        "Tow hitch",
+        "Rear camera",
+        "Apple CarPlay",
+        "Leather seats",
+        "Heated seats"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 9.2,
+      "views_count": 40,
+      "favorites_count": 3,
+      "created_at": "2026-09-23T08:08:58.735638",
+      "updated_at": "2026-09-23T08:08:58.735638"
+    },
+    {
+      "id": "car-2",
+      "seller_id": "owner-lucia",
+      "brand": "Ford",
+      "model": "Lobo",
+      "version": "Lariat 4x4",
+      "year": 2021,
+      "price": 749000,
+      "mileage_km": 52300,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "pickup",
+      "engine_cc": 3500,
+      "exterior_color": "Blue",
+      "location_id": "loc-gdl",
+      "city": "Guadalajara",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1551830820-330a71b99659?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1657920035552-809ed648bb37?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "4x4",
+        "Tow hitch",
+        "Rear camera",
+        "Apple CarPlay"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 8.8,
+      "views_count": 77,
+      "favorites_count": 14,
+      "created_at": "2026-09-23T06:08:58.738363",
+      "updated_at": "2026-09-23T06:08:58.738363"
+    },
+    {
+      "id": "car-3",
+      "seller_id": "owner-ana",
+      "brand": "Toyota",
+      "model": "Tacoma",
+      "version": "TRD Off-Road",
+      "year": 2020,
+      "price": 615000,
+      "mileage_km": 61200,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "pickup",
+      "engine_cc": 3500,
+      "exterior_color": "Tan",
+      "location_id": "loc-tij",
+      "city": "Tijuana",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "4x4",
+        "Tow hitch",
+        "Rear camera",
+        "Apple CarPlay",
+        "Lane assist"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 8.9,
+      "views_count": 114,
+      "favorites_count": 25,
+      "created_at": "2026-09-23T02:08:58.738414",
+      "updated_at": "2026-09-23T02:08:58.738414"
+    },
+    {
+      "id": "car-4",
+      "seller_id": "owner-carlos",
+      "brand": "Chevrolet",
+      "model": "Silverado",
+      "version": "LTZ Crew Cab",
+      "year": 2021,
+      "price": 699000,
+      "mileage_km": 47800,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "pickup",
+      "engine_cc": 5300,
+      "exterior_color": "Red",
+      "location_id": "loc-qro",
+      "city": "Querétaro",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1624339024061-b435d9261c1d?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1607535882326-e3bd656233b3?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "4x4",
+        "Tow hitch",
+        "Rear camera",
+        "Apple CarPlay"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": true,
+      "inspection_score": 8.5,
+      "views_count": 151,
+      "favorites_count": 36,
+      "created_at": "2026-09-22T21:08:58.738454",
+      "updated_at": "2026-09-22T21:08:58.738454"
+    },
+    {
+      "id": "car-5",
+      "seller_id": "owner-jorge",
+      "brand": "Chevrolet",
+      "model": "Cheyenne",
+      "version": "High Country",
+      "year": 2023,
+      "price": 985000,
+      "mileage_km": 18400,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "pickup",
+      "engine_cc": 6200,
+      "exterior_color": "Black",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1605893477799-b99e3b8b93fe?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1601252300554-4ad551483bd2?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "4x4",
+        "Tow hitch",
+        "Rear camera",
+        "Apple CarPlay",
+        "Leather seats",
+        "Sunroof",
+        "Navigation",
+        "360° camera",
+        "Heated seats",
+        "Adaptive cruise",
+        "Push start"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 9.5,
+      "views_count": 188,
+      "favorites_count": 47,
+      "created_at": "2026-09-22T15:08:58.738906",
+      "updated_at": "2026-09-22T15:08:58.738906"
+    },
+    {
+      "id": "car-6",
+      "seller_id": "seller-mariana",
+      "brand": "RAM",
+      "model": "2500",
+      "version": "Heavy Duty Diesel",
+      "year": 2019,
+      "price": 720000,
+      "mileage_km": 98700,
+      "fuel_type": "diesel",
+      "transmission": "automatic",
+      "body_type": "pickup",
+      "engine_cc": 6700,
+      "exterior_color": "White",
+      "location_id": "loc-gdl",
+      "city": "Guadalajara",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1552745998-234af3caf5b6?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "4x4",
+        "Tow hitch",
+        "Rear camera",
+        "Apple CarPlay"
+      ],
+      "owners": 2,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 225,
+      "favorites_count": 58,
+      "created_at": "2026-09-22T05:08:58.738950",
+      "updated_at": "2026-09-22T05:08:58.738950"
+    },
+    {
+      "id": "car-7",
+      "seller_id": "seller-diego",
+      "brand": "Chevrolet",
+      "model": "Colorado",
+      "version": "Z71",
+      "year": 2020,
+      "price": 489000,
+      "mileage_km": 73400,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "pickup",
+      "engine_cc": 3600,
+      "exterior_color": "Black",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1612057473117-3e16246121e6?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1686715018049-f73970aa97d3?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "4x4",
+        "Android Auto"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 262,
+      "favorites_count": 69,
+      "created_at": "2026-09-21T19:08:58.738987",
+      "updated_at": "2026-09-21T19:08:58.738987"
+    },
+    {
+      "id": "car-8",
+      "seller_id": "owner-lucia",
+      "brand": "Jeep",
+      "model": "Wrangler",
+      "version": "Rubicon Unlimited",
+      "year": 2022,
+      "price": 1049000,
+      "mileage_km": 21500,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "suv",
+      "engine_cc": 3600,
+      "exterior_color": "Black",
+      "location_id": "loc-gdl",
+      "city": "Guadalajara",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1506015391300-4802dc74de2e?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Apple CarPlay",
+        "Android Auto",
+        "Rear camera",
+        "Cruise control",
+        "Keyless entry",
+        "4x4"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 9.1,
+      "views_count": 299,
+      "favorites_count": 80,
+      "created_at": "2026-09-23T09:08:58.739030",
+      "updated_at": "2026-09-23T09:08:58.739030"
+    },
+    {
+      "id": "car-9",
+      "seller_id": "owner-jorge",
+      "brand": "Ford",
+      "model": "Explorer",
+      "version": "Platinum",
+      "year": 2021,
+      "price": 829000,
+      "mileage_km": 41000,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "suv",
+      "engine_cc": 3000,
+      "exterior_color": "Black",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1612563893490-d86ed296e5e6?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Apple CarPlay",
+        "Android Auto",
+        "Rear camera",
+        "Cruise control",
+        "Keyless entry",
+        "Leather seats",
+        "Sunroof",
+        "Navigation",
+        "360° camera",
+        "Heated seats",
+        "Adaptive cruise",
+        "Push start"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": true,
+      "inspection_score": 8.7,
+      "views_count": 336,
+      "favorites_count": 11,
+      "created_at": "2026-09-23T00:08:58.739072",
+      "updated_at": "2026-09-23T00:08:58.739072"
+    },
+    {
+      "id": "car-10",
+      "seller_id": "owner-carlos",
+      "brand": "Mazda",
+      "model": "CX-5",
+      "version": "Signature",
+      "year": 2022,
+      "price": 559000,
+      "mileage_km": 29800,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "suv",
+      "engine_cc": 2500,
+      "exterior_color": "Gray",
+      "location_id": "loc-qro",
+      "city": "Querétaro",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1531181616225-f8e50c1ab53e?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Apple CarPlay",
+        "Android Auto",
+        "Rear camera",
+        "Cruise control",
+        "Keyless entry",
+        "Leather seats",
+        "Sunroof"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 9.0,
+      "views_count": 373,
+      "favorites_count": 22,
+      "created_at": "2026-09-23T04:08:58.739120",
+      "updated_at": "2026-09-23T04:08:58.739120"
+    },
+    {
+      "id": "car-11",
+      "seller_id": "seller-mariana",
+      "brand": "Hyundai",
+      "model": "Tucson",
+      "version": "Limited Tech",
+      "year": 2023,
+      "price": 612000,
+      "mileage_km": 15200,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "suv",
+      "engine_cc": 2500,
+      "exterior_color": "Gray",
+      "location_id": "loc-gdl",
+      "city": "Guadalajara",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1694649686884-0d62d0dc47d1?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1705624843697-4461f9dce482?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Apple CarPlay",
+        "Android Auto",
+        "Rear camera",
+        "Cruise control",
+        "Keyless entry"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 410,
+      "favorites_count": 33,
+      "created_at": "2026-09-22T09:08:58.739161",
+      "updated_at": "2026-09-22T09:08:58.739161"
+    },
+    {
+      "id": "car-12",
+      "seller_id": "owner-ana",
+      "brand": "Toyota",
+      "model": "RAV4",
+      "version": "Hybrid XLE",
+      "year": 2022,
+      "price": 649000,
+      "mileage_km": 33100,
+      "fuel_type": "hybrid",
+      "transmission": "automatic",
+      "body_type": "suv",
+      "engine_cc": 2500,
+      "exterior_color": "White",
+      "location_id": "loc-tij",
+      "city": "Tijuana",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1606611013016-969c19ba27bb?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1653813893853-be3e6ecfe061?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Apple CarPlay",
+        "Android Auto",
+        "Rear camera",
+        "Cruise control",
+        "Keyless entry",
+        "Lane assist",
+        "Blind spot monitor"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": true,
+      "inspection_score": 9.3,
+      "views_count": 447,
+      "favorites_count": 44,
+      "created_at": "2026-09-22T19:08:58.739293",
+      "updated_at": "2026-09-22T19:08:58.739293"
+    },
+    {
+      "id": "car-13",
+      "seller_id": "seller-sofia",
+      "brand": "Kia",
+      "model": "Sorento",
+      "version": "EX Pack",
+      "year": 2021,
+      "price": 529000,
+      "mileage_km": 55600,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "suv",
+      "engine_cc": 2500,
+      "exterior_color": "Black",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1700884520248-92092bd21e63?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Apple CarPlay",
+        "Android Auto",
+        "Rear camera",
+        "Cruise control",
+        "Keyless entry"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 484,
+      "favorites_count": 55,
+      "created_at": "2026-09-21T09:08:58.739338",
+      "updated_at": "2026-09-21T09:08:58.739338"
+    },
+    {
+      "id": "car-14",
+      "seller_id": "owner-jorge",
+      "brand": "BMW",
+      "model": "Serie 3",
+      "version": "330i M Sport",
+      "year": 2021,
+      "price": 689000,
+      "mileage_km": 36800,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "sedan",
+      "engine_cc": 2000,
+      "exterior_color": "Black",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1546614042-7df3c24c9e5d?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Leather seats",
+        "Sunroof",
+        "Navigation",
+        "360° camera",
+        "Heated seats",
+        "Adaptive cruise",
+        "Push start"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 9.0,
+      "views_count": 521,
+      "favorites_count": 66,
+      "created_at": "2026-09-23T07:08:58.739386",
+      "updated_at": "2026-09-23T07:08:58.739386"
+    },
+    {
+      "id": "car-15",
+      "seller_id": "owner-lucia",
+      "brand": "Mercedes-Benz",
+      "model": "Clase C",
+      "version": "C 200 Sport",
+      "year": 2022,
+      "price": 739000,
+      "mileage_km": 24900,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "sedan",
+      "engine_cc": 1500,
+      "exterior_color": "Black",
+      "location_id": "loc-gdl",
+      "city": "Guadalajara",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1629005559534-e71542e2a24a?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1615452877590-9324660cfc27?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Leather seats",
+        "Sunroof",
+        "Navigation",
+        "360° camera",
+        "Heated seats",
+        "Adaptive cruise",
+        "Push start"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": true,
+      "inspection_score": 8.9,
+      "views_count": 558,
+      "favorites_count": 77,
+      "created_at": "2026-09-22T17:08:58.739438",
+      "updated_at": "2026-09-22T17:08:58.739438"
+    },
+    {
+      "id": "car-16",
+      "seller_id": "seller-sofia",
+      "brand": "Honda",
+      "model": "City",
+      "version": "Touring",
+      "year": 2022,
+      "price": 309000,
+      "mileage_km": 28700,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "sedan",
+      "engine_cc": 1500,
+      "exterior_color": "White",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1611760394284-e2c6b98141cc?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Air conditioning",
+        "Android Auto",
+        "Rear camera"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 595,
+      "favorites_count": 8,
+      "created_at": "2026-09-20T23:08:58.739572",
+      "updated_at": "2026-09-20T23:08:58.739572"
+    },
+    {
+      "id": "car-17",
+      "seller_id": "owner-carlos",
+      "brand": "Volkswagen",
+      "model": "Polo",
+      "version": "Comfortline",
+      "year": 2020,
+      "price": 219000,
+      "mileage_km": 64500,
+      "fuel_type": "gasoline",
+      "transmission": "manual",
+      "body_type": "hatchback",
+      "engine_cc": 1600,
+      "exterior_color": "Blue",
+      "location_id": "loc-qro",
+      "city": "Querétaro",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Air conditioning",
+        "Android Auto",
+        "Rear camera"
+      ],
+      "owners": 2,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": true,
+      "inspection_score": 8.1,
+      "views_count": 632,
+      "favorites_count": 19,
+      "created_at": "2026-09-22T07:08:58.739667",
+      "updated_at": "2026-09-22T07:08:58.739667"
+    },
+    {
+      "id": "car-18",
+      "seller_id": "seller-diego",
+      "brand": "Hyundai",
+      "model": "Grand i10",
+      "version": "GLS",
+      "year": 2021,
+      "price": 189000,
+      "mileage_km": 41200,
+      "fuel_type": "gasoline",
+      "transmission": "manual",
+      "body_type": "hatchback",
+      "engine_cc": 1200,
+      "exterior_color": "Blue",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1573899754191-bd20f600141c?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Air conditioning",
+        "Android Auto",
+        "Rear camera"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 669,
+      "favorites_count": 30,
+      "created_at": "2026-09-20T11:08:58.739715",
+      "updated_at": "2026-09-20T11:08:58.739715"
+    },
+    {
+      "id": "car-19",
+      "seller_id": "owner-ana",
+      "brand": "Volkswagen",
+      "model": "Golf",
+      "version": "GTI",
+      "year": 2021,
+      "price": 529000,
+      "mileage_km": 30400,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "hatchback",
+      "engine_cc": 2000,
+      "exterior_color": "White",
+      "location_id": "loc-tij",
+      "city": "Tijuana",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1572634302117-74d5936414ce?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1572811298797-9eecadf6cb24?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Air conditioning",
+        "Android Auto",
+        "Rear camera",
+        "Sunroof",
+        "Leather seats"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 9.1,
+      "views_count": 706,
+      "favorites_count": 41,
+      "created_at": "2026-09-23T03:08:58.739761",
+      "updated_at": "2026-09-23T03:08:58.739761"
+    },
+    {
+      "id": "car-20",
+      "seller_id": "owner-jorge",
+      "brand": "Porsche",
+      "model": "911",
+      "version": "Carrera S",
+      "year": 2021,
+      "price": 3150000,
+      "mileage_km": 12100,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "coupe",
+      "engine_cc": 3000,
+      "exterior_color": "Gray",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1592853625601-bb9d23da12fc?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1592853625511-ad0edcc69c07?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Leather seats",
+        "Sunroof",
+        "Navigation",
+        "360° camera",
+        "Heated seats",
+        "Adaptive cruise",
+        "Push start"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 9.7,
+      "views_count": 743,
+      "favorites_count": 52,
+      "created_at": "2026-09-23T10:08:58.739802",
+      "updated_at": "2026-09-23T10:08:58.739802"
+    },
+    {
+      "id": "car-21",
+      "seller_id": "owner-lucia",
+      "brand": "Mercedes-Benz",
+      "model": "AMG C63",
+      "version": "S Coupé",
+      "year": 2020,
+      "price": 1590000,
+      "mileage_km": 26300,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "coupe",
+      "engine_cc": 4000,
+      "exterior_color": "Red",
+      "location_id": "loc-gdl",
+      "city": "Guadalajara",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Leather seats",
+        "Sunroof",
+        "Navigation",
+        "360° camera",
+        "Heated seats",
+        "Adaptive cruise",
+        "Push start"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": true,
+      "inspection_score": 9.2,
+      "views_count": 780,
+      "favorites_count": 63,
+      "created_at": "2026-09-22T02:08:58.739955",
+      "updated_at": "2026-09-22T02:08:58.739955"
+    },
+    {
+      "id": "car-22",
+      "seller_id": "seller-mariana",
+      "brand": "BMW",
+      "model": "M3",
+      "version": "Competition",
+      "year": 2019,
+      "price": 1290000,
+      "mileage_km": 34800,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "sedan",
+      "engine_cc": 3000,
+      "exterior_color": "White",
+      "location_id": "loc-gdl",
+      "city": "Guadalajara",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1601057319429-db0ea69e0307?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1605270396307-d00ba5cda1d0?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "left_side",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Leather seats",
+        "Sunroof",
+        "Navigation",
+        "360° camera",
+        "Heated seats",
+        "Adaptive cruise",
+        "Push start"
+      ],
+      "owners": 2,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 817,
+      "favorites_count": 74,
+      "created_at": "2026-09-21T15:08:58.740016",
+      "updated_at": "2026-09-21T15:08:58.740016"
+    },
+    {
+      "id": "car-23",
+      "seller_id": "owner-jorge",
+      "brand": "Audi",
+      "model": "R8",
+      "version": "V10 Performance",
+      "year": 2020,
+      "price": 3890000,
+      "mileage_km": 9800,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "coupe",
+      "engine_cc": 5200,
+      "exterior_color": "Red",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1610768207795-72169abdf0d4?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Leather seats",
+        "Sunroof",
+        "Navigation",
+        "360° camera",
+        "Heated seats",
+        "Adaptive cruise",
+        "Push start"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": true,
+      "is_verified": true,
+      "inspection_score": 9.6,
+      "views_count": 854,
+      "favorites_count": 5,
+      "created_at": "2026-09-22T23:08:58.740047",
+      "updated_at": "2026-09-22T23:08:58.740047"
+    },
+    {
+      "id": "car-24",
+      "seller_id": "owner-carlos",
+      "brand": "Ford",
+      "model": "Mustang",
+      "version": "GT 5.0",
+      "year": 2019,
+      "price": 719000,
+      "mileage_km": 42600,
+      "fuel_type": "gasoline",
+      "transmission": "manual",
+      "body_type": "coupe",
+      "engine_cc": 5000,
+      "exterior_color": "Dark Gray",
+      "location_id": "loc-qro",
+      "city": "Querétaro",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1609386464913-4cbfa39de540?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Leather seats",
+        "Apple CarPlay",
+        "Rear camera"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": true,
+      "inspection_score": 8.6,
+      "views_count": 891,
+      "favorites_count": 16,
+      "created_at": "2026-09-22T13:08:58.740076",
+      "updated_at": "2026-09-22T13:08:58.740076"
+    },
+    {
+      "id": "car-25",
+      "seller_id": "user-demo",
+      "brand": "Mazda",
+      "model": "3",
+      "version": "Hatchback i Sport",
+      "year": 2020,
+      "price": 339000,
+      "mileage_km": 48200,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "hatchback",
+      "engine_cc": 2500,
+      "exterior_color": "Gray",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1655285142221-2ecd4a91776f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Air conditioning",
+        "Android Auto",
+        "Rear camera"
+      ],
+      "owners": 1,
+      "status": "active",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 928,
+      "favorites_count": 27,
+      "created_at": "2026-09-19T11:08:58.740103",
+      "updated_at": "2026-09-19T11:08:58.740103"
+    },
+    {
+      "id": "car-26",
+      "seller_id": "user-demo",
+      "brand": "Nissan",
+      "model": "Kicks",
+      "version": "Exclusive",
+      "year": 2022,
+      "price": 365000,
+      "mileage_km": 22000,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "suv",
+      "engine_cc": 1600,
+      "exterior_color": "White",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1683965362932-9d4224e6904f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1549064233-945d7063292f?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1660374703904-b26c6b594e04?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Apple CarPlay",
+        "Android Auto",
+        "Rear camera",
+        "Cruise control",
+        "Keyless entry"
+      ],
+      "owners": 1,
+      "status": "pending",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 65,
+      "favorites_count": 38,
+      "created_at": "2026-09-23T05:08:58.740130",
+      "updated_at": "2026-09-23T05:08:58.740130"
+    },
+    {
+      "id": "car-27",
+      "seller_id": "user-demo",
+      "brand": "Volkswagen",
+      "model": "Jetta",
+      "version": "Highline",
+      "year": 2018,
+      "price": 259000,
+      "mileage_km": 88000,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "sedan",
+      "engine_cc": 1400,
+      "exterior_color": "White",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1624543345260-c1f7ad0b7be6?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1636763086471-9f29bc34ab9e?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1547731269-e4073e054f12?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1553260188-75a8d6205b6c?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Air conditioning",
+        "Android Auto",
+        "Rear camera"
+      ],
+      "owners": 2,
+      "status": "sold",
+      "rejection_reason": null,
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 102,
+      "favorites_count": 49,
+      "created_at": "2026-09-02T15:08:58.740159",
+      "updated_at": "2026-09-02T15:08:58.740159"
+    },
+    {
+      "id": "car-28",
+      "seller_id": "user-demo",
+      "brand": "Chevrolet",
+      "model": "Aveo",
+      "version": "LT",
+      "year": 2019,
+      "price": 179000,
+      "mileage_km": 71000,
+      "fuel_type": "gasoline",
+      "transmission": "automatic",
+      "body_type": "sedan",
+      "engine_cc": 1500,
+      "exterior_color": "Red",
+      "location_id": "loc-cdmx",
+      "city": "CDMX",
+      "description": "Excellent condition, always serviced at the dealer with full records. Two keys, original manual and valid registration. No accidents and a clean title. Test drives available at our showroom — financing and nationwide delivery available.",
+      "images": [
+        "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1629280878139-038999084e23?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1573074586277-871bb71b78a2?w=1200&q=80&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1625690180114-5530b1304127?w=1200&q=80&auto=format&fit=crop"
+      ],
+      "image_angles": [
+        "front_left",
+        "dashboard",
+        "front_seats",
+        "rear_seats"
+      ],
+      "features": [
+        "Air conditioning",
+        "Android Auto",
+        "Rear camera"
+      ],
+      "owners": 1,
+      "status": "rejected",
+      "rejection_reason": "The dashboard photo is blurry and the mileage is not readable. Please retake it and resubmit.",
+      "is_featured": false,
+      "is_verified": false,
+      "inspection_score": null,
+      "views_count": 139,
+      "favorites_count": 60,
+      "created_at": "2026-09-22T05:08:58.740186",
+      "updated_at": "2026-09-22T05:08:58.740186"
+    }
+  ],
+  "inspection_reports": [
+    {
+      "listing_id": "car-1",
+      "overall_score": 9.2,
+      "inspected_at": "2026-09-21T08:08:58.735638",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-cdmx",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "front_bumper",
+          "code": "P",
+          "note": "Repainted lower lip."
+        },
+        {
+          "panel": "roof",
+          "code": "•",
+          "note": "Minor hail marks."
+        },
+        {
+          "panel": "trunk",
+          "code": "A3",
+          "note": "Long scratch on the lid."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-2",
+      "overall_score": 8.8,
+      "inspected_at": "2026-09-21T06:08:58.738363",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-gdl",
+      "summary": "Good condition with minor cosmetic details noted below.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "trunk",
+          "code": "A3",
+          "note": "Long scratch on the lid."
+        },
+        {
+          "panel": "hood",
+          "code": "A1",
+          "note": "Light scratch near the emblem."
+        },
+        {
+          "panel": "rear_right_door",
+          "code": "A2",
+          "note": "Key scratch, 10 cm."
+        },
+        {
+          "panel": "left_rocker",
+          "code": "S1",
+          "note": "Surface rust."
+        },
+        {
+          "panel": "rear_left_quarter",
+          "code": "A1",
+          "note": "Small scratch."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-3",
+      "overall_score": 8.9,
+      "inspected_at": "2026-09-21T02:08:58.738414",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-tij",
+      "summary": "Good condition with minor cosmetic details noted below.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "front_bumper",
+          "code": "P",
+          "note": "Repainted lower lip."
+        },
+        {
+          "panel": "roof",
+          "code": "•",
+          "note": "Minor hail marks."
+        },
+        {
+          "panel": "trunk",
+          "code": "A3",
+          "note": "Long scratch on the lid."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-4",
+      "overall_score": 8.5,
+      "inspected_at": "2026-09-20T21:08:58.738454",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-qro",
+      "summary": "Good condition with minor cosmetic details noted below.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "fail",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "fail",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "hood",
+          "code": "A1",
+          "note": "Light scratch near the emblem."
+        },
+        {
+          "panel": "rear_right_door",
+          "code": "A2",
+          "note": "Key scratch, 10 cm."
+        },
+        {
+          "panel": "left_rocker",
+          "code": "S1",
+          "note": "Surface rust."
+        },
+        {
+          "panel": "rear_left_quarter",
+          "code": "A1",
+          "note": "Small scratch."
+        },
+        {
+          "panel": "front_left_door",
+          "code": "U1",
+          "note": "Parking dent."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-5",
+      "overall_score": 9.5,
+      "inspected_at": "2026-09-20T15:08:58.738906",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-cdmx",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "front_right_fender",
+          "code": "P",
+          "note": "Paint thickness differs."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-8",
+      "overall_score": 9.1,
+      "inspected_at": "2026-09-21T09:08:58.739030",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-gdl",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "rear_right_door",
+          "code": "A2",
+          "note": "Key scratch, 10 cm."
+        },
+        {
+          "panel": "left_rocker",
+          "code": "S1",
+          "note": "Surface rust."
+        },
+        {
+          "panel": "rear_left_quarter",
+          "code": "A1",
+          "note": "Small scratch."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-9",
+      "overall_score": 8.7,
+      "inspected_at": "2026-09-21T00:08:58.739072",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-cdmx",
+      "summary": "Good condition with minor cosmetic details noted below.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "hood",
+          "code": "A1",
+          "note": "Light scratch near the emblem."
+        },
+        {
+          "panel": "rear_right_door",
+          "code": "A2",
+          "note": "Key scratch, 10 cm."
+        },
+        {
+          "panel": "left_rocker",
+          "code": "S1",
+          "note": "Surface rust."
+        },
+        {
+          "panel": "rear_left_quarter",
+          "code": "A1",
+          "note": "Small scratch."
+        },
+        {
+          "panel": "front_left_door",
+          "code": "U1",
+          "note": "Parking dent."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-10",
+      "overall_score": 9.0,
+      "inspected_at": "2026-09-21T04:08:58.739120",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-qro",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "rear_bumper",
+          "code": "B2",
+          "note": "Dent with scratch, hand-sized."
+        },
+        {
+          "panel": "front_right_fender",
+          "code": "P",
+          "note": "Paint thickness differs."
+        },
+        {
+          "panel": "front_bumper",
+          "code": "P",
+          "note": "Repainted lower lip."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-12",
+      "overall_score": 9.3,
+      "inspected_at": "2026-09-20T19:08:58.739293",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-tij",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "left_rocker",
+          "code": "S1",
+          "note": "Surface rust."
+        },
+        {
+          "panel": "rear_left_quarter",
+          "code": "A1",
+          "note": "Small scratch."
+        },
+        {
+          "panel": "front_left_door",
+          "code": "U1",
+          "note": "Parking dent."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-14",
+      "overall_score": 9.0,
+      "inspected_at": "2026-09-21T07:08:58.739386",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-cdmx",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "rear_right_door",
+          "code": "A2",
+          "note": "Key scratch, 10 cm."
+        },
+        {
+          "panel": "left_rocker",
+          "code": "S1",
+          "note": "Surface rust."
+        },
+        {
+          "panel": "rear_left_quarter",
+          "code": "A1",
+          "note": "Small scratch."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-15",
+      "overall_score": 8.9,
+      "inspected_at": "2026-09-20T17:08:58.739438",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-gdl",
+      "summary": "Good condition with minor cosmetic details noted below.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "rear_bumper",
+          "code": "B2",
+          "note": "Dent with scratch, hand-sized."
+        },
+        {
+          "panel": "front_right_fender",
+          "code": "P",
+          "note": "Paint thickness differs."
+        },
+        {
+          "panel": "front_bumper",
+          "code": "P",
+          "note": "Repainted lower lip."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-17",
+      "overall_score": 8.1,
+      "inspected_at": "2026-09-20T07:08:58.739667",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-qro",
+      "summary": "Good condition with minor cosmetic details noted below.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "fail",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "fail",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "left_rocker",
+          "code": "S1",
+          "note": "Surface rust."
+        },
+        {
+          "panel": "rear_left_quarter",
+          "code": "A1",
+          "note": "Small scratch."
+        },
+        {
+          "panel": "front_left_door",
+          "code": "U1",
+          "note": "Parking dent."
+        },
+        {
+          "panel": "rear_bumper",
+          "code": "B2",
+          "note": "Dent with scratch, hand-sized."
+        },
+        {
+          "panel": "front_right_fender",
+          "code": "P",
+          "note": "Paint thickness differs."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-19",
+      "overall_score": 9.1,
+      "inspected_at": "2026-09-21T03:08:58.739761",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-tij",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "front_bumper",
+          "code": "P",
+          "note": "Repainted lower lip."
+        },
+        {
+          "panel": "roof",
+          "code": "•",
+          "note": "Minor hail marks."
+        },
+        {
+          "panel": "trunk",
+          "code": "A3",
+          "note": "Long scratch on the lid."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-20",
+      "overall_score": 9.7,
+      "inspected_at": "2026-09-21T10:08:58.739802",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-cdmx",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "rear_left_quarter",
+          "code": "A1",
+          "note": "Small scratch."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-21",
+      "overall_score": 9.2,
+      "inspected_at": "2026-09-20T02:08:58.739955",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-gdl",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "rear_bumper",
+          "code": "B2",
+          "note": "Dent with scratch, hand-sized."
+        },
+        {
+          "panel": "front_right_fender",
+          "code": "P",
+          "note": "Paint thickness differs."
+        },
+        {
+          "panel": "front_bumper",
+          "code": "P",
+          "note": "Repainted lower lip."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-23",
+      "overall_score": 9.6,
+      "inspected_at": "2026-09-20T23:08:58.740047",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-cdmx",
+      "summary": "Excellent condition. Ready for delivery.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "trunk",
+          "code": "A3",
+          "note": "Long scratch on the lid."
+        }
+      ]
+    },
+    {
+      "listing_id": "car-24",
+      "overall_score": 8.6,
+      "inspected_at": "2026-09-20T13:08:58.740076",
+      "inspector_name": "Carmexio certified mechanic",
+      "location_id": "loc-qro",
+      "summary": "Good condition with minor cosmetic details noted below.",
+      "categories": [
+        {
+          "name": "Exterior & body",
+          "items": [
+            {
+              "name": "Panel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Paint condition",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Glass & mirrors",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Lights & lenses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Chassis / frame",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Engine & transmission",
+          "items": [
+            {
+              "name": "Engine start & idle",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Oil leaks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Coolant level & leaks",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Belts & hoses",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Gear shifting",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Exhaust smoke",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Suspension & steering",
+          "items": [
+            {
+              "name": "Shock absorbers",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Steering play",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Wheel alignment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Bushings & joints",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Tires & brakes",
+          "items": [
+            {
+              "name": "Tire tread depth",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake pads",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Brake discs",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Spare tire & tools",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Interior",
+          "items": [
+            {
+              "name": "Seats & upholstery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Dashboard & trim",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Headliner",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Carpets & odors",
+              "status": "attention",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Electrical & AC",
+          "items": [
+            {
+              "name": "Battery",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Air conditioning",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Infotainment",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Power windows & locks",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Warning lights",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        },
+        {
+          "name": "Documents",
+          "items": [
+            {
+              "name": "Factura (title)",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "REPUVE / theft check",
+              "status": "ok",
+              "note": null
+            },
+            {
+              "name": "Tenencias paid",
+              "status": "attention",
+              "note": null
+            },
+            {
+              "name": "Verificación",
+              "status": "ok",
+              "note": null
+            }
+          ]
+        }
+      ],
+      "body_defects": [
+        {
+          "panel": "front_bumper",
+          "code": "P",
+          "note": "Repainted lower lip."
+        },
+        {
+          "panel": "roof",
+          "code": "•",
+          "note": "Minor hail marks."
+        },
+        {
+          "panel": "trunk",
+          "code": "A3",
+          "note": "Long scratch on the lid."
+        },
+        {
+          "panel": "hood",
+          "code": "A1",
+          "note": "Light scratch near the emblem."
+        },
+        {
+          "panel": "rear_right_door",
+          "code": "A2",
+          "note": "Key scratch, 10 cm."
+        }
+      ]
+    }
+  ],
+  "favorites": {
+    "user-demo": [
+      "car-8",
+      "car-14",
+      "car-20"
+    ]
+  },
+  "conversations": [
+    {
+      "id": "conv-1",
+      "user_id": "user-demo",
+      "listing_id": "car-1",
+      "location_id": "loc-cdmx",
+      "last_message": "Saturday at 11:00 works. See you at the CDMX showroom!",
+      "last_message_at": "2026-09-23T10:56:58.746736",
+      "user_unread_count": 1,
+      "staff_unread_count": 0,
+      "created_at": "2026-09-23T08:08:58.746744"
+    },
+    {
+      "id": "conv-2",
+      "user_id": "user-demo",
+      "listing_id": "car-11",
+      "location_id": "loc-gdl",
+      "last_message": "The owner accepts $600,000 if you close this week.",
+      "last_message_at": "2026-09-22T09:08:58.746752",
+      "user_unread_count": 0,
+      "staff_unread_count": 0,
+      "created_at": "2026-09-22T05:08:58.746800"
+    },
+    {
+      "id": "conv-3",
+      "user_id": "user-demo",
+      "listing_id": "car-25",
+      "location_id": "loc-cdmx",
+      "last_message": "Your Mazda 3 passed verification and is now live.",
+      "last_message_at": "2026-09-21T09:08:58.746809",
+      "user_unread_count": 2,
+      "staff_unread_count": 0,
+      "created_at": "2026-09-21T07:08:58.746813"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-1",
+      "conversation_id": "conv-1",
+      "sender_id": "user-demo",
+      "sender_role": "user",
+      "body": "Hi! Is the RAM 1500 still available?",
+      "created_at": "2026-09-23T08:08:58.746964",
+      "read_at": "2026-09-23T08:08:58.746969"
+    },
+    {
+      "id": "msg-2",
+      "conversation_id": "conv-1",
+      "sender_id": "staff-carmexio",
+      "sender_role": "staff",
+      "body": "Hello Alex, this is Carmexio CDMX. Yes, it is available and verified.",
+      "created_at": "2026-09-23T08:18:58.746975",
+      "read_at": "2026-09-23T08:18:58.746978"
+    },
+    {
+      "id": "msg-3",
+      "conversation_id": "conv-1",
+      "sender_id": "user-demo",
+      "sender_role": "user",
+      "body": "Great. Has it had any accidents?",
+      "created_at": "2026-09-23T10:08:58.746982",
+      "read_at": "2026-09-23T10:08:58.746986"
+    },
+    {
+      "id": "msg-4",
+      "conversation_id": "conv-1",
+      "sender_id": "staff-carmexio",
+      "sender_role": "staff",
+      "body": "No accidents. You can see the full inspection report in the app.",
+      "created_at": "2026-09-23T10:28:58.746990",
+      "read_at": "2026-09-23T10:28:58.746993"
+    },
+    {
+      "id": "msg-5",
+      "conversation_id": "conv-1",
+      "sender_id": "user-demo",
+      "sender_role": "user",
+      "body": "Can I see it this weekend?",
+      "created_at": "2026-09-23T10:48:58.746998",
+      "read_at": "2026-09-23T10:48:58.747001"
+    },
+    {
+      "id": "msg-6",
+      "conversation_id": "conv-1",
+      "sender_id": "staff-carmexio",
+      "sender_role": "staff",
+      "body": "Saturday at 11:00 works. See you at the CDMX showroom!",
+      "created_at": "2026-09-23T10:56:58.747005",
+      "read_at": null
+    },
+    {
+      "id": "msg-7",
+      "conversation_id": "conv-2",
+      "sender_id": "user-demo",
+      "sender_role": "user",
+      "body": "Hi, is the price of the Tucson negotiable?",
+      "created_at": "2026-09-22T05:08:58.747010",
+      "read_at": "2026-09-22T05:08:58.747014"
+    },
+    {
+      "id": "msg-8",
+      "conversation_id": "conv-2",
+      "sender_id": "staff-carmexio",
+      "sender_role": "staff",
+      "body": "The owner accepts $600,000 if you close this week.",
+      "created_at": "2026-09-22T09:08:58.747018",
+      "read_at": "2026-09-22T09:08:58.747022"
+    },
+    {
+      "id": "msg-9",
+      "conversation_id": "conv-3",
+      "sender_id": "staff-carmexio",
+      "sender_role": "staff",
+      "body": "We received your Mazda 3. Please bring it to our CDMX showroom for the inspection.",
+      "created_at": "2026-09-21T07:28:58.747026",
+      "read_at": null
+    },
+    {
+      "id": "msg-10",
+      "conversation_id": "conv-3",
+      "sender_id": "staff-carmexio",
+      "sender_role": "staff",
+      "body": "Your Mazda 3 passed verification and is now live.",
+      "created_at": "2026-09-21T09:08:58.747031",
+      "read_at": null
+    }
+  ],
+  "auto_replies": [
+    "Thanks for writing to Carmexio! An advisor will reply shortly.",
+    "Sure, we can book a visit. What day and time work for you?",
+    "The price includes a full inspection report and paperwork review.",
+    "Yes, we offer financing and delivery to your city."
+  ]
+}

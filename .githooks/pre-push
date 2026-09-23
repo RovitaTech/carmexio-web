@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Blocks the push unless tests and the production build pass.
+set -e
+npm run verify
