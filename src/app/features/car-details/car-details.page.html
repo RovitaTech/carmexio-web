@@ -75,7 +75,7 @@
           }
         </section>
 
-        @if (c.inspectionScore != null) {
+        @if (c.inspectionScore !== undefined) {
           <a class="card block inspection" [routerLink]="['/autos', slug(), 'inspeccion']">
             <cx-score-ring [score]="c.inspectionScore" />
             <div>

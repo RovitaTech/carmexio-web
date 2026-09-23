@@ -28,12 +28,20 @@ import { NgOptimizedImage } from '@angular/common';
       color: var(--cx-text);
     }
     span.white {
-      color: #fff;
+      color: var(--cx-on-dark);
+    }
+    /* Narrow phones: eagle only, so the header actions keep their room. */
+    @media (max-width: 419px) {
+      :host(.collapse) span {
+        display: none;
+      }
     }
   `,
+  host: { '[class.collapse]': 'collapseOnPhone()' },
 })
 export class Logo {
   readonly size = input(30);
   readonly wordmark = input(true);
   readonly white = input(false);
+  readonly collapseOnPhone = input(false);
 }

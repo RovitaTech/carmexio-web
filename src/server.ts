@@ -6,6 +6,10 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { DummyDb } from './app/data/dummy/dummy-db';
+import { DummyListingRepository } from './app/data/dummy/dummy-listing.repository';
+import { environment } from './environments/environment';
+import { listingEntries, renderSitemap } from './server/sitemap';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -13,16 +17,18 @@ const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 /**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
+ * sitemap.xml from active listings, cached for an hour at the edge.
+ * DUMMY: swap for `new SupabaseListingRepository(createClient(url, key))` when live.
  */
+const sitemapListings = new DummyListingRepository(new DummyDb(0));
+app.get('/sitemap.xml', async (_req, res, next) => {
+  try {
+    const xml = renderSitemap(environment.siteUrl, await listingEntries(sitemapListings));
+    res.type('application/xml').set('Cache-Control', 'public, max-age=3600').send(xml);
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * Serve static files from /browser

@@ -72,7 +72,7 @@ const EMAIL = /^[\w.+-]+@[\w-]+\.[\w.-]+$/;
       justify-content: space-between;
     }
     .links a {
-      color: var(--cx-primary);
+      color: var(--cx-primary-text);
       font-weight: 700;
     }
   `,
@@ -85,7 +85,7 @@ export class LoginPage {
   protected readonly password = signal('');
 
   constructor() {
-    inject(SeoService).set({ title: 'Entrar' });
+    inject(SeoService).set({ title: 'Entrar', noindex: true });
   }
 
   protected fillDemo(): void {
@@ -168,11 +168,11 @@ export class LoginPage {
       color: var(--cx-error);
     }
     a {
-      color: var(--cx-primary);
+      color: var(--cx-primary-text);
       font-weight: 700;
     }
     .btn.primary {
-      color: #fff;
+      color: var(--cx-on-dark);
     }
   `,
 })
@@ -184,7 +184,7 @@ export class RegisterPage {
   protected readonly confirmSent = signal(false);
 
   constructor() {
-    inject(SeoService).set({ title: 'Crear cuenta' });
+    inject(SeoService).set({ title: 'Crear cuenta', noindex: true });
   }
 
   protected async submit(
@@ -245,13 +245,17 @@ export class RegisterPage {
       gap: 14px;
     }
     .btn.primary {
-      color: #fff;
+      color: var(--cx-on-dark);
     }
   `,
 })
 export class ResetPage {
   protected readonly session = inject(SessionStore);
   protected readonly sent = signal(false);
+
+  constructor() {
+    inject(SeoService).set({ title: 'Recuperar contraseña', noindex: true });
+  }
 
   protected async submit(email: string): Promise<void> {
     if (!EMAIL.test(email.trim())) return;

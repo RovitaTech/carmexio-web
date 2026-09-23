@@ -1,0 +1,156 @@
+@if (car(); as c) {
+  <a class="back" [routerLink]="['/staff/revision', c.id]">← Volver al anuncio</a>
+}
+
+@if (source.error()) {
+  <cx-error-state [error]="source.error()" (retry)="source.reload()" />
+} @else if (!store.loaded() || !car()) {
+  <cx-skeleton height="480px" radius="20px" />
+} @else {
+  @let c = car()!;
+  <header class="head">
+    <div>
+      <h1>Inspección · {{ c.brand }} {{ c.model }} {{ c.year }}</h1>
+      <p>{{ c.location?.name }} · {{ store.isNew() ? 'Reporte nuevo' : 'Editando reporte' }}</p>
+    </div>
+    <div class="score">
+      <cx-score-ring [score]="store.overallScore()" [size]="72" />
+      <div class="field">
+        <label for="score">Calificación (0–10)</label>
+        <input
+          id="score"
+          type="number"
+          min="0"
+          max="10"
+          step="0.1"
+          [placeholder]="store.suggested().toFixed(1)"
+          [value]="store.scoreOverride() ?? ''"
+          (change)="scoreInput($any($event.target).value)"
+        />
+        <small class="muted">Sugerida por checklist: {{ store.suggested().toFixed(1) }}</small>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section class="checklist" aria-label="Checklist">
+      @for (cat of store.categories(); track cat.name; let ci = $index) {
+        <details class="card category" [open]="ci === 0">
+          <summary>
+            <span>{{ cat.name }}</span>
+            <strong>{{ store.categoryScores()[ci] }}%</strong>
+          </summary>
+          @for (item of cat.items; track item.name; let ii = $index) {
+            <div class="item">
+              <fieldset class="statuses">
+                <legend class="name">{{ item.name }}</legend>
+                @for (s of statuses; track s.value) {
+                  <label [class]="'status ' + s.value" [class.on]="item.status === s.value">
+                    <input
+                      type="radio"
+                      class="visually-hidden"
+                      [name]="'item-' + ci + '-' + ii"
+                      [checked]="item.status === s.value"
+                      (change)="store.setStatus(ci, ii, s.value)"
+                    />
+                    <span aria-hidden="true">{{ s.icon }}</span> {{ s.label }}
+                  </label>
+                }
+              </fieldset>
+              @if (item.status !== 'ok' || item.note) {
+                <input
+                  class="note"
+                  type="text"
+                  maxlength="200"
+                  placeholder="Nota (visible para el comprador)"
+                  [attr.aria-label]="'Nota: ' + item.name"
+                  [value]="item.note ?? ''"
+                  (change)="store.setNote(ci, ii, $any($event.target).value)"
+                />
+              }
+            </div>
+          }
+        </details>
+      }
+    </section>
+
+    <aside class="side">
+      <section class="card block" aria-labelledby="body-title">
+        <h2 id="body-title">Carrocería</h2>
+        <p class="muted">Toca un panel para agregar daños.</p>
+        <cx-body-diagram
+          [defects]="store.defects()"
+          (panelSelected)="store.selectedPanel.set($event)"
+        />
+
+        @if (store.selectedPanel(); as panel) {
+          <div class="panel-editor" aria-live="polite">
+            <h3>{{ panelLabel(panel) }}</h3>
+            @for (d of store.panelDefects(); track d.index) {
+              <div class="defect">
+                <strong>{{ d.defect.code }}</strong>
+                <span>{{ d.defect.note ?? '' }}</span>
+                <button
+                  type="button"
+                  class="link"
+                  [attr.aria-label]="'Quitar ' + d.defect.code"
+                  (click)="store.removeDefect(d.index)"
+                >
+                  Quitar
+                </button>
+              </div>
+            } @empty {
+              <p class="muted">Sin daños registrados.</p>
+            }
+            <div class="add">
+              <select #code aria-label="Código de daño">
+                @for (opt of codes; track opt.code) {
+                  <option [value]="opt.code">{{ opt.code }} · {{ opt.label }}</option>
+                }
+              </select>
+              <input
+                #note
+                type="text"
+                maxlength="120"
+                placeholder="Nota"
+                aria-label="Nota del daño"
+              />
+              <button class="btn outline" type="button" (click)="addDefect(code.value, note)">
+                Agregar
+              </button>
+            </div>
+          </div>
+        }
+      </section>
+
+      <section class="card block">
+        <div class="field">
+          <label for="inspector">Inspector</label>
+          <input
+            id="inspector"
+            [value]="store.inspectorName()"
+            (input)="store.edit('inspectorName', $any($event.target).value)"
+          />
+        </div>
+        <div class="field">
+          <label for="summary">Resumen para el comprador</label>
+          <textarea
+            id="summary"
+            rows="4"
+            maxlength="600"
+            [value]="store.summary()"
+            (input)="store.edit('summary', $any($event.target).value)"
+          ></textarea>
+        </div>
+        <button
+          class="btn primary block"
+          type="button"
+          [disabled]="store.saving() || (!store.dirty() && !store.isNew())"
+          (click)="save()"
+        >
+          {{ store.saving() ? 'Guardando…' : 'Guardar reporte' }}
+        </button>
+      </section>
+    </aside>
+  </div>
+}

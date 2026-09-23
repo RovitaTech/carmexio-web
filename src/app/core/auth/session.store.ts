@@ -1,11 +1,15 @@
-import { Service, computed, inject, signal } from '@angular/core';
-import { AppError, AppUser } from '../../domain/models';
+import { DestroyRef, PLATFORM_ID, Service, computed, inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AppUser, ProfileChanges } from '../../domain/models';
 import { AUTH_REPOSITORY } from '../../domain/repositories';
+import { errorMessage } from '../utils/errors';
 
 /** App-wide session (ViewModel for auth). Guests have `user() === null`. */
 @Service()
 export class SessionStore {
   private readonly repo = inject(AUTH_REPOSITORY);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly user = signal<AppUser | null>(null);
   readonly busy = signal(false);
@@ -16,8 +20,17 @@ export class SessionStore {
     return role === 'staff' || role === 'admin';
   });
 
+  /**
+   * App initializer: loads the current session and, in the browser, follows
+   * changes made outside the app (token expiry, sign-out in another tab).
+   * On the server every render is a guest render.
+   */
   async restore(): Promise<void> {
-    this.user.set(await this.repo.current());
+    this.user.set(await this.repo.current().catch(() => null));
+    if (isPlatformBrowser(this.platformId)) {
+      const stop = this.repo.onChange((user) => this.user.set(user));
+      this.destroyRef.onDestroy(stop);
+    }
   }
 
   signIn(email: string, password: string) {
@@ -39,7 +52,7 @@ export class SessionStore {
     return this.run(() => this.repo.resetPassword(email));
   }
 
-  updateProfile(changes: Partial<Pick<AppUser, 'fullName' | 'phone' | 'city'>>) {
+  updateProfile(changes: ProfileChanges) {
     return this.run(async () => this.user.set(await this.repo.updateProfile(changes)));
   }
 
@@ -56,7 +69,7 @@ export class SessionStore {
       await action();
       return true;
     } catch (e) {
-      this.error.set(e instanceof AppError ? e.message : 'Algo salió mal. Intenta de nuevo.');
+      this.error.set(errorMessage(e));
       return false;
     } finally {
       this.busy.set(false);

@@ -13,6 +13,7 @@ import { CATALOG_REPOSITORY, LISTING_REPOSITORY } from '../../domain/repositorie
 import { CarCard } from '../../shared/ui/car-card';
 import { EmptyState, Skeleton } from '../../shared/ui/state-views';
 import { activeFilterCount, filterToParams, parseFilter } from './search-query';
+import { optional } from '../../core/utils/resource';
 
 const PAGE_SIZE = 12;
 
@@ -36,11 +37,18 @@ export class SearchPage {
   protected readonly limit = linkedSignal({ source: this.filter, computation: () => PAGE_SIZE });
 
   protected readonly results = resource({
+    id: 'search:results',
     params: () => ({ filter: this.filter(), limit: this.limit() }),
     loader: ({ params }) => this.listings.search(params.filter, 0, params.limit),
   });
-  protected readonly brands = resource({ loader: () => this.catalog.brands() });
-  protected readonly locations = resource({ loader: () => this.catalog.locations() });
+  protected readonly brands = resource({
+    id: 'search:brands',
+    loader: () => optional(this.catalog.brands(), []),
+  });
+  protected readonly locations = resource({
+    id: 'search:locations',
+    loader: () => optional(this.catalog.locations(), []),
+  });
 
   protected readonly bodies = Object.entries(BODY_LABELS);
   protected readonly fuels = Object.entries(FUEL_LABELS);

@@ -3,6 +3,7 @@ import { draftToRow } from '../mappers';
 import { DummyDb } from './dummy-db';
 import { DummyAuthRepository, DummyChatRepository } from './dummy-account.repositories';
 import { DummyListingRepository } from './dummy-listing.repository';
+import { DummyStaffRepository } from './dummy-staff.repository';
 
 describe('dummy repositories (same seed as the Flutter app)', () => {
   let db: DummyDb;
@@ -77,7 +78,41 @@ describe('dummy repositories (same seed as the Flutter app)', () => {
     expect(car.status).toBe('pending');
     expect(car.city).toBe('Querétaro');
     expect(car.imageAngles).toEqual(PHOTO_ANGLES.map((a) => a.value));
-    expect((await listings.reviewQueue('loc-qro')).some((c) => c.id === car.id)).toBe(true);
+
+    const staff = new DummyStaffRepository(db);
+    await expect(staff.reviewQueue()).rejects.toMatchObject({ kind: 'auth' });
+    await auth.signIn('staff@carmexio.mx', 'carmexio123');
+    expect((await staff.reviewQueue('loc-qro')).some((c) => c.id === car.id)).toBe(true);
+    await staff.approve(car.id);
+    expect((await listings.byId(car.id)).status).toBe('active');
+  });
+
+  it('owners can only mark live ads as sold, and relisting goes back to review', async () => {
+    await auth.signIn('demo@carmexio.mx', 'carmexio123');
+    const [mine] = await listings.mine();
+    const pending = (await listings.mine()).find((c) => c.status !== 'active');
+    if (pending) {
+      await expect(listings.setStatus(pending.id, 'sold')).rejects.toMatchObject({
+        kind: 'validation',
+      });
+    }
+    await listings.setStatus(mine.id, 'pending');
+    expect((await listings.byId(mine.id)).status).toBe('pending');
+    await expect(listings.setStatus('car-1', 'sold')).rejects.toMatchObject({ kind: 'auth' });
+  });
+
+  it('staff reject needs a reason and saving a report syncs the score', async () => {
+    const staff = new DummyStaffRepository(db);
+    await auth.signIn('staff@carmexio.mx', 'carmexio123');
+    const [queued] = await staff.reviewQueue();
+    await expect(staff.reject(queued.id, '  ')).rejects.toMatchObject({ kind: 'validation' });
+    await staff.reject(queued.id, 'Foto del tablero borrosa.');
+    expect((await listings.byId(queued.id)).rejectionReason).toBe('Foto del tablero borrosa.');
+
+    const report = (await listings.inspection('car-1'))!;
+    await staff.saveInspection({ ...report, overallScore: 9.9 });
+    expect((await listings.byId('car-1')).inspectionScore).toBe(9.9);
+    expect((await listings.inspection('car-1'))!.overallScore).toBe(9.9);
   });
 
   it('draftToRow keeps canonical angle order', () => {

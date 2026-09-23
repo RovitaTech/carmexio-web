@@ -6,7 +6,7 @@ import { compactPrice, timeAgo } from '../../core/utils/format';
 import { ChatMessage } from '../../domain/models';
 import { CHAT_REPOSITORY } from '../../domain/repositories';
 import { EmptyState } from '../../shared/ui/state-views';
-import { ChatInboxStore } from './chat-inbox.store';
+import { ChatInboxStore } from '../../core/state/chat-inbox.store';
 
 const QUICK_REPLIES = [
   '¿Sigue disponible?',
@@ -40,7 +40,7 @@ export class ChatsPage {
   );
 
   constructor() {
-    inject(SeoService).set({ title: 'Mensajes' });
+    inject(SeoService).set({ title: 'Mensajes', noindex: true });
     // Load + subscribe to the open thread; unsubscribe when it changes.
     effect((onCleanup) => {
       const id = this.id();

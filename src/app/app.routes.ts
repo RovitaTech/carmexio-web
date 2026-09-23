@@ -75,7 +75,7 @@ export const routes: Routes = [
   {
     path: 'staff',
     canActivate: [staffGuard],
-    loadComponent: () => import('./features/staff/staff.page').then((m) => m.StaffPage),
+    loadChildren: () => import('./features/staff/staff.routes').then((m) => m.STAFF_ROUTES),
   },
   {
     path: '**',

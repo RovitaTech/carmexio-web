@@ -2,14 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { App } from './app';
 import { routes } from './app.routes';
-import { DummyDb } from './data/dummy/dummy-db';
 import { provideDummyData } from './data/providers';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideRouter(routes), provideDummyData(new DummyDb(0))],
+      providers: [provideRouter(routes), provideDummyData({ latencyMs: 0 })],
     }).compileComponents();
   });
 

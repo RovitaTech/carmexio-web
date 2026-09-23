@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /staff
+Disallow: /cuenta
+Disallow: /mensajes
+Disallow: /mis-anuncios
+Disallow: /favoritos
+Disallow: /vender
+Disallow: /entrar
+Disallow: /registro
+Disallow: /recuperar
+
+Sitemap: https://carmexio.mx/sitemap.xml

@@ -37,6 +37,14 @@ export const STATUS_OWNER_LABELS: Record<ListingStatus, string> = {
   rejected: 'Cambios solicitados',
 };
 
+/** Staff-facing status names (portal, review queue). */
+export const STATUS_STAFF_LABELS: Record<ListingStatus, string> = {
+  active: 'Publicado',
+  pending: 'Pendiente',
+  sold: 'Vendido',
+  rejected: 'Rechazado',
+};
+
 export const SORT_LABELS: Record<SortOption, string> = {
   newest: 'Más recientes',
   priceLow: 'Precio: menor a mayor',
@@ -278,11 +286,44 @@ export interface ListingDraft {
   photos: Partial<Record<PhotoAngle, string>>;
 }
 
+export type ProfileChanges = Partial<Pick<AppUser, 'fullName' | 'phone' | 'city'>>;
+
+// ---- Staff ----------------------------------------------------------------
+
+/** What an owner may do to their own ad (the DB guard enforces the rest). */
+export type OwnerStatusChange = Extract<ListingStatus, 'sold' | 'pending'>;
+
+export interface ListingFlags {
+  isFeatured?: boolean;
+  isVerified?: boolean;
+}
+
+export interface StaffListingFilter {
+  locationId?: string;
+  status?: ListingStatus;
+  query?: string;
+}
+
+export interface StaffStats {
+  pending: number;
+  active: number;
+  rejected: number;
+  soldThisMonth: number;
+  unreadChats: number;
+  withoutInspection: number;
+}
+
+// ---- Errors ---------------------------------------------------------------
+
+export type AppErrorKind = 'network' | 'auth' | 'notFound' | 'validation' | 'server';
+
+/** The only error type repositories reject with; `message` is user-facing (es-MX). */
 export class AppError extends Error {
   constructor(
     message: string,
-    readonly kind: 'network' | 'auth' | 'notFound' | 'validation' | 'server' = 'server',
+    readonly kind: AppErrorKind = 'server',
   ) {
     super(message);
+    this.name = 'AppError';
   }
 }

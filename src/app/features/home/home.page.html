@@ -25,7 +25,8 @@
 </section>
 
 @if (banners.value(); as list) {
-  <section class="container section banners" aria-label="Promociones">
+  <section class="container section banners" aria-labelledby="promos-title">
+    <h2 id="promos-title" class="visually-hidden">Promociones</h2>
     @for (b of list; track b.id) {
       @let link = bannerLink(b.deepLink);
       <a class="banner card" [routerLink]="link.path" [queryParams]="link.query">

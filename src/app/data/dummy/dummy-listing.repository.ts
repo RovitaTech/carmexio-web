@@ -5,14 +5,14 @@ import {
   CarFilter,
   InspectionReport,
   ListingDraft,
-  ListingStatus,
+  OwnerStatusChange,
   Page,
 } from '../../domain/models';
 import { CatalogRepository, ListingRepository } from '../../domain/repositories';
 import { Row, draftToRow, toBanner, toBrand, toCar, toInspection, toLocation } from '../mappers';
 import { DummyDb, requireUser } from './dummy-db';
 
-const SORTS: Record<string, (a: Row, b: Row) => number> = {
+export const SORTS: Record<string, (a: Row, b: Row) => number> = {
   newest: (a, b) => b['created_at'].localeCompare(a['created_at']),
   priceLow: (a, b) => a['price'] - b['price'],
   priceHigh: (a, b) => b['price'] - a['price'],
@@ -94,8 +94,12 @@ export class DummyListingRepository implements ListingRepository {
     await this.db.delay(0.6);
     const row = this.db.listing(id);
     if (!row) throw new AppError('Este auto ya no está publicado.', 'notFound');
-    row['views_count'] = (row['views_count'] ?? 0) + 1;
     return toCar(this.db.withLocation(row));
+  }
+
+  async recordView(id: string) {
+    const row = this.db.listing(id);
+    if (row?.['status'] === 'active') row['views_count'] = (row['views_count'] ?? 0) + 1;
   }
 
   async similar(car: Car, limit = 8) {
@@ -161,27 +165,22 @@ export class DummyListingRepository implements ListingRepository {
     return toCar(this.db.withLocation(row));
   }
 
-  async setStatus(id: string, status: ListingStatus, reason?: string) {
+  /** Mirrors `guard_listing_fields`: only active → sold, or relist → pending. */
+  async setStatus(id: string, status: OwnerStatusChange) {
     await this.db.delay(0.6);
-    const row = this.db.listing(id);
-    if (!row) throw new AppError('Anuncio no encontrado.', 'notFound');
+    const row = this.owned(id);
+    if (status === 'sold' && row['status'] !== 'active') {
+      throw new AppError('Solo un anuncio publicado se puede marcar como vendido.', 'validation');
+    }
     row['status'] = status;
-    row['rejection_reason'] = status === 'rejected' ? (reason ?? null) : null;
+    row['rejection_reason'] = null;
+    row['updated_at'] = new Date().toISOString();
   }
 
   async remove(id: string) {
     await this.db.delay(0.6);
     const row = this.owned(id);
     this.db.listings.splice(this.db.listings.indexOf(row), 1);
-  }
-
-  async reviewQueue(locationId?: string) {
-    await this.db.delay();
-    return this.cars(
-      this.db.listings.filter(
-        (l) => l['status'] === 'pending' && (!locationId || l['location_id'] === locationId),
-      ),
-    );
   }
 
   private owned(id: string): Row {

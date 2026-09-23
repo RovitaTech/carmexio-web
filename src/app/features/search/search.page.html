@@ -147,7 +147,8 @@
       </label>
     </aside>
 
-    <section class="results" aria-live="polite">
+    <section class="results" aria-live="polite" aria-labelledby="results-title">
+      <h2 id="results-title" class="visually-hidden">Resultados</h2>
       @if (results.error()) {
         <cx-empty-state
           icon="⚠️"

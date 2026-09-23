@@ -5,7 +5,7 @@
 }
 
 .back {
-  color: var(--cx-primary);
+  color: var(--cx-primary-text);
   font-weight: 700;
 }
 
@@ -16,11 +16,11 @@
   padding: 24px;
   border-radius: var(--cx-radius-xl);
   background: var(--cx-gradient-hero);
-  color: #fff;
+  color: var(--cx-on-dark);
 
   p,
   small {
-    color: rgb(255 255 255 / 75%);
+    color: var(--cx-on-dark-2);
   }
 }
 

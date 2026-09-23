@@ -4,6 +4,8 @@
 
 .layout {
   display: grid;
+  // minmax(0, …): scrollable children (thumb strip) must not widen the page.
+  grid-template-columns: minmax(0, 1fr);
   gap: 20px;
 }
 
@@ -43,6 +45,7 @@
 
 .gallery {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
 }
 
@@ -66,8 +69,8 @@
     bottom: 14px;
     padding: 4px 10px;
     border-radius: 99px;
-    background: rgb(0 0 0 / 55%);
-    color: #fff;
+    background: var(--cx-photo-overlay);
+    color: var(--cx-on-dark);
     font-size: 0.8rem;
     font-weight: 700;
   }
@@ -110,7 +113,7 @@ h1 {
 }
 
 .price {
-  color: var(--cx-primary);
+  color: var(--cx-primary-text);
   font-size: 1.8rem;
   font-weight: 800;
 
@@ -122,8 +125,12 @@ h1 {
 
 .specs {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .spec {
@@ -144,7 +151,7 @@ h1 {
   gap: 16px;
 
   .link {
-    color: var(--cx-primary);
+    color: var(--cx-primary-text);
     font-weight: 700;
   }
 }
@@ -192,7 +199,7 @@ h1 {
 
 @media (min-width: 1024px) {
   .layout {
-    grid-template-columns: 1fr 360px;
+    grid-template-columns: minmax(0, 1fr) 360px;
     align-items: start;
   }
 

@@ -6,6 +6,7 @@ import { BODY_LABELS, BodyType } from '../../domain/models';
 import { CATALOG_REPOSITORY, LISTING_REPOSITORY } from '../../domain/repositories';
 import { CarCard } from '../../shared/ui/car-card';
 import { Skeleton } from '../../shared/ui/state-views';
+import { optional, valueOr } from '../../core/utils/resource';
 
 @Component({
   selector: 'cx-home-page',
@@ -18,14 +19,29 @@ export class HomePage {
   private readonly catalog = inject(CATALOG_REPOSITORY);
   private readonly router = inject(Router);
 
-  protected readonly featured = resource({ loader: () => this.listings.featured(8) });
-  protected readonly recent = resource({ loader: () => this.listings.recent(8) });
-  protected readonly brands = resource({ loader: () => this.catalog.brands() });
-  protected readonly banners = resource({ loader: () => this.catalog.banners() });
-  protected readonly locations = resource({ loader: () => this.catalog.locations() });
+  protected readonly featured = resource({
+    id: 'home:featured',
+    loader: () => optional(this.listings.featured(8), []),
+  });
+  protected readonly recent = resource({
+    id: 'home:recent',
+    loader: () => optional(this.listings.recent(8), []),
+  });
+  protected readonly brands = resource({
+    id: 'home:brands',
+    loader: () => optional(this.catalog.brands(), []),
+  });
+  protected readonly banners = resource({
+    id: 'home:banners',
+    loader: () => optional(this.catalog.banners(), []),
+  });
+  protected readonly locations = resource({
+    id: 'home:locations',
+    loader: () => optional(this.catalog.locations(), []),
+  });
 
   protected readonly topBrands = computed(() =>
-    (this.brands.value() ?? [])
+    valueOr(this.brands, [])
       .filter((b) => b.listingsCount > 0)
       .sort((a, b) => b.listingsCount - a.listingsCount)
       .slice(0, 10),

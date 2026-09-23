@@ -1,0 +1,171 @@
+<a class="back" routerLink="/staff/revision">← Volver a revisión</a>
+
+@if (car.error()) {
+  <cx-error-state [error]="car.error()" (retry)="car.reload()" />
+} @else if (!car.hasValue()) {
+  <cx-skeleton height="420px" radius="20px" />
+} @else {
+  @let c = car.value();
+  <header class="head">
+    <div>
+      <h1>{{ c.brand }} {{ c.model }} {{ c.year }}</h1>
+      <p>{{ price(c.price) }} · {{ c.location?.name }} · actualizado {{ ago(c.updatedAt) }}</p>
+    </div>
+    <div class="head-actions">
+      <cx-status-pill [status]="c.status" />
+      <a class="btn outline" [routerLink]="['/autos', slug(c)]" target="_blank" rel="noopener"
+        >Ver anuncio</a
+      >
+    </div>
+  </header>
+
+  @if (c.rejectionReason) {
+    <p class="card note">Motivo anterior: {{ c.rejectionReason }}</p>
+  }
+
+  <div class="layout">
+    <div class="main">
+      <section class="card block" aria-labelledby="photos-title">
+        <h2 id="photos-title">Fotos obligatorias</h2>
+        <p class="muted">Marca las que el dueño debe volver a tomar.</p>
+        <ul class="photos">
+          @for (p of photos(); track p.value) {
+            <li [class.missing]="!p.url">
+              @if (p.url) {
+                <a [href]="p.url" target="_blank" rel="noopener">
+                  <img [src]="p.url" [alt]="p.label" loading="lazy" />
+                </a>
+              } @else {
+                <div class="placeholder">Sin foto</div>
+              }
+              <label>
+                <input
+                  type="checkbox"
+                  [checked]="reshoot().includes(p.value)"
+                  (change)="toggleReshoot(p.value, $any($event.target).checked)"
+                />
+                {{ p.label }}
+              </label>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="card block" aria-labelledby="details-title">
+        <h2 id="details-title">Datos del auto</h2>
+        <dl class="details">
+          @for (d of details(); track d[0]) {
+            <div>
+              <dt>{{ d[0] }}</dt>
+              <dd>{{ d[1] }}</dd>
+            </div>
+          }
+        </dl>
+        @if (c.features.length) {
+          <div class="chips">
+            @for (f of c.features; track f) {
+              <span class="chip">{{ f }}</span>
+            }
+          </div>
+        }
+        <p class="description">{{ c.description }}</p>
+      </section>
+    </div>
+
+    <aside class="side">
+      <section class="card block" aria-labelledby="inspection-title">
+        <h2 id="inspection-title">Inspección</h2>
+        @if (report.hasValue() && report.value(); as r) {
+          <div class="score">
+            <cx-score-ring [score]="r.overallScore" [size]="56" />
+            <span>{{ r.inspectorName }} · {{ ago(r.inspectedAt) }}</span>
+          </div>
+          <a class="btn outline block" [routerLink]="['/staff/inspecciones', c.id]"
+            >Editar reporte</a
+          >
+        } @else if (report.isLoading()) {
+          <cx-skeleton height="56px" />
+        } @else {
+          <p class="muted">Aún no tiene reporte.</p>
+          <a class="btn primary block" [routerLink]="['/staff/inspecciones', c.id]"
+            >Crear reporte</a
+          >
+        }
+      </section>
+
+      <section class="card block" aria-labelledby="badges-title">
+        <h2 id="badges-title">Distintivos</h2>
+        <label class="toggle">
+          <input
+            type="checkbox"
+            [checked]="c.isFeatured"
+            [disabled]="busy()"
+            (change)="setFlags(c, { isFeatured: $any($event.target).checked })"
+          />
+          Destacado
+        </label>
+        <label class="toggle">
+          <input
+            type="checkbox"
+            [checked]="c.isVerified"
+            [disabled]="busy()"
+            (change)="setFlags(c, { isVerified: $any($event.target).checked })"
+          />
+          Carmexio Certificado
+        </label>
+      </section>
+
+      @if (c.status === 'pending') {
+        <section class="card block" aria-labelledby="decision-title">
+          <h2 id="decision-title">Decisión</h2>
+          @if (blockers().length) {
+            <ul class="blockers">
+              @for (b of blockers(); track b) {
+                <li>{{ b }}</li>
+              }
+            </ul>
+          }
+          <button
+            class="btn primary block"
+            type="button"
+            [disabled]="busy() || blockers().length > 0"
+            (click)="approve(c)"
+          >
+            Aprobar y publicar
+          </button>
+
+          <div class="field">
+            <label for="template">Motivo frecuente</label>
+            <select id="template" (change)="useTemplate($any($event.target).value)">
+              <option value="">Elegir…</option>
+              @for (t of templates; track t) {
+                <option [value]="t">{{ t }}</option>
+              }
+            </select>
+          </div>
+          <div class="field">
+            <label for="note">Mensaje para el dueño</label>
+            <textarea
+              id="note"
+              rows="3"
+              maxlength="500"
+              [value]="note()"
+              (input)="note.set($any($event.target).value)"
+            ></textarea>
+          </div>
+          @if (reason()) {
+            <p class="preview"><strong>Se enviará:</strong> {{ reason() }}</p>
+          }
+          <button
+            class="btn outline block"
+            type="button"
+            [disabled]="busy() || !reason()"
+            (click)="reject(c)"
+          >
+            Solicitar cambios
+          </button>
+        </section>
+      }
+    </aside>
+  </div>
+}

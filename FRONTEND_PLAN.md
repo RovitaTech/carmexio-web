@@ -180,6 +180,11 @@ calling repositories) + child components. Repositories are injected by
 **interface tokens**, so `provideDummyData()` vs `provideSupabaseData()` is a
 one-line switch in `app.config.ts` (same idea as `dummyOverrides()` in Flutter).
 
+> **As built (Sep 2026):** the Supabase client and error mapping live in
+> `data/supabase/` (infrastructure belongs to the data layer, so `core/` never imports
+> `@supabase/*`); app-wide stores are in `core/state/`; layer boundaries are enforced by
+> ESLint. `CLAUDE.md` → "Architecture" is the source of truth.
+
 Rules: files < 400 lines, OnPush everywhere (default with signals), no
 `any`, every route has a title + meta, every page has loading / empty / error
 states.
@@ -189,62 +194,62 @@ states.
 ## 6. Pages & features (public)
 
 ### 6.1 Layout shell
-- [ ] Sticky header: logo, search box (desktop), nav (Buy, Sell, Showrooms, How it works), favorites, chats (unread badge), avatar menu / Sign in
-- [ ] Mobile: compact header + bottom tab bar (Home, Search, **Sell**, Chats, Account) mirroring the app
-- [ ] Footer: branches with hours, WhatsApp, Instagram, legal links, language + theme toggles
-- [ ] Global toast, route progress bar, skip-to-content link
+- [ ] Sticky header: logo, search box (desktop), nav (Buy, Sell, Showrooms, How it works), favorites, chats (unread badge), avatar menu / Sign in _(partial: desktop search box pending)_
+- [x] Mobile: compact header + bottom tab bar (Home, Search, **Sell**, Chats, Account) mirroring the app
+- [ ] Footer: branches with hours, WhatsApp, Instagram, legal links, language + theme toggles _(partial: WhatsApp, legal links and language toggle pending)_
+- [x] Global toast, route progress bar, skip-to-content link
 
 ### 6.2 Home (`/`) — SSR + prerender
-- [ ] Navy hero: headline "Encuentra tu próximo auto", search bar (make/model/version) + quick filters (body, budget, branch), hero car image
-- [ ] Promo banners carousel (`banners` table, deep links)
-- [ ] Body-type chips, top brands (sorted by stock)
-- [ ] Featured / Carmexio Certified carousel
-- [ ] "How Carmexio works" 4 steps (verify → inspect → live → we arrange the visit)
-- [ ] Shop by budget tiles, "Just arrived" grid
-- [ ] Our showrooms (4 cards with photo, hours, map link)
+- [ ] Navy hero: headline "Encuentra tu próximo auto", search bar (make/model/version) + quick filters (body, budget, branch), hero car image _(partial: quick filters (budget, branch) and hero car image pending)_
+- [x] Promo banners carousel (`banners` table, deep links)
+- [x] Body-type chips, top brands (sorted by stock)
+- [x] Featured / Carmexio Certified carousel
+- [x] "How Carmexio works" 4 steps (verify → inspect → live → we arrange the visit)
+- [x] Shop by budget tiles, "Just arrived" grid
+- [ ] Our showrooms (4 cards with photo, hours, map link) _(partial: map link pending)_
 - [ ] Sell CTA band + app download badges
 - [ ] Testimonials / Instagram highlights (optional)
 
 ### 6.3 Search (`/autos?…`) — SSR
-- [ ] URL is the state: same query keys as the app deep links (`q, brand, body, fuel, transmission, city, minPrice, maxPrice, minYear, maxYear, maxKm, verified, featured, sort`)
-- [ ] Desktop: left sticky filter panel; mobile: filter drawer with "Apply N filters"
-- [ ] Price / year range sliders, mileage slider, chips for body/fuel/transmission/branch, certified toggle
-- [ ] Active-filter chips with remove, sort dropdown, result count
-- [ ] Grid / list toggle, infinite scroll or pagination (page size 12), skeletons
-- [ ] Empty state with "clear filters", recent searches (localStorage)
+- [x] URL is the state: same query keys as the app deep links (`q, brand, body, fuel, transmission, city, minPrice, maxPrice, minYear, maxYear, maxKm, verified, featured, sort`)
+- [ ] Desktop: left sticky filter panel; mobile: filter drawer with "Apply N filters" _(partial: verify the "Apply N filters" drawer label)_
+- [ ] Price / year range sliders, mileage slider, chips for body/fuel/transmission/branch, certified toggle _(partial: selects today, sliders pending)_
+- [x] Active-filter chips with remove, sort dropdown, result count
+- [ ] Grid / list toggle, infinite scroll or pagination (page size 12), skeletons _(partial: "load more" pagination done; grid/list toggle pending)_
+- [ ] Empty state with "clear filters", recent searches (localStorage) _(partial: recent searches pending)_
 - [ ] SEO landing variants: `/autos/pickup`, `/autos/toyota`, `/autos/cdmx`
 
 ### 6.4 Car details (`/autos/:id-:slug`) — SSR
-- [ ] Gallery: hero + thumbnails of the **11 angles** labelled by angle, full-screen lightbox with zoom/keyboard
-- [ ] Title, version, price (MXN), badges (Featured, Certified, Verified by Carmexio), views, posted time
-- [ ] Key specs grid (year, km, fuel, transmission) + overview table + features chips + description
-- [ ] **Inspection summary** card (score ring) → full report
-- [ ] **Branch card** "Sold by Carmexio {branch}": address, hours, map, "Book a visit"
-- [ ] Sticky contact box (desktop right column / mobile bottom bar): Chat with Carmexio, WhatsApp branch (prefilled message with ad id), Call branch
-- [ ] Favorite + share (Web Share API, copy link), similar cars
-- [ ] Owner view: status banner, Edit, Mark as sold, Chat with Carmexio about my ad
-- [ ] JSON-LD `Car` / `Offer`, OG image = cover photo, canonical URL
+- [ ] Gallery: hero + thumbnails of the **11 angles** labelled by angle, full-screen lightbox with zoom/keyboard _(partial: angle-labelled thumbnails done; lightbox pending)_
+- [x] Title, version, price (MXN), badges (Featured, Certified, Verified by Carmexio), views, posted time
+- [x] Key specs grid (year, km, fuel, transmission) + overview table + features chips + description
+- [x] **Inspection summary** card (score ring) → full report
+- [ ] **Branch card** "Sold by Carmexio {branch}": address, hours, map, "Book a visit" _(partial: address/hours done; map + "Book a visit" pending)_
+- [x] Sticky contact box (desktop right column / mobile bottom bar): Chat with Carmexio, WhatsApp branch (prefilled message with ad id), Call branch
+- [x] Favorite + share (Web Share API, copy link), similar cars
+- [ ] Owner view: status banner, Edit, Mark as sold, Chat with Carmexio about my ad _(partial: banner + Edit done; verify mark-as-sold / owner chat)_
+- [x] JSON-LD `Car` / `Offer`, OG image = cover photo, canonical URL
 
 ### 6.5 Inspection report (`/autos/:id/inspeccion`)
-- [ ] Header: overall score ring, summary, inspected date, branch, inspector
-- [ ] **SVG exploded body diagram** (port `BodyDiagram` layout from `../carmexio/lib/features/listings/presentation/inspection/body_diagram.dart`): 15 panels, severity tint, codes on panels, hover/click → popover with defects; "Show minor marks" toggle
-- [ ] Legend (P, A1, A2, A3, U1, B2, S1, •)
-- [ ] Category accordions with % bar, item status icons, "Issues only" toggle
+- [ ] Header: overall score ring, summary, inspected date, branch, inspector _(partial: verify inspector + branch fields)_
+- [ ] **SVG exploded body diagram** (port `BodyDiagram` layout from `../carmexio/lib/features/listings/presentation/inspection/body_diagram.dart`): 15 panels, severity tint, codes on panels, hover/click → popover with defects; "Show minor marks" toggle _(partial: diagram, codes and minor-marks toggle done; hover popover pending)_
+- [x] Legend (P, A1, A2, A3, U1, B2, S1, •)
+- [x] Category accordions with % bar, item status icons, "Issues only" toggle
 - [ ] Print-friendly / "Download PDF" (print stylesheet)
 
 ### 6.6 Showrooms (`/sucursales`, `/sucursales/:id`)
-- [ ] Cards / map (Leaflet or Google Maps embed) of branches, hours, phone, WhatsApp, directions
-- [ ] Branch page: inventory of that branch, chat with branch (general enquiry)
+- [ ] Cards / map (Leaflet or Google Maps embed) of branches, hours, phone, WhatsApp, directions _(partial: cards with directions link done; map pending)_
+- [ ] Branch page: inventory of that branch, chat with branch (general enquiry) _(partial: `/sucursales/:id` route pending)_
 
 ### 6.7 Auth (`/entrar`, `/registro`, `/recuperar`)
-- [ ] Email + password, sign up with name + phone (+52), password reset, email confirmation screen
-- [ ] Redirect back to the page that required auth (`?from=`)
+- [ ] Email + password, sign up with name + phone (+52), password reset, email confirmation screen _(partial: email confirmation screen to verify)_
+- [x] Redirect back to the page that required auth (`?from=`)
 - [ ] Future: Google / Apple / phone OTP
 
 ### 6.8 Sell (`/vender`, `/vender/:id/editar`) — auth required
-- [ ] Stepper: **Details → Photos → Price & branch → Review**
+- [x] Stepper: **Details → Photos → Price & branch → Review**
 - [ ] Details: brand/model pickers (from `brands.models`, custom model allowed), year, version, body, fuel, transmission, mileage, engine, color
-- [ ] **Photos: 11 angle slots** with silhouette icon, label and instruction.
+- [ ] **Photos: 11 angle slots** with silhouette icon, label and instruction. _(partial: camera capture + progress done; drag & drop to verify)_
   - Mobile browsers: slot click opens the camera directly (`<input type="file" accept="image/*" capture="environment">`)
   - Desktop: click opens file dialog; drag & drop onto a slot
   - Client-side resize to 1920px / 80% JPEG (canvas) before upload
@@ -253,24 +258,24 @@ states.
 - [ ] Price & branch: price (MXN), branch picker (address/hours shown), features multi-select, description (20–1500)
 - [ ] Review: angle thumbnails, summary cards with Edit links, "What happens next" (4 steps) → **Submit for review**
 - [ ] Edit mode: prefill, tagged angles keep their photo, missing angles must be re-shot; resubmission goes back to `pending`
-- [ ] Draft autosave to localStorage
+- [ ] Draft autosave to localStorage _(partial: not started)_
 
 ### 6.9 My ads (`/mis-anuncios`) — auth
-- [ ] Tabs: Live / In review (pending + rejected) / Sold with counts
+- [x] Tabs: Live / In review (pending + rejected) / Sold with counts
 - [ ] Card: cover, title, price, status pill ("Under review by Carmexio", "Changes requested"), views/saves, rejection reason + "Fix and resubmit"
 - [ ] Actions: edit, mark sold, relist (→ pending), delete (confirm)
 
 ### 6.10 Favorites (`/favoritos`) — auth
-- [ ] Grid of saved cars, optimistic heart toggle everywhere, sign-in prompt for guests
+- [x] Grid of saved cars, optimistic heart toggle everywhere, sign-in prompt for guests
 
 ### 6.11 Chats (`/mensajes`, `/mensajes/:id`) — auth
-- [ ] Desktop two-pane (inbox left, thread right); mobile separate pages
+- [ ] Desktop two-pane (inbox left, thread right); mobile separate pages _(partial: verify mobile separate pages)_
 - [ ] Inbox rows: Carmexio avatar, branch name, car title/price or "General enquiry", last message, time, unread badge
 - [ ] Thread: car banner (link to ad), bubbles (user right / Carmexio left), day dividers, read ticks, quick replies ("Is it still available?", "I'd like to book a visit", "Test drive?", "Financing?")
-- [ ] Supabase Realtime on `messages`, `mark_conversation_read`, unread count in header
+- [ ] Supabase Realtime on `messages`, `mark_conversation_read`, unread count in header _(partial: implemented in data/supabase; untested against a live backend)_
 
 ### 6.12 Profile (`/cuenta`)
-- [ ] Profile card, edit name/phone/city/avatar (upload to `avatars`), theme + language, sign out
+- [ ] Profile card, edit name/phone/city/avatar (upload to `avatars`), theme + language, sign out _(partial: avatar upload pending)_
 - [ ] Links: showrooms, Instagram, support WhatsApp, terms, privacy
 
 ### 6.13 Static pages
@@ -280,10 +285,10 @@ states.
 
 ## 7. Staff portal (`/staff`) — role `staff` | `admin`
 
-- [ ] Staff shell: sidebar (Dashboard, Review queue, Listings, Inspections, Chats, Branches*, Banners*, Users*) — *admin only
-- [ ] Dashboard: KPIs per branch (pending, live, sold this month, unread chats, avg review time) — see dashboard refs above
-- [ ] **Review queue**: pending ads for my branch, oldest first; review page shows 11 angle photos side by side, details, owner contact (staff only); actions Approve → `active`, Reject with reason templates, Request re-shoot of specific angles
-- [ ] **Inspection editor**: checklist form per category (ok/attention/fail + note), **click on SVG diagram panel → add defect code + note**, overall score, summary; saves `inspection_reports` (score syncs to listing); toggles Featured / Certified
+- [ ] Staff shell: sidebar (Dashboard, Review queue, Listings, Inspections, Chats, Branches*, Banners*, Users*) — *admin only _(partial: Dashboard, Review queue, Listings done; Chats + admin sections pending)_
+- [x] Dashboard: KPIs per branch (pending, live, sold this month, unread chats, avg review time) — see dashboard refs above
+- [ ] **Review queue**: pending ads for my branch, oldest first; review page shows 11 angle photos side by side, details, owner contact (staff only); actions Approve → `active`, Reject with reason templates, Request re-shoot of specific angles _(partial: done except owner contact (needs a staff profile read))_
+- [ ] **Inspection editor**: checklist form per category (ok/attention/fail + note), **click on SVG diagram panel → add defect code + note**, overall score, summary; saves `inspection_reports` (score syncs to listing); toggles Featured / Certified _(partial: checklist, diagram defects, score, summary, save done; Featured/Certified toggles live on the review page)_
 - [ ] **Branch inbox**: all conversations for my branch, assign advisor, reply as staff, canned replies, link to listing, schedule visit (future `appointments` table)
 - [ ] Listings admin: search all, change status, feature, edit
 - [ ] Admin: CRUD locations, banners, brands/models, promote users to staff
@@ -293,24 +298,24 @@ states.
 
 ## 8. SEO, performance, accessibility
 
-- [ ] SSR for `/`, `/autos`, `/autos/:id-:slug`, `/sucursales`; prerender static pages
-- [ ] Per-page `<title>`, description, OG/Twitter tags; JSON-LD (`AutoDealer` for branches, `Car` + `Offer` for listings, `BreadcrumbList`)
-- [ ] `sitemap.xml` generated from active listings (Edge Function or build step), `robots.txt`
-- [ ] Canonical slugs `/autos/<id>-toyota-hilux-2022`
+- [ ] SSR for `/`, `/autos`, `/autos/:id-:slug`, `/sucursales`; prerender static pages _(partial: done; add prerender for more static pages)_
+- [x] Per-page `<title>`, description, OG/Twitter tags; JSON-LD (`AutoDealer` for branches, `Car` + `Offer` for listings, `BreadcrumbList`)
+- [ ] `sitemap.xml` generated from active listings (Edge Function or build step), `robots.txt` _(partial: Express route from listings + static robots.txt; Supabase source at go-live)_
+- [x] Canonical slugs `/autos/<id>-toyota-hilux-2022`
 - [ ] Core Web Vitals: LCP < 2.5s (hero image priority, `NgOptimizedImage`, AVIF/WebP), `@defer` below-the-fold sections, route-level code splitting
-- [ ] WCAG 2.2 AA: contrast, focus rings, keyboard gallery & diagram, aria labels on icon buttons, reduced-motion support
+- [ ] WCAG 2.2 AA: contrast, focus rings, keyboard gallery & diagram, aria labels on icon buttons, reduced-motion support _(partial: axe suite on every page + AA colour roles; keyboard gallery pending)_
 - [ ] Analytics (Vercel Analytics / GA4) + error tracking (Sentry)
 
 ---
 
 ## 9. Data layer tasks
 
-- [ ] Export the Flutter dummy seed to JSON (`../carmexio/lib/dummy/data/*`) → `src/app/data/dummy/*.json` so both clients show the same demo data
-- [ ] Repositories (interfaces in `domain/`, Supabase + dummy impls): Auth, Listings (search, details, featured, recent, similar, my listings, create/update/status/delete, uploadPhoto), Locations, Brands, Banners, InspectionReports, Favorites, Chat (conversations, realtime messages, send, markRead, getOrCreate by listing/location), Profile, Staff (review queue, approve/reject, save report, admin CRUD)
-- [ ] Mappers use the exact column names in API_NEEDED.md (`image_angles`, `location_id`, `rejection_reason`, `sender_role`, `user_unread_count`…)
-- [ ] Error mapping identical to the app (`PGRST116` → NotFound, `42501` → Auth, network)
+- [x] Export the Flutter dummy seed to JSON (`../carmexio/lib/dummy/data/*`) → `src/app/data/dummy/*.json` so both clients show the same demo data
+- [ ] Repositories (interfaces in `domain/`, Supabase + dummy impls): Auth, Listings (search, details, featured, recent, similar, my listings, create/update/status/delete, uploadPhoto), Locations, Brands, Banners, InspectionReports, Favorites, Chat (conversations, realtime messages, send, markRead, getOrCreate by listing/location), Profile, Staff (review queue, approve/reject, save report, admin CRUD) _(partial: all interfaces + dummy + Supabase impls; Profile avatar + staff chat/admin CRUD pending)_
+- [x] Mappers use the exact column names in API_NEEDED.md (`image_angles`, `location_id`, `rejection_reason`, `sender_role`, `user_unread_count`…)
+- [x] Error mapping identical to the app (`PGRST116` → NotFound, `42501` → Auth, network)
 - [ ] Generate DB types: `supabase gen types typescript` → `src/app/data/supabase.types.ts`
-- [ ] Environment: `src/environments/environment*.ts` (never commit real keys; use Vercel env vars)
+- [ ] Environment: `src/environments/environment*.ts` (never commit real keys; use Vercel env vars) _(partial: environment.ts + APP_CONFIG done; build-time env generation pending)_
 
 ---
 

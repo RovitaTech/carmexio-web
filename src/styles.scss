@@ -88,7 +88,7 @@ textarea {
   }
 
   a {
-    color: var(--cx-primary);
+    color: var(--cx-primary-text);
     font-weight: 700;
   }
 }
@@ -124,8 +124,8 @@ textarea {
   }
 
   &.primary {
-    background: var(--cx-primary);
-    color: #fff;
+    background: var(--cx-primary-fill);
+    color: var(--cx-on-dark);
   }
 
   &.outline {
@@ -135,7 +135,7 @@ textarea {
 
   &.whatsapp {
     background: var(--cx-whatsapp);
-    color: #fff;
+    color: var(--cx-on-whatsapp);
   }
 
   &.block {
@@ -156,9 +156,9 @@ textarea {
   cursor: pointer;
 
   &.active {
-    background: var(--cx-primary);
-    border-color: var(--cx-primary);
-    color: #fff;
+    background: var(--cx-primary-fill);
+    border-color: var(--cx-primary-fill);
+    color: var(--cx-on-dark);
   }
 }
 
@@ -170,16 +170,17 @@ textarea {
   border-radius: var(--cx-radius-pill);
   font-size: 0.72rem;
   font-weight: 700;
-  color: #fff;
-  background: var(--cx-primary);
+  color: var(--cx-on-dark);
+  background: var(--cx-primary-fill);
 
   &.gold {
     background: var(--cx-gold);
+    color: var(--cx-on-gold);
   }
 
   &.soft {
     background: var(--cx-primary-soft);
-    color: var(--cx-primary);
+    color: var(--cx-primary-text);
   }
 }
 
@@ -203,9 +204,10 @@ textarea {
     border-radius: var(--cx-radius-md);
     background: var(--cx-surface);
 
-    &:focus {
+    &:focus-visible {
       border-color: var(--cx-primary);
-      outline: none;
+      outline: 3px solid color-mix(in srgb, var(--cx-primary) 45%, transparent);
+      outline-offset: 1px;
     }
   }
 

@@ -4,15 +4,19 @@ import { SessionStore } from '../../core/auth/session.store';
 import { SeoService } from '../../core/seo/seo.service';
 import { DealerLocation } from '../../domain/models';
 import { CATALOG_REPOSITORY } from '../../domain/repositories';
-import { ChatInboxStore } from '../chat/chat-inbox.store';
+import { ChatInboxStore } from '../../core/state/chat-inbox.store';
+import { ErrorState } from '../../shared/ui/state-views';
 
 @Component({
   selector: 'cx-showrooms-page',
-  imports: [RouterLink],
+  imports: [RouterLink, ErrorState],
   template: `
     <div class="container page">
       <h1>Nuestras sucursales</h1>
       <p>Cada auto se inspecciona y se entrega en una sucursal Carmexio.</p>
+      @if (locations.error()) {
+        <cx-error-state [error]="locations.error()" (retry)="locations.reload()" />
+      }
       <div class="grid">
         @for (l of locations.value() ?? []; track l.id) {
           <article class="card">
@@ -85,7 +89,10 @@ export class ShowroomsPage {
   private readonly inbox = inject(ChatInboxStore);
   private readonly router = inject(Router);
 
-  protected readonly locations = resource({ loader: () => this.catalog.locations() });
+  protected readonly locations = resource({
+    id: 'showrooms:locations',
+    loader: () => this.catalog.locations(),
+  });
 
   constructor() {
     inject(SeoService).set({

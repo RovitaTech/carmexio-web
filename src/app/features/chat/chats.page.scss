@@ -50,7 +50,7 @@
   }
 
   .car {
-    color: var(--cx-primary);
+    color: var(--cx-primary-text);
     font-weight: 700;
   }
 }
@@ -66,8 +66,8 @@
   min-width: 20px;
   padding: 1px 6px;
   border-radius: 99px;
-  background: var(--cx-primary);
-  color: #fff;
+  background: var(--cx-primary-fill);
+  color: var(--cx-on-dark);
   font-size: 0.72rem;
   font-weight: 800;
   text-align: center;
@@ -98,7 +98,7 @@
 
 .car-link {
   margin-left: auto;
-  color: var(--cx-primary);
+  color: var(--cx-primary-text);
   font-weight: 700;
   font-size: 0.85rem;
 }
@@ -134,7 +134,7 @@
 
       p,
       small {
-        color: #fff;
+        color: var(--cx-on-dark);
       }
     }
   }

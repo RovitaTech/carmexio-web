@@ -100,6 +100,8 @@ export class HowItWorksPage {
 })
 export class NotFoundPage {
   constructor() {
-    inject(SeoService).set({ title: 'Página no encontrada' });
+    const seo = inject(SeoService);
+    seo.set({ title: 'Página no encontrada', noindex: true });
+    seo.setStatus(404);
   }
 }

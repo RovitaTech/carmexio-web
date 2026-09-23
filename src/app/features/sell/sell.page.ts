@@ -14,6 +14,7 @@ import {
 import { CATALOG_REPOSITORY, LISTING_REPOSITORY } from '../../domain/repositories';
 import { AngleGrid } from './angle-grid';
 import { FEATURES, SELL_STEPS, SellStore } from './sell.store';
+import { optional, valueOr } from '../../core/utils/resource';
 
 @Component({
   selector: 'cx-sell-page',
@@ -31,8 +32,8 @@ export class SellPage {
   private readonly listings = inject(LISTING_REPOSITORY);
   private readonly router = inject(Router);
 
-  protected readonly brands = resource({ loader: () => this.catalog.brands() });
-  protected readonly locations = resource({ loader: () => this.catalog.locations() });
+  protected readonly brands = resource({ loader: () => optional(this.catalog.brands(), []) });
+  protected readonly locations = resource({ loader: () => optional(this.catalog.locations(), []) });
   private readonly existing = resource({
     params: () => this.id(),
     loader: ({ params }) => this.listings.byId(params),
@@ -51,16 +52,16 @@ export class SellPage {
   protected readonly formatPrice = formatPrice;
 
   protected readonly models = computed(
-    () => this.brands.value()?.find((b) => b.name === this.store.brand())?.models ?? [],
+    () => valueOr(this.brands, undefined)?.find((b) => b.name === this.store.brand())?.models ?? [],
   );
   protected readonly branch = computed(() =>
-    this.locations.value()?.find((l) => l.id === this.store.locationId()),
+    valueOr(this.locations, undefined)?.find((l) => l.id === this.store.locationId()),
   );
 
   constructor() {
-    inject(SeoService).set({ title: 'Vende tu auto' });
+    inject(SeoService).set({ title: 'Vende tu auto', noindex: true });
     effect(() => {
-      const car = this.existing.value();
+      const car = valueOr(this.existing, undefined);
       if (car) this.store.load(car);
     });
   }

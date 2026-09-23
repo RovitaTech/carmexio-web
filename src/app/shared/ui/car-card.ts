@@ -2,7 +2,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { formatKm, formatPrice, carSlug } from '../../core/utils/format';
 import { BODY_LABELS, Car, FUEL_LABELS } from '../../domain/models';
-import { FavoritesStore } from '../../features/favorites/favorites.store';
+import { FavoritesStore } from '../../core/state/favorites.store';
 
 @Component({
   selector: 'cx-car-card',
@@ -83,7 +83,7 @@ import { FavoritesStore } from '../../features/favorites/favorites.store';
       left: 12px;
       bottom: 10px;
       z-index: 1;
-      color: #fff;
+      color: var(--cx-on-dark);
       font-size: 0.75rem;
       font-weight: 700;
     }
@@ -96,9 +96,9 @@ import { FavoritesStore } from '../../features/favorites/favorites.store';
       height: 38px;
       border: 0;
       border-radius: 50%;
-      background: rgb(0 0 0 / 35%);
+      background: var(--cx-photo-overlay);
       backdrop-filter: blur(10px);
-      color: #fff;
+      color: var(--cx-on-dark);
       font-size: 1.1rem;
       cursor: pointer;
     }
@@ -118,7 +118,7 @@ import { FavoritesStore } from '../../features/favorites/favorites.store';
     }
     strong {
       margin-top: 6px;
-      color: var(--cx-primary);
+      color: var(--cx-primary-text);
       font-size: 1.15rem;
       font-weight: 800;
     }

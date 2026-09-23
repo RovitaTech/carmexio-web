@@ -1,8 +1,11 @@
+<cx-route-progress />
 <a class="skip" href="#main">Saltar al contenido</a>
 
 <header class="header">
   <div class="container bar">
-    <a routerLink="/" aria-label="Carmexio inicio"><cx-logo [size]="28" /></a>
+    <a routerLink="/" aria-label="Carmexio inicio"
+      ><cx-logo [size]="28" [collapseOnPhone]="true"
+    /></a>
     <nav class="nav" aria-label="Principal">
       <a routerLink="/autos" routerLinkActive="active">Comprar</a>
       <a routerLink="/vender" routerLinkActive="active">Vender</a>
@@ -50,7 +53,7 @@
       </label>
     </div>
     <div>
-      <h4>Sucursales</h4>
+      <h2>Sucursales</h2>
       @for (l of locations.value() ?? []; track l.id) {
         <p>
           <strong>{{ l.name }}</strong
@@ -59,7 +62,7 @@
       }
     </div>
     <div>
-      <h4>Carmexio</h4>
+      <h2>Carmexio</h2>
       <a routerLink="/como-funciona">Cómo funciona</a>
       <a routerLink="/vender">Vende tu auto</a>
       <a href="https://www.instagram.com/carmexio.mx/" target="_blank" rel="noopener">Instagram</a>
@@ -77,3 +80,5 @@
   <a routerLink="/mensajes" routerLinkActive="active">💬<span>Chats</span></a>
   <a routerLink="/cuenta" routerLinkActive="active">☺<span>Cuenta</span></a>
 </nav>
+
+<cx-toast-outlet />

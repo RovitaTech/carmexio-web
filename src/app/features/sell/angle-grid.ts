@@ -126,7 +126,7 @@ import { SellStore } from './sell.store';
       place-items: center;
       height: 100%;
       font-size: 1.8rem;
-      color: var(--cx-primary);
+      color: var(--cx-primary-text);
     }
     .empty small {
       font-size: 0.75rem;
@@ -137,12 +137,12 @@ import { SellStore } from './sell.store';
       inset: 0;
       display: grid;
       place-items: center;
-      background: rgb(0 0 0 / 40%);
+      background: var(--cx-photo-overlay);
     }
     .spinner {
       width: 28px;
       height: 28px;
-      border: 3px solid #fff;
+      border: 3px solid var(--cx-on-dark);
       border-right-color: transparent;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -161,8 +161,8 @@ import { SellStore } from './sell.store';
       display: grid;
       place-items: center;
       border-radius: 50%;
-      background: var(--cx-success);
-      color: #fff;
+      background: var(--cx-success-fill);
+      color: var(--cx-on-dark);
       font-weight: 800;
     }
     .retry {
@@ -172,8 +172,8 @@ import { SellStore } from './sell.store';
       width: max-content;
       padding: 4px 10px;
       border-radius: 99px;
-      background: var(--cx-error);
-      color: #fff;
+      background: var(--cx-error-fill);
+      color: var(--cx-on-dark);
       font-size: 0.75rem;
       font-weight: 700;
     }
@@ -190,7 +190,7 @@ import { SellStore } from './sell.store';
       color: var(--cx-text-3);
     }
     .retake {
-      color: var(--cx-primary);
+      color: var(--cx-primary-text);
       font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;

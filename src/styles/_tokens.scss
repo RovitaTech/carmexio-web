@@ -10,6 +10,18 @@
   --cx-error: #f04438;
   --cx-gold: #ffb020;
   --cx-whatsapp: #25d366;
+  // Accessible roles of the brand blue (WCAG AA 4.5:1): text on surfaces, and
+  // fills behind white text. Plain --cx-primary stays for borders, icons, focus.
+  --cx-primary-text: #0066d6;
+  --cx-primary-fill: #0066d6;
+  --cx-success-fill: #067647;
+  --cx-error-fill: #d92d20;
+  --cx-on-whatsapp: #0a0f1c;
+  --cx-on-gold: #0a0f1c;
+  // Status colors as *text* (≥ 4.5:1 on surface); the plain ones are for fills/icons.
+  --cx-success-text: #067647;
+  --cx-warning-text: #b54708;
+  --cx-error-text: #b42318;
 
   --cx-bg: #f5f7fb;
   --cx-surface: #ffffff;
@@ -24,6 +36,15 @@
   --cx-gradient-primary: linear-gradient(135deg, #0085fe, #3d5afe);
   --cx-gradient-hero: linear-gradient(135deg, #0a0f1c, #0e2447);
   --cx-scrim: linear-gradient(180deg, transparent, rgb(0 0 0 / 70%));
+  --cx-banner-scrim: linear-gradient(90deg, rgb(10 15 28 / 92%), rgb(10 15 28 / 30%));
+
+  // Content on navy / photos (same in light and dark themes).
+  --cx-on-dark: #ffffff;
+  --cx-on-dark-2: rgb(255 255 255 / 78%);
+  --cx-glass: rgb(255 255 255 / 8%);
+  --cx-glass-border: rgb(255 255 255 / 18%);
+  --cx-photo-overlay: rgb(0 0 0 / 40%);
+  --cx-elevated-shadow: 0 12px 32px rgb(10 15 28 / 25%);
 
   --cx-radius-sm: 10px;
   --cx-radius-md: 14px;
@@ -47,6 +68,10 @@
   --cx-text-2: #a4aec2;
   --cx-text-3: #6b7690;
   --cx-primary-soft: #0f2a4d;
+  --cx-primary-text: #6cb6ff;
+  --cx-success-text: #47cd89;
+  --cx-warning-text: #fdb022;
+  --cx-error-text: #f97066;
   --cx-shadow: 0 8px 24px rgb(0 0 0 / 35%);
   color-scheme: dark;
 }

@@ -1,7 +1,7 @@
 // DELETE WHEN LIVE — in-memory auth, favorites and dealer chat.
-import { AppError, AppUser, ChatMessage, Conversation } from '../../domain/models';
+import { AppError, AppUser, ChatMessage, Conversation, ProfileChanges } from '../../domain/models';
 import { AuthRepository, ChatRepository, FavoritesRepository } from '../../domain/repositories';
-import { Row, toCar, toConversation, toMessage } from '../mappers';
+import { Row, toCar, toConversation, toMessage, toUser } from '../mappers';
 import { DummyDb, requireUser } from './dummy-db';
 
 export class DummyAuthRepository implements AuthRepository {
@@ -9,17 +9,7 @@ export class DummyAuthRepository implements AuthRepository {
 
   private user(id: string | null): AppUser | null {
     const p = this.db.profiles.find((r) => r['id'] === id);
-    if (!p) return null;
-    return {
-      id: p['id'],
-      email: p['email'] ?? '',
-      fullName: p['full_name'],
-      phone: p['phone'] ?? undefined,
-      city: p['city'] ?? undefined,
-      avatarUrl: p['avatar_url'] ?? undefined,
-      role: p['role'] ?? 'user',
-      locationId: p['location_id'] ?? undefined,
-    };
+    return p ? toUser(p) : null;
   }
 
   async current() {
@@ -66,7 +56,7 @@ export class DummyAuthRepository implements AuthRepository {
     await this.db.delay();
   }
 
-  async updateProfile(changes: Partial<Pick<AppUser, 'fullName' | 'phone' | 'city'>>) {
+  async updateProfile(changes: ProfileChanges) {
     await this.db.delay();
     const id = requireUser(this.db);
     const row = this.db.profiles.find((p) => p['id'] === id)!;
@@ -74,6 +64,11 @@ export class DummyAuthRepository implements AuthRepository {
     if (changes.phone !== undefined) row['phone'] = changes.phone;
     if (changes.city !== undefined) row['city'] = changes.city;
     return this.user(id)!;
+  }
+
+  /** In-memory sessions never change behind the app's back. */
+  onChange() {
+    return () => undefined;
   }
 }
 

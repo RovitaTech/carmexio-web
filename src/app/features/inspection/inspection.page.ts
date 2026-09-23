@@ -13,6 +13,7 @@ import {
 import { CATALOG_REPOSITORY, LISTING_REPOSITORY } from '../../domain/repositories';
 import { BodyDiagram, PANEL_LAYOUT, SEVERITY_COLOR } from '../../shared/ui/body-diagram';
 import { EmptyState, ScoreRing, Skeleton } from '../../shared/ui/state-views';
+import { optional } from '../../core/utils/resource';
 
 @Component({
   selector: 'cx-inspection-page',
@@ -27,10 +28,14 @@ export class InspectionPage {
   private readonly catalog = inject(CATALOG_REPOSITORY);
 
   protected readonly report = resource({
+    id: 'inspection:report',
     params: () => idFromSlug(this.slug()),
     loader: ({ params }) => this.listings.inspection(params),
   });
-  protected readonly locations = resource({ loader: () => this.catalog.locations() });
+  protected readonly locations = resource({
+    id: 'inspection:locations',
+    loader: () => optional(this.catalog.locations(), []),
+  });
 
   protected readonly showMinor = signal(true);
   protected readonly issuesOnly = signal(false);

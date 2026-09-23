@@ -16,32 +16,73 @@ Guadalajara, Querétaro, Tijuana). Public marketplace + staff portal.
 - Inspection report: category checklists (ok/attention/fail → %) + body diagram (15 panels, codes P A1 A2 A3 U1 B2 S1 •).
 - UI language **es-MX**; prices MXN (`$459,900`).
 
-## Structure
+## Architecture
 
 ```
 src/app/
-  domain/        models.ts (entities, enums, labels), repositories.ts (interfaces + InjectionTokens)
-  data/          mappers.ts (snake_case rows ↔ entities), providers.ts (provideDummyData)
+  domain/        framework-free: models.ts (entities, enums, labels, AppError),
+                 repositories.ts (interfaces + InjectionTokens), inspection-template.ts
+  data/          mappers.ts (snake_case rows ↔ entities), providers.ts
+                 (provideDummyData / provideSupabaseData — the ONE switch, in app.config.ts)
+    supabase/    client factory, *Repository impls, error mapping, listing-query builder
     dummy/       DELETE WHEN LIVE — DummyDb seeded from seed.json (exported from the Flutter app)
-  core/          auth (SessionStore, guards), seo, theme, utils/format
-  shared/ui/     car-card, logo, state views, score ring, body-diagram (SVG)
-  layout/        shell (header, mobile tab bar, footer)
+  core/          config (APP_CONFIG), auth (SessionStore, guards), state (FavoritesStore,
+                 ChatInboxStore — app-wide), seo (SeoService: meta/canonical/JSON-LD/status),
+                 theme, ui (ToastStore), utils (format, errors, resource helpers)
+  shared/ui/     feature-agnostic components: car-card, logo, state views (empty/error/
+                 skeleton/score ring), status-pill, toast-outlet, body-diagram (SVG)
+  layout/        shell (header, mobile tab bar, footer), route progress bar
   features/      home, search, car-details, inspection, showrooms, auth, sell, my-ads,
-                 favorites, chat, profile, staff, static
+                 favorites, chat, profile, staff (own routes + StaffScope), static
+src/server/      Express-only code (sitemap.xml); src/server.ts wires it
 ```
 
-Pattern: page component (view) + signal store / `resource()` (ViewModel) +
-repositories injected by token. Swap dummy → Supabase in `app.config.ts`.
+Dependency direction (enforced by `no-restricted-imports` in `eslint.config.js`):
+`features → shared/core/domain`, `layout → shared/core/domain`, `shared → core/domain`,
+`core → domain`, `data → domain/core`. Features never import `data/` or another feature;
+only `data/supabase` imports `@supabase/*`; `data/dummy` stays deletable on its own.
+
+Patterns:
+- Page component (view) + signal store / `resource()` (ViewModel) + repositories injected
+  by token. Cross-feature state lives in `core/state`.
+- Repositories reject only with `AppError` (es-MX message + kind). Show it with
+  `ToastStore.error(e)` for actions and `<cx-error-state>` for failed primary content.
+- `resource().value()` **throws** in error state: read with `valueOr(res, fallback)` in code,
+  guard with `@if (res.error())` first in templates. Secondary sections load through
+  `optional(promise, [])` so their failure never breaks the page.
+- Public SSR resources get an `id` (e.g. `'home:featured'`) so hydration reuses the server
+  data via TransferState. Never set `id` on user-specific data.
+- Reads have no side effects: counters (`recordView`) run in the browser only.
+- Pages call `SeoService.set()` (title, description, canonical, `noindex` for private
+  pages) and `setStatus(404)` for missing content.
+- Providers are factories so each SSR request gets its own instances.
 
 ## Rules
 
 - Brand tokens only (`src/styles/_tokens.scss`: `--cx-*`), font Urbanist, logo in `public/images`.
+  Text/fill colours must use the AA roles: `--cx-primary-text`, `--cx-primary-fill`,
+  `--cx-{success,warning,error}-text`, `--cx-{success,error}-fill`; plain `--cx-primary` is
+  for borders, icons and focus rings only.
 - Files < 400 lines; split components instead.
 - SSR-safe: no `window`/`localStorage` at module or constructor level (guard with `isPlatformBrowser`).
 - Render modes live in `app.routes.server.ts` (public = SSR/prerender, signed-in = client).
-- Before pushing: `npm run verify` (tests + production build). Enable the hook once: `git config core.hooksPath .githooks`.
+- Layout must not scroll horizontally at 360px: grid tracks that hold scrollers use `minmax(0, 1fr)`.
+- `src/app/a11y.spec.ts` runs axe on every page — add new routes to it.
+- Before pushing: `npm run verify` (lint + tests + production build). Enable the hook once:
+  `git config core.hooksPath .githooks`.
 - Refresh demo data from the app: `cd ../carmexio && dart run tool/export_dummy_seed.dart ../carmexio-web/src/app/data/dummy/seed.json`.
 - Demo logins: `demo@carmexio.mx` / `carmexio123` (user), `staff@carmexio.mx` / `carmexio123` (admin → /staff).
+- Local production server: `NG_ALLOWED_HOSTS=localhost npm run serve:ssr:carmexio-web`
+  (production hosts are listed in `angular.json` → `security.allowedHosts`).
+
+## Going live (Supabase)
+
+1. Fill `src/environments/environment.ts` (`supabase.url`, `supabase.publishableKey`) — or
+   generate it at build time from host env vars. Publishable key only, never the secret key.
+2. `app.config.ts`: `provideDummyData()` → `provideSupabaseData()`.
+3. `src/server.ts`: sitemap source → `SupabaseListingRepository` (marked `DUMMY`).
+4. Stop shipping `src/app/data/dummy/`: specs use it as an in-memory fake, so either keep it
+   test-only (no imports from app code) or replace it with slimmer fakes, then delete it.
 
 ---
 

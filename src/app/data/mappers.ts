@@ -1,6 +1,7 @@
 // Row (snake_case, as in ../carmexio/API_NEEDED.md) → domain entity.
 // Shared by the dummy and Supabase repositories.
 import {
+  AppUser,
   Brand,
   BodyDefect,
   Car,
@@ -14,6 +15,8 @@ import {
   PromoBanner,
 } from '../domain/models';
 
+// Untyped DB rows stop here: mappers are the only place that reads them.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Row = Record<string, any>;
 
 const ANGLE_VALUES = new Set<string>(PHOTO_ANGLES.map((a) => a.value));
@@ -130,6 +133,32 @@ export function toMessage(r: Row): ChatMessage {
     body: r['body'],
     createdAt: r['created_at'],
     readAt: r['read_at'] ?? undefined,
+  };
+}
+
+export function inspectionToRow(report: InspectionReport): Row {
+  return {
+    listing_id: report.listingId,
+    location_id: report.locationId,
+    overall_score: report.overallScore,
+    summary: report.summary ?? null,
+    inspector_name: report.inspectorName,
+    inspected_at: report.inspectedAt,
+    categories: report.categories,
+    body_defects: report.bodyDefects,
+  };
+}
+
+export function toUser(r: Row): AppUser {
+  return {
+    id: r['id'],
+    email: r['email'] ?? '',
+    fullName: r['full_name'] ?? '',
+    phone: r['phone'] ?? undefined,
+    city: r['city'] ?? undefined,
+    avatarUrl: r['avatar_url'] ?? undefined,
+    role: r['role'] ?? 'user',
+    locationId: r['location_id'] ?? undefined,
   };
 }
 

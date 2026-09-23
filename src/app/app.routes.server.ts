@@ -22,5 +22,6 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'mensajes/:id', renderMode: RenderMode.Client },
   { path: 'cuenta', renderMode: RenderMode.Client },
   { path: 'staff', renderMode: RenderMode.Client },
+  { path: 'staff/**', renderMode: RenderMode.Client },
   { path: '**', renderMode: RenderMode.Server },
 ];

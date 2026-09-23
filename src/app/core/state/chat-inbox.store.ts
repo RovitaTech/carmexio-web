@@ -1,5 +1,5 @@
 import { Service, computed, effect, inject, signal } from '@angular/core';
-import { SessionStore } from '../../core/auth/session.store';
+import { SessionStore } from '../auth/session.store';
 import { Conversation } from '../../domain/models';
 import { CHAT_REPOSITORY } from '../../domain/repositories';
 
@@ -25,6 +25,8 @@ export class ChatInboxStore {
     this.loading.set(true);
     try {
       this.conversations.set(await this.repo.conversations());
+    } catch {
+      // Badge/inbox keep the last good list; the chats page shows its own error.
     } finally {
       this.loading.set(false);
     }

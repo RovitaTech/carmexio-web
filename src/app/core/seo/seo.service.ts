@@ -1,38 +1,103 @@
-import { DOCUMENT, Service, inject } from '@angular/core';
+import { DOCUMENT, RESPONSE_INIT, Service, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { APP_CONFIG } from '../config/app-config';
 
 export interface SeoData {
   title: string;
   description?: string;
   image?: string;
-  /** JSON-LD object for rich results (Car, AutoDealer…). */
-  jsonLd?: object;
+  /** Canonical path; defaults to the current route without its query string. */
+  path?: string;
+  /** Private or thin pages (account, auth, chats, staff). */
+  noindex?: boolean;
+  /** JSON-LD object(s) for rich results (Car, AutoDealer, BreadcrumbList…). */
+  jsonLd?: object | object[];
 }
 
-/** Per-page title, meta, Open Graph and JSON-LD (rendered on the server). */
+const SITE_NAME = 'Carmexio';
+const DEFAULT_IMAGE = '/icon-512.png';
+
+/**
+ * Per-page title, meta, canonical, Open Graph / Twitter and JSON-LD. Runs on
+ * the server, so crawlers get it in the HTML. Every call replaces everything
+ * the previous page set — nothing leaks between routes.
+ */
 @Service()
 export class SeoService {
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
   private readonly document = inject(DOCUMENT);
+  private readonly router = inject(Router);
+  private readonly siteUrl = inject(APP_CONFIG).siteUrl;
+  /** Only present while rendering on the server. */
+  private readonly response = inject(RESPONSE_INIT, { optional: true });
 
   set(data: SeoData): void {
-    const title = `${data.title} · Carmexio`;
-    this.title.setTitle(title);
-    this.meta.updateTag({ property: 'og:title', content: title });
-    if (data.description) {
-      this.meta.updateTag({ name: 'description', content: data.description });
-      this.meta.updateTag({ property: 'og:description', content: data.description });
-    }
-    if (data.image) this.meta.updateTag({ property: 'og:image', content: data.image });
+    const title = `${data.title} · ${SITE_NAME}`;
+    const url = this.absolute(data.path ?? this.currentPath());
+    const image = this.absolute(data.image ?? DEFAULT_IMAGE);
 
-    this.document.getElementById('cx-jsonld')?.remove();
-    if (data.jsonLd) {
-      const script = this.document.createElement('script');
-      script.id = 'cx-jsonld';
-      script.type = 'application/ld+json';
-      script.textContent = JSON.stringify(data.jsonLd);
-      this.document.head.appendChild(script);
+    this.title.setTitle(title);
+    this.setMeta('name', 'robots', data.noindex ? 'noindex, nofollow' : 'index, follow');
+    this.setMeta('name', 'description', data.description);
+    this.setMeta('property', 'og:site_name', SITE_NAME);
+    this.setMeta('property', 'og:locale', 'es_MX');
+    this.setMeta('property', 'og:type', 'website');
+    this.setMeta('property', 'og:title', title);
+    this.setMeta('property', 'og:description', data.description);
+    this.setMeta('property', 'og:url', url);
+    this.setMeta('property', 'og:image', image);
+    this.setMeta('name', 'twitter:card', 'summary_large_image');
+    this.setCanonical(data.noindex ? undefined : url);
+    this.setJsonLd(data.jsonLd);
+  }
+
+  /** HTTP status of the server-rendered response (e.g. 404 for a missing car). */
+  setStatus(status: number): void {
+    if (this.response) this.response.status = status;
+  }
+
+  /** `https://carmexio.mx` + path, unless the value is already absolute. */
+  absolute(pathOrUrl: string): string {
+    return /^https?:\/\//.test(pathOrUrl) ? pathOrUrl : `${this.siteUrl}${pathOrUrl}`;
+  }
+
+  /** Pages set SEO while their navigation is still in flight, so prefer its target URL. */
+  private currentPath(): string {
+    const tree = this.router.currentNavigation()?.finalUrl ?? this.router.parseUrl(this.router.url);
+    const path = this.router.serializeUrl(tree).split(/[?#]/)[0];
+    return path === '/' ? '' : path;
+  }
+
+  private setMeta(attr: 'name' | 'property', key: string, content: string | undefined): void {
+    const selector = `${attr}="${key}"`;
+    if (content) this.meta.updateTag({ [attr]: key, content }, selector);
+    else this.meta.removeTag(selector);
+  }
+
+  private setCanonical(url: string | undefined): void {
+    let link = this.document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!url) {
+      link?.remove();
+      return;
     }
+    if (!link) {
+      link = this.document.createElement('link');
+      link.rel = 'canonical';
+      this.document.head.appendChild(link);
+    }
+    link.href = url;
+  }
+
+  private setJsonLd(jsonLd: SeoData['jsonLd']): void {
+    this.document.getElementById('cx-jsonld')?.remove();
+    if (!jsonLd) return;
+    const script = this.document.createElement('script');
+    script.id = 'cx-jsonld';
+    script.type = 'application/ld+json';
+    // `<` escaped so listing text can never close the script tag.
+    script.textContent = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
+    this.document.head.appendChild(script);
   }
 }

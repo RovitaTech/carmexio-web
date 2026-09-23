@@ -26,10 +26,10 @@ import { Logo } from '../../shared/ui/logo';
       align-content: center;
       padding: 40px 24px;
       background: var(--cx-gradient-hero);
-      color: #fff;
+      color: var(--cx-on-dark);
     }
     .hero p {
-      color: rgb(255 255 255 / 75%);
+      color: var(--cx-on-dark-2);
       max-width: 420px;
     }
     h1 {

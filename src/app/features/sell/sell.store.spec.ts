@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { PHOTO_ANGLES } from '../../domain/models';
-import { DummyDb } from '../../data/dummy/dummy-db';
 import { provideDummyData } from '../../data/providers';
 import { SellStore } from './sell.store';
 
@@ -8,7 +7,7 @@ describe('SellStore', () => {
   let store: SellStore;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [provideDummyData(new DummyDb(0)), SellStore] });
+    TestBed.configureTestingModule({ providers: [provideDummyData({ latencyMs: 0 }), SellStore] });
     store = TestBed.inject(SellStore);
   });
 

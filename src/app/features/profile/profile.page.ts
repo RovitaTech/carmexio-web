@@ -98,10 +98,10 @@ import { ThemeMode, ThemeService } from '../../core/theme/theme.service';
       padding: 24px;
       border-radius: var(--cx-radius-xl);
       background: var(--cx-gradient-hero);
-      color: #fff;
+      color: var(--cx-on-dark);
     }
     .hero p {
-      color: rgb(255 255 255 / 75%);
+      color: var(--cx-on-dark-2);
     }
     .avatar {
       display: grid;
@@ -133,8 +133,8 @@ import { ThemeMode, ThemeService } from '../../core/theme/theme.service';
       margin-top: 14px;
     }
     .light {
-      color: #fff;
-      border-color: rgb(255 255 255 / 40%);
+      color: var(--cx-on-dark);
+      border-color: var(--cx-glass-border);
     }
     .ok {
       color: var(--cx-success);
@@ -156,7 +156,7 @@ export class ProfilePage {
   ];
 
   constructor() {
-    inject(SeoService).set({ title: 'Mi cuenta' });
+    inject(SeoService).set({ title: 'Mi cuenta', noindex: true });
   }
 
   protected async save(fullName: string, phone: string, city: string): Promise<void> {

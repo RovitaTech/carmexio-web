@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import {
+import type {
   AppUser,
   Brand,
   Car,
@@ -9,9 +9,13 @@ import {
   DealerLocation,
   InspectionReport,
   ListingDraft,
-  ListingStatus,
+  ListingFlags,
+  OwnerStatusChange,
   Page,
+  ProfileChanges,
   PromoBanner,
+  StaffListingFilter,
+  StaffStats,
 } from './models';
 
 /**
@@ -29,16 +33,17 @@ export interface ListingRepository {
   recent(limit?: number): Promise<Car[]>;
   search(filter: CarFilter, page: number, pageSize: number): Promise<Page<Car>>;
   byId(id: string): Promise<Car>;
+  /** Counts a real visitor view (browser only — never on server renders). */
+  recordView(id: string): Promise<void>;
   similar(car: Car, limit?: number): Promise<Car[]>;
   inspection(listingId: string): Promise<InspectionReport | null>;
   mine(): Promise<Car[]>;
   uploadPhoto(file: Blob, fileName: string): Promise<string>;
   create(draft: ListingDraft): Promise<Car>;
   update(id: string, draft: ListingDraft): Promise<Car>;
-  setStatus(id: string, status: ListingStatus, reason?: string): Promise<void>;
+  /** Owner actions only: mark sold, or relist (→ back to review). */
+  setStatus(id: string, status: OwnerStatusChange): Promise<void>;
   remove(id: string): Promise<void>;
-  /** Staff: pending ads for a branch (all branches for admins). */
-  reviewQueue(locationId?: string): Promise<Car[]>;
 }
 
 export interface AuthRepository {
@@ -47,7 +52,9 @@ export interface AuthRepository {
   signUp(fullName: string, email: string, phone: string, password: string): Promise<AppUser | null>;
   signOut(): Promise<void>;
   resetPassword(email: string): Promise<void>;
-  updateProfile(changes: Partial<Pick<AppUser, 'fullName' | 'phone' | 'city'>>): Promise<AppUser>;
+  updateProfile(changes: ProfileChanges): Promise<AppUser>;
+  /** Session changes from outside the app (token expiry, other tabs). Returns unsubscribe. */
+  onChange(listener: (user: AppUser | null) => void): () => void;
 }
 
 export interface FavoritesRepository {
@@ -68,8 +75,22 @@ export interface ChatRepository {
   markRead(conversationId: string): Promise<void>;
 }
 
+/** Carmexio staff operations (RLS: branch staff, or admins for every branch). */
+export interface StaffRepository {
+  /** Pending ads, oldest first; all branches when `locationId` is omitted. */
+  reviewQueue(locationId?: string): Promise<Car[]>;
+  listings(filter: StaffListingFilter): Promise<Car[]>;
+  approve(listingId: string): Promise<void>;
+  reject(listingId: string, reason: string): Promise<void>;
+  setFlags(listingId: string, flags: ListingFlags): Promise<void>;
+  /** Upserts the report; the DB mirrors `overall_score` onto the listing. */
+  saveInspection(report: InspectionReport): Promise<void>;
+  stats(locationId?: string): Promise<StaffStats>;
+}
+
 export const CATALOG_REPOSITORY = new InjectionToken<CatalogRepository>('CatalogRepository');
 export const LISTING_REPOSITORY = new InjectionToken<ListingRepository>('ListingRepository');
 export const AUTH_REPOSITORY = new InjectionToken<AuthRepository>('AuthRepository');
 export const FAVORITES_REPOSITORY = new InjectionToken<FavoritesRepository>('FavoritesRepository');
 export const CHAT_REPOSITORY = new InjectionToken<ChatRepository>('ChatRepository');
+export const STAFF_REPOSITORY = new InjectionToken<StaffRepository>('StaffRepository');

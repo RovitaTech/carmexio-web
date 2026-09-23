@@ -29,7 +29,7 @@ h1 {
   }
 
   .active {
-    color: var(--cx-primary);
+    color: var(--cx-primary-text);
 
     span {
       background: var(--cx-primary);
@@ -84,7 +84,7 @@ fieldset {
 }
 
 .price {
-  color: var(--cx-primary);
+  color: var(--cx-primary-text);
   font-size: 1.3rem;
   font-weight: 800;
 }

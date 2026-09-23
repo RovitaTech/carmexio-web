@@ -2,9 +2,12 @@ import { Component, computed, inject, input, resource, signal } from '@angular/c
 import { Router, RouterLink } from '@angular/router';
 import { SeoService } from '../../core/seo/seo.service';
 import { carSlug, formatPrice } from '../../core/utils/format';
-import { Car, ListingStatus, STATUS_OWNER_LABELS } from '../../domain/models';
+import { ToastStore } from '../../core/ui/toast.store';
+import { Car, ListingStatus, OwnerStatusChange } from '../../domain/models';
 import { LISTING_REPOSITORY } from '../../domain/repositories';
-import { EmptyState, Skeleton } from '../../shared/ui/state-views';
+import { EmptyState, ErrorState, Skeleton } from '../../shared/ui/state-views';
+import { StatusPill } from '../../shared/ui/status-pill';
+import { valueOr } from '../../core/utils/resource';
 
 type Tab = 'live' | 'review' | 'sold';
 const TABS: { id: Tab; label: string; statuses: ListingStatus[] }[] = [
@@ -15,7 +18,7 @@ const TABS: { id: Tab; label: string; statuses: ListingStatus[] }[] = [
 
 @Component({
   selector: 'cx-my-ads-page',
-  imports: [RouterLink, EmptyState, Skeleton],
+  imports: [RouterLink, EmptyState, ErrorState, Skeleton, StatusPill],
   template: `
     <div class="container page">
       <header>
@@ -42,16 +45,22 @@ const TABS: { id: Tab; label: string; statuses: ListingStatus[] }[] = [
           </button>
         }
       </div>
-      @if (ads.isLoading()) {
+      @if (ads.error()) {
+        <cx-error-state [error]="ads.error()" (retry)="ads.reload()" />
+      } @else if (ads.isLoading()) {
         <cx-skeleton height="140px" radius="20px" />
       } @else {
         @for (car of visible(); track car.id) {
           <article class="card ad">
-            <a [routerLink]="['/autos', slug(car)]"><img [src]="car.images[0]" alt="" /></a>
+            <a [routerLink]="['/autos', slug(car)]"
+                ><img
+                  [src]="car.images[0]"
+                  [alt]="'Ver anuncio: ' + car.brand + ' ' + car.model + ' ' + car.year"
+              /></a>
             <div class="info">
               <h2>{{ car.brand }} {{ car.model }} {{ car.year }}</h2>
               <strong>{{ formatPrice(car.price) }}</strong>
-              <span class="pill" [class]="car.status">{{ labels[car.status] }}</span>
+              <cx-status-pill [status]="car.status" audience="owner" />
               @if (car.status === 'pending') {
                 <p>
                   Carmexio está revisando tus fotos. Te escribiremos en Mensajes para la inspección.
@@ -143,20 +152,8 @@ const TABS: { id: Tab; label: string; statuses: ListingStatus[] }[] = [
       font-size: 1.05rem;
     }
     strong {
-      color: var(--cx-primary);
+      color: var(--cx-primary-text);
       font-weight: 800;
-    }
-    .pill.pending {
-      background: var(--cx-warning);
-    }
-    .pill.rejected {
-      background: var(--cx-error);
-    }
-    .pill.sold {
-      background: var(--cx-navy-soft);
-    }
-    .pill.active {
-      background: var(--cx-success);
     }
     .reason {
       color: var(--cx-error);
@@ -181,36 +178,47 @@ export class MyAdsPage {
 
   private readonly repo = inject(LISTING_REPOSITORY);
   private readonly router = inject(Router);
+  private readonly toast = inject(ToastStore);
 
   protected readonly ads = resource({ loader: () => this.repo.mine() });
   protected readonly tab = signal<Tab>('live');
   protected readonly tabs = TABS;
-  protected readonly labels = STATUS_OWNER_LABELS;
   protected readonly formatPrice = formatPrice;
   protected readonly slug = carSlug;
 
   protected readonly visible = computed(() => {
     const statuses = TABS.find((t) => t.id === this.tab())!.statuses;
-    return (this.ads.value() ?? []).filter((c) => statuses.includes(c.status));
+    return valueOr(this.ads, []).filter((c) => statuses.includes(c.status));
   });
 
   constructor() {
-    inject(SeoService).set({ title: 'Mis anuncios' });
+    inject(SeoService).set({ title: 'Mis anuncios', noindex: true });
   }
 
   protected count(statuses: ListingStatus[]): number {
-    return (this.ads.value() ?? []).filter((c) => statuses.includes(c.status)).length;
+    return valueOr(this.ads, []).filter((c) => statuses.includes(c.status)).length;
   }
 
-  protected async setStatus(car: Car, status: ListingStatus): Promise<void> {
-    await this.repo.setStatus(car.id, status);
-    this.ads.reload();
+  protected setStatus(car: Car, status: OwnerStatusChange): Promise<void> {
+    const done = status === 'sold' ? 'Marcado como vendido.' : 'Enviado a revisión de Carmexio.';
+    return this.act(() => this.repo.setStatus(car.id, status), done);
   }
 
-  protected async remove(car: Car): Promise<void> {
-    if (!confirm(`¿Eliminar ${car.brand} ${car.model}? No se puede deshacer.`)) return;
-    await this.repo.remove(car.id);
-    this.ads.reload();
+  protected remove(car: Car): Promise<void> {
+    if (!confirm(`¿Eliminar ${car.brand} ${car.model}? No se puede deshacer.`)) {
+      return Promise.resolve();
+    }
+    return this.act(() => this.repo.remove(car.id), 'Anuncio eliminado.');
+  }
+
+  private async act(action: () => Promise<void>, done: string): Promise<void> {
+    try {
+      await action();
+      this.toast.success(done);
+      this.ads.reload();
+    } catch (e) {
+      this.toast.error(e);
+    }
   }
 
   protected sell(): void {

@@ -1,4 +1,5 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
+import { errorMessage } from '../../core/utils/errors';
 
 @Component({
   selector: 'cx-empty-state',
@@ -25,7 +26,7 @@ import { Component, input, output } from '@angular/core';
       height: 88px;
       border-radius: 50%;
       background: var(--cx-primary-soft);
-      color: var(--cx-primary);
+      color: var(--cx-primary-text);
       font-size: 2.2rem;
     }
     p {
@@ -42,6 +43,29 @@ export class EmptyState {
   readonly message = input('');
   readonly actionLabel = input<string>();
   readonly action = output<void>();
+}
+
+/** Failed primary content: the repository's message plus a retry button. */
+@Component({
+  selector: 'cx-error-state',
+  imports: [EmptyState],
+  template: `
+    <cx-empty-state
+      icon="⚠️"
+      [title]="title()"
+      [message]="message()"
+      actionLabel="Reintentar"
+      (action)="retry.emit()"
+    />
+  `,
+})
+export class ErrorState {
+  readonly error = input<unknown>();
+  readonly title = input('No pudimos cargar esta sección');
+  readonly retry = output<void>();
+  protected readonly message = computed(() =>
+    errorMessage(this.error(), 'Revisa tu conexión e intenta de nuevo.'),
+  );
 }
 
 @Component({

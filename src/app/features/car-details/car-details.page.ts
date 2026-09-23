@@ -7,12 +7,16 @@ import {
   linkedSignal,
   resource,
   signal,
+  untracked,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { SessionStore } from '../../core/auth/session.store';
 import { SeoService } from '../../core/seo/seo.service';
-import { formatKm, formatPrice, idFromSlug, timeAgo } from '../../core/utils/format';
+import { carSlug, formatKm, formatPrice, idFromSlug, timeAgo } from '../../core/utils/format';
 import {
+  AppError,
   BODY_LABELS,
   Car,
   FUEL_LABELS,
@@ -21,10 +25,11 @@ import {
   TRANSMISSION_LABELS,
 } from '../../domain/models';
 import { LISTING_REPOSITORY } from '../../domain/repositories';
-import { ChatInboxStore } from '../chat/chat-inbox.store';
-import { FavoritesStore } from '../favorites/favorites.store';
+import { ChatInboxStore } from '../../core/state/chat-inbox.store';
+import { FavoritesStore } from '../../core/state/favorites.store';
 import { CarCard } from '../../shared/ui/car-card';
 import { EmptyState, ScoreRing, Skeleton } from '../../shared/ui/state-views';
+import { optional, valueOr } from '../../core/utils/resource';
 
 @Component({
   selector: 'cx-car-details-page',
@@ -39,17 +44,20 @@ export class CarDetailsPage {
   private readonly listings = inject(LISTING_REPOSITORY);
   private readonly router = inject(Router);
   private readonly seo = inject(SeoService);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly inbox = inject(ChatInboxStore);
   protected readonly session = inject(SessionStore);
   protected readonly favorites = inject(FavoritesStore);
 
   protected readonly car = resource({
+    id: 'car:detail',
     params: () => idFromSlug(this.slug()),
     loader: ({ params }) => this.listings.byId(params),
   });
   protected readonly similar = resource({
-    params: () => this.car.value(),
-    loader: ({ params }) => this.listings.similar(params, 8),
+    id: 'car:similar',
+    params: ({ chain }) => chain(this.car),
+    loader: ({ params }) => optional(this.listings.similar(params, 8), []),
   });
 
   /** Selected photo; back to the cover whenever another car opens. */
@@ -58,10 +66,10 @@ export class CarDetailsPage {
 
   protected readonly isOwner = computed(() => {
     const user = this.session.user();
-    return !!user && this.car.value()?.sellerId === user.id;
+    return !!user && valueOr(this.car, undefined)?.sellerId === user.id;
   });
   protected readonly photos = computed(() => {
-    const car = this.car.value();
+    const car = valueOr(this.car, undefined);
     if (!car) return [];
     return car.images.map((url, i) => ({
       url,
@@ -69,7 +77,7 @@ export class CarDetailsPage {
     }));
   });
   protected readonly specs = computed(() => {
-    const c = this.car.value();
+    const c = valueOr(this.car, undefined);
     if (!c) return [];
     return [
       { label: 'Año', value: String(c.year) },
@@ -79,7 +87,7 @@ export class CarDetailsPage {
     ];
   });
   protected readonly overview = computed(() => {
-    const c = this.car.value();
+    const c = valueOr(this.car, undefined);
     if (!c) return [];
     return [
       ['Marca', c.brand],
@@ -100,8 +108,19 @@ export class CarDetailsPage {
 
   constructor() {
     effect(() => {
-      const c = this.car.value();
+      const c = valueOr(this.car, undefined);
       if (c) this.setSeo(c);
+      else if (this.car.error()) {
+        const error = this.car.error();
+        this.seo.set({ title: 'Auto no disponible', noindex: true });
+        this.seo.setStatus(error instanceof AppError && error.kind === 'notFound' ? 404 : 503);
+      }
+    });
+    // Browser only, so SSR renders and crawlers don't inflate the view count.
+    effect(() => {
+      const id = valueOr(this.car, undefined)?.id;
+      if (id && this.isBrowser)
+        untracked(() => void this.listings.recordView(id).catch(() => undefined));
     });
   }
 
@@ -142,6 +161,8 @@ export class CarDetailsPage {
       title: `${title} · ${formatPrice(c.price)}`,
       description: `${title} ${c.version ?? ''}, ${formatKm(c.mileageKm)}, verificado por ${c.location?.name ?? 'Carmexio'}.`,
       image: c.images[0],
+      path: `/autos/${carSlug(c)}`,
+      noindex: c.status !== 'active',
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'Car',
