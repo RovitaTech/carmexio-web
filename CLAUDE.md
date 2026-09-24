@@ -99,7 +99,7 @@ Patterns:
 
 ## Deployment (Vercel)
 
-- Project `carmexio`, linked to GitHub `master` → every push deploys.
+- Project `carmexio-web` (https://carmexio-web.vercel.app), linked to GitHub `master` → every push deploys.
 - `vercel.json`: static `dist/carmexio-web/browser` on the CDN; everything else rewrites to
   `api/ssr.mjs`, which runs the Angular SSR handler from `dist/carmexio-web/server`.
 - `environment.siteUrl` and `public/robots.txt` point at the Vercel domain until carmexio.mx is

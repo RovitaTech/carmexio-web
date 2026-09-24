@@ -11,4 +11,4 @@ Disallow: /entrar
 Disallow: /registro
 Disallow: /recuperar
 
-Sitemap: https://carmexio.vercel.app/sitemap.xml
+Sitemap: https://carmexio-web.vercel.app/sitemap.xml
