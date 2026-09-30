@@ -92,14 +92,15 @@ export class HomePage {
   ];
 
   constructor() {
-    inject(SeoService).set({
+    const seo = inject(SeoService);
+    seo.set({
       title: $localize`:@@home.seo.title:Autos seminuevos verificados`,
       description: $localize`:@@home.seo.description:Compra autos seminuevos verificados e inspeccionados por Carmexio en CDMX, Guadalajara, Querétaro y Tijuana.`,
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'AutoDealer',
         name: 'Carmexio',
-        url: 'https://carmexio.mx',
+        url: seo.absolute('/'),
       },
     });
   }

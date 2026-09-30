@@ -62,7 +62,7 @@ export class SeoService {
     if (this.response) this.response.status = status;
   }
 
-  /** `https://carmexio.mx` + path, unless the value is already absolute. */
+  /** `siteUrl` + path, unless the value is already absolute. */
   absolute(pathOrUrl: string): string {
     return /^https?:\/\//.test(pathOrUrl) ? pathOrUrl : `${this.siteUrl}${pathOrUrl}`;
   }

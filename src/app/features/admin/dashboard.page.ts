@@ -14,7 +14,7 @@ import { ErrorState, Skeleton } from '../../shared/ui/state-views';
     <header class="head">
       <div>
         <h1>Resumen</h1>
-        <p class="muted">Contenido publicado en carmexio.mx ahora mismo.</p>
+        <p class="muted">Contenido publicado en el sitio ahora mismo.</p>
       </div>
       <div class="quick">
         <a class="btn primary" routerLink="/admin/anuncios/nuevo">+ Anuncio</a>

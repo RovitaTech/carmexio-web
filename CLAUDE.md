@@ -99,11 +99,13 @@ Patterns:
 
 ## Deployment (Vercel)
 
-- Project `carmexio-web` (https://carmexio-web.vercel.app), linked to GitHub `master` → every push deploys.
+- Project `carmexio-web`, linked to GitHub `master` → every push deploys. Domain
+  **https://www.carmexioguanajuato.com** (bare domain 308 → `www`; DNS on Vercel, registrar Name.com);
+  `carmexio-web.vercel.app` still works.
 - `vercel.json`: static `dist/carmexio-web/browser` on the CDN; everything else rewrites to
   `api/ssr.mjs`, which runs the Angular SSR handler from `dist/carmexio-web/server`.
-- `environment.siteUrl` and `public/robots.txt` point at the Vercel domain until carmexio.mx is
-  connected; production hosts are in `angular.json → security.allowedHosts`.
+- `environment.siteUrl` and `public/robots.txt` hold the canonical domain. Every host the site is
+  served on must be in `angular.json → security.allowedHosts`, or SSR pages answer **400**.
 - Brand logos: `public/brands/*.svg` (Simple Icons, see its README) via `<cx-brand-logo>`.
 
 ## Going live (Supabase)

@@ -34,7 +34,13 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": ["carmexio.mx", "*.carmexio.mx", "*.vercel.app"]
+              "allowedHosts": [
+                "carmexioguanajuato.com",
+                "*.carmexioguanajuato.com",
+                "carmexio.mx",
+                "*.carmexio.mx",
+                "*.vercel.app"
+              ]
             },
             "ssr": {
               "entry": "src/server.ts"
