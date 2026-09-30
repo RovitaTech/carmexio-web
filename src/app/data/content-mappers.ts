@@ -65,6 +65,8 @@ export function adToRow(ad: Draft<Advertisement>): Row {
     placement: ad.placement,
     ...textColumns('title', ad.title),
     ...textColumns('subtitle', ad.subtitle),
+    // NOT NULL for the Flutter app: '' means "no subtitle" (read back as undefined).
+    subtitle: ad.subtitle?.es.trim() || '',
     ...textColumns('cta_label', ad.ctaLabel),
     deep_link: orNull(ad.link),
     // Flutter reads image_url: for videos it holds the poster.

@@ -9,7 +9,7 @@ import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from 
 import { routes } from './app.routes';
 import { SessionStore } from './core/auth/session.store';
 import { ThemeService } from './core/theme/theme.service';
-import { provideDummyData } from './data/providers';
+import { provideSupabaseData } from './data/providers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,8 +21,8 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'top' }),
     ),
     provideClientHydration(withEventReplay()),
-    // DUMMY: replace with provideSupabaseData() when the backend is live.
-    provideDummyData(),
+    // Live data (Supabase). Specs use provideDummyData() as an in-memory fake.
+    provideSupabaseData(),
     provideAppInitializer(() => {
       inject(ThemeService).init();
       return inject(SessionStore).restore();

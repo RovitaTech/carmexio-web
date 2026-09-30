@@ -1,6 +1,7 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { SessionStore } from '../../core/auth/session.store';
+import { APP_CONFIG } from '../../core/config/app-config';
 import { SeoService } from '../../core/seo/seo.service';
 import { AuthLayout } from './auth-layout';
 
@@ -47,9 +48,11 @@ const EMAIL = /^[\w.+-]+@[\w-]+\.[\w.-]+$/;
           }
         </button>
       </form>
-      <button class="demo" type="button" (click)="fillDemo()" i18n="@@auth.modo-demo-usar-demo-64">
-        Modo demo: usar demo&#64;carmexio.mx / carmexio123 (staff: staff&#64;carmexio.mx)
-      </button>
+      @if (demoMode) {
+        <button class="demo" type="button" (click)="fillDemo()" i18n="@@auth.modo-demo-usar-demo-64">
+          Modo demo: usar demo&#64;carmexio.mx / carmexio123 (staff: staff&#64;carmexio.mx)
+        </button>
+      }
       <p class="links">
         <a routerLink="/recuperar" i18n="@@auth.olvidaste-tu-contrasena"
           >¿Olvidaste tu contraseña?</a
@@ -92,6 +95,8 @@ export class LoginPage {
   private readonly router = inject(Router);
   protected readonly email = signal('');
   protected readonly password = signal('');
+  /** Demo credentials only exist in the in-memory data mode (no Supabase configured). */
+  protected readonly demoMode = !inject(APP_CONFIG).supabase.url;
 
   constructor() {
     inject(SeoService).set({ title: $localize`:@@auth.entrar-2:Entrar`, noindex: true });

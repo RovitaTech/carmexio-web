@@ -1,28 +1,37 @@
-// DUMMY: active listings from the demo seed. When live, replace with a REST call:
-// GET {SUPABASE_URL}/rest/v1/listings?status=eq.active&select=id,brand,model,year,updated_at,inspection_score
-import seed from '../app/data/dummy/seed.json';
+// Active listings for sitemap.xml, read with the publishable key (RLS: public
+// rows only) over PostgREST. Express-only: no Angular / supabase-js imports.
+import { environment } from '../environments/environment';
 import { SitemapCar } from './sitemap';
 
-interface SeedListing {
+interface ListingRow {
   id: string;
   brand: string;
   model: string;
   year: number;
-  status: string;
-  created_at: string;
-  updated_at?: string;
-  inspection_score?: number | null;
+  updated_at: string;
+  inspection_score: number | null;
 }
 
 export async function activeListings(): Promise<SitemapCar[]> {
-  return (seed.listings as SeedListing[])
-    .filter((l) => l.status === 'active')
-    .map((l) => ({
-      id: l.id,
-      brand: l.brand,
-      model: l.model,
-      year: l.year,
-      updatedAt: l.updated_at ?? l.created_at,
-      hasInspection: l.inspection_score != null,
-    }));
+  const { url, publishableKey } = environment.supabase;
+  if (!url || !publishableKey) return [];
+  const query = new URLSearchParams({
+    select: 'id,brand,model,year,updated_at,inspection_score',
+    status: 'eq.active',
+    order: 'updated_at.desc',
+    limit: '50000', // sitemap protocol limit per file
+  });
+  const res = await fetch(`${url}/rest/v1/listings?${query}`, {
+    headers: { apikey: publishableKey, Authorization: `Bearer ${publishableKey}` },
+  });
+  if (!res.ok) throw new Error(`Sitemap listings: HTTP ${res.status}`);
+  const rows = (await res.json()) as ListingRow[];
+  return rows.map((l) => ({
+    id: l.id,
+    brand: l.brand,
+    model: l.model,
+    year: l.year,
+    updatedAt: l.updated_at,
+    hasInspection: l.inspection_score != null,
+  }));
 }

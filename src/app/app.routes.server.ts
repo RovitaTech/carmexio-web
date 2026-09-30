@@ -1,13 +1,14 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
 
 /**
- * Public pages are server-rendered for SEO; static pages are prerendered;
- * signed-in areas render on the client (the session lives in the browser).
+ * Public pages are server-rendered per request for SEO and fresh data (cars,
+ * banners and texts change from /admin without a redeploy); signed-in areas
+ * render on the client (the session lives in the browser).
  */
 export const serverRoutes: ServerRoute[] = [
-  { path: '', renderMode: RenderMode.Prerender },
-  { path: 'como-funciona', renderMode: RenderMode.Prerender },
-  { path: 'sucursales', renderMode: RenderMode.Prerender },
+  { path: '', renderMode: RenderMode.Server },
+  { path: 'como-funciona', renderMode: RenderMode.Server },
+  { path: 'sucursales', renderMode: RenderMode.Server },
   { path: 'autos', renderMode: RenderMode.Server },
   { path: 'ofertas', renderMode: RenderMode.Server },
   { path: 'autos/:slug', renderMode: RenderMode.Server },

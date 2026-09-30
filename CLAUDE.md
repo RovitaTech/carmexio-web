@@ -71,7 +71,8 @@ Patterns:
 - Before pushing: `npm run verify` (lint + tests + production build). Enable the hook once:
   `git config core.hooksPath .githooks`.
 - Refresh demo data from the app: `cd ../carmexio && dart run tool/export_dummy_seed.dart ../carmexio-web/src/app/data/dummy/seed.json`.
-- Demo logins: `demo@carmexio.mx` / `carmexio123` (user), `staff@carmexio.mx` / `carmexio123` (admin → /staff).
+- Demo logins (tests / demo mode only): `demo@carmexio.mx` / `carmexio123`, `staff@carmexio.mx` / `carmexio123`.
+  The live site uses the Supabase Auth passwords instead.
 - Local production server: `NG_ALLOWED_HOSTS=localhost npm run serve:ssr:carmexio-web`
   (production hosts are listed in `angular.json` → `security.allowedHosts`).
 
@@ -108,14 +109,17 @@ Patterns:
   served on must be in `angular.json → security.allowedHosts`, or SSR pages answer **400**.
 - Brand logos: `public/brands/*.svg` (Simple Icons, see its README) via `<cx-brand-logo>`.
 
-## Going live (Supabase)
+## Live data (Supabase)
 
-1. Fill `src/environments/environment.ts` (`supabase.url`, `supabase.publishableKey`) — or
-   generate it at build time from host env vars. Publishable key only, never the secret key.
-2. `app.config.ts`: `provideDummyData()` → `provideSupabaseData()`.
-3. `src/server.ts`: sitemap source → `SupabaseListingRepository` (marked `DUMMY`).
-4. Stop shipping `src/app/data/dummy/`: specs use it as an in-memory fake, so either keep it
-   test-only (no imports from app code) or replace it with slimmer fakes, then delete it.
+- **Live since 2026-09-30**: `app.config.ts` uses `provideSupabaseData()`; `environment.ts` holds the
+  project URL + **publishable** key (never the secret key). Project `msxeedztqddyfunvtcsx`.
+- Public pages render per request (`app.routes.server.ts`), so admin edits and new cars show up
+  without a redeploy. `sitemap.xml` reads active listings over PostgREST (`src/server/sitemap-source.ts`).
+- Specs still use `provideDummyData()` as an in-memory fake (`data/dummy/`, test-only); the demo
+  login hint on `/entrar` only shows when Supabase isn't configured.
+- Logins are Supabase Auth accounts (`demo@carmexio.mx`, `staff@carmexio.mx` = admin); demo data
+  comes from `../../personal-backend/carmexio-BE/supabase/seed/`.
+- Schema/migrations live in carmexio-BE `supabase/migrations/` (0005: `banners.id` default).
 
 ---
 
