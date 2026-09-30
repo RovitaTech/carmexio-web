@@ -37,6 +37,7 @@ const STAFF_PAGES = [
   '/admin/ofertas/offer-buen-fin',
   '/admin/avisos',
   '/admin/medios',
+  '/admin/importar',
   '/admin/textos',
 ];
 

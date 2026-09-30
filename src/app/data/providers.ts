@@ -8,7 +8,10 @@ import {
   FAVORITES_REPOSITORY,
   LISTING_REPOSITORY,
   STAFF_REPOSITORY,
+  STOCK_IMPORT_REPOSITORY,
 } from '../domain/repositories';
+import { ApiStockImportRepository } from './api/api-stock-import.repository';
+import { DummyStockImportRepository } from './dummy/dummy-stock-import.repository';
 import { DummyDb } from './dummy/dummy-db';
 import {
   DummyAuthRepository,
@@ -62,6 +65,10 @@ export function provideDummyData(options: DummyDataOptions = {}): EnvironmentPro
     { provide: STAFF_REPOSITORY, useFactory: () => new DummyStaffRepository(inject(DummyDb)) },
     { provide: CONTENT_REPOSITORY, useFactory: () => new DummyContentRepository(inject(DummyDb)) },
     { provide: CMS_REPOSITORY, useFactory: () => new DummyCmsRepository(inject(DummyDb)) },
+    {
+      provide: STOCK_IMPORT_REPOSITORY,
+      useFactory: () => new DummyStockImportRepository(inject(DummyDb)),
+    },
   ]);
 }
 
@@ -107,6 +114,16 @@ export function provideSupabaseData(): EnvironmentProviders {
     {
       provide: CMS_REPOSITORY,
       useFactory: () => new SupabaseCmsRepository(inject(SUPABASE_CLIENT)),
+    },
+    {
+      provide: STOCK_IMPORT_REPOSITORY,
+      useFactory: () => {
+        const db = inject(SUPABASE_CLIENT);
+        return new ApiStockImportRepository(
+          inject(APP_CONFIG).apiUrl,
+          async () => (await db.auth.getSession()).data.session?.access_token ?? null,
+        );
+      },
     },
   ]);
 }

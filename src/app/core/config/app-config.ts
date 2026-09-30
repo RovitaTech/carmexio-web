@@ -4,6 +4,8 @@ import { environment } from '../../../environments/environment';
 export interface AppConfig {
   /** Canonical origin for SEO (canonical URLs, sitemap, Open Graph). */
   siteUrl: string;
+  /** carmexio-BE REST API (`…/v1`), used for server-side jobs such as the stock import. */
+  apiUrl: string;
   supabase: {
     url: string;
     /** Publishable (anon) key — safe in the browser; RLS protects the data. */

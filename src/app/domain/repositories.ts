@@ -17,6 +17,7 @@ import type {
   StaffStats,
 } from './models';
 import type { Advertisement, Draft, MediaAsset, Offer, SiteAlert, SiteContent } from './content';
+import type { StockImportOutcome, StockItem } from './stock-import';
 
 /**
  * Repository contracts. Implementations: `data/dummy` (now) and
@@ -99,6 +100,12 @@ export interface CmsRepository {
   saveTexts(texts: SiteContent['texts']): Promise<void>;
 }
 
+/** Admin: Carmexio's own stock from the WhatsApp Business catalog (carmexio-BE API). */
+export interface StockImportRepository {
+  /** At most `STOCK_IMPORT_BATCH` items; one outcome per item, in order. */
+  importBatch(items: readonly StockItem[]): Promise<StockImportOutcome[]>;
+}
+
 /** Carmexio staff operations (RLS: branch staff, or admins for every branch). */
 export interface StaffRepository {
   /** Pending ads, oldest first; all branches when `locationId` is omitted. */
@@ -120,3 +127,6 @@ export const CHAT_REPOSITORY = new InjectionToken<ChatRepository>('ChatRepositor
 export const CONTENT_REPOSITORY = new InjectionToken<ContentRepository>('ContentRepository');
 export const CMS_REPOSITORY = new InjectionToken<CmsRepository>('CmsRepository');
 export const STAFF_REPOSITORY = new InjectionToken<StaffRepository>('StaffRepository');
+export const STOCK_IMPORT_REPOSITORY = new InjectionToken<StockImportRepository>(
+  'StockImportRepository',
+);

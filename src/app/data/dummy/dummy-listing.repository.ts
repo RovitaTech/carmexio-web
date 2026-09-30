@@ -129,7 +129,11 @@ export class DummyListingRepository implements ListingRepository {
   async mine() {
     await this.db.delay();
     const user = requireUser(this.db);
-    return this.cars(this.db.listings.filter((l) => l['seller_id'] === user).sort(SORTS['newest']));
+    return this.cars(
+      this.db.listings
+        .filter((l) => l['seller_id'] === user && l['source'] !== 'carmexio')
+        .sort(SORTS['newest']),
+    );
   }
 
   async uploadPhoto(_file: Blob, fileName: string) {

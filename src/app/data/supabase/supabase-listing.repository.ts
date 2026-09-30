@@ -116,6 +116,7 @@ export class SupabaseListingRepository implements ListingRepository {
       await this.listings
         .select(LISTING_SELECT)
         .eq('seller_id', userId)
+        .eq('source', 'owner') // imported Carmexio stock lives in the staff/admin views
         .order('created_at', { ascending: false }),
     );
     return rows.map(toCar);

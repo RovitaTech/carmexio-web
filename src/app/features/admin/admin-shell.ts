@@ -166,6 +166,7 @@ export class AdminShell {
 
   protected readonly nav = [
     { path: '/admin', label: 'Resumen', icon: '▦', exact: true },
+    { path: '/admin/importar', label: 'Importar autos', icon: '⇪', exact: false },
     { path: '/admin/anuncios', label: 'Anuncios', icon: '◧', exact: false },
     { path: '/admin/ofertas', label: 'Ofertas', icon: '％', exact: false },
     { path: '/admin/avisos', label: 'Avisos', icon: '📣', exact: false },

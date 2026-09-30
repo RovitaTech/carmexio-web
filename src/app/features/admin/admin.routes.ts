@@ -49,6 +49,11 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () => import('./offers/offer-editor.page').then((m) => m.OfferEditorPage),
       },
       {
+        path: 'importar',
+        title: 'Importar autos · Admin Carmexio',
+        loadComponent: () => import('./import/import.page').then((m) => m.ImportPage),
+      },
+      {
         path: 'textos',
         title: 'Textos del sitio · Admin Carmexio',
         loadComponent: () => import('./texts/texts.page').then((m) => m.TextsPage),

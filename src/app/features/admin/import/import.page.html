@@ -1,0 +1,159 @@
+<header class="head">
+  <div>
+    <h1>Importar autos</h1>
+    <p class="muted">
+      Carga tu catálogo de WhatsApp Business (CSV o Excel). Los autos se publican como inventario
+      Carmexio; volver a importar el mismo id actualiza el auto.
+    </p>
+  </div>
+  <a class="btn" [href]="templateHref" download="plantilla-autos-carmexio.csv"
+    >Descargar plantilla</a
+  >
+</header>
+
+@if (catalog.error()) {
+  <cx-error-state [error]="catalog.error()" (retry)="catalog.reload()" />
+} @else if (!catalog.hasValue()) {
+  <cx-skeleton height="200px" radius="20px" />
+} @else if (!rows().length) {
+  <section class="card steps" aria-labelledby="source-title">
+    <h2 id="source-title">1. Elige el archivo</h2>
+    <label
+      class="drop"
+      [class.over]="dragging()"
+      (dragover)="$event.preventDefault(); dragging.set(true)"
+      (dragleave)="dragging.set(false)"
+      (drop)="$event.preventDefault(); dragging.set(false); readFile($event.dataTransfer?.files)"
+    >
+      <input
+        type="file"
+        class="visually-hidden"
+        accept=".csv,.tsv,.txt,.xlsx,text/csv"
+        (change)="readFile($any($event.target).files); $any($event.target).value = ''"
+      />
+      <strong>{{ reading() ? 'Leyendo archivo…' : 'Arrastra el archivo aquí' }}</strong>
+      <span class="muted">o haz clic para elegirlo · CSV, TSV o Excel (.xlsx)</span>
+    </label>
+
+    <p class="or muted">o pega las filas (copiadas de Excel o Google Sheets, con encabezado):</p>
+    <label class="visually-hidden" for="import-paste">Filas del catálogo</label>
+    <textarea
+      id="import-paste"
+      rows="6"
+      placeholder="id	title	price	image_link	sucursal…"
+      [value]="pasted()"
+      (input)="pasted.set($any($event.target).value)"
+    ></textarea>
+    <button class="btn primary" type="button" [disabled]="!pasted().trim()" (click)="readPasted()">
+      Leer filas pegadas
+    </button>
+
+    <details class="help">
+      <summary>¿Cómo exporto mi catálogo de WhatsApp Business?</summary>
+      <ol>
+        <li>Abre Meta Commerce Manager con la cuenta de tu WhatsApp Business.</li>
+        <li>Catálogo → Artículos → Exportar (CSV).</li>
+        <li>Agrega una columna <code>sucursal</code> (CDMX, Guadalajara, Querétaro o Tijuana).</li>
+        <li>
+          Si puedes, agrega <code>mileage</code>, <code>transmission</code> y
+          <code>body_style</code>; si no, los completas aquí.
+        </li>
+      </ol>
+    </details>
+  </section>
+} @else {
+  <section class="card toolbar" aria-label="Resumen de la importación">
+    <p>
+      <strong>{{ fileName() }}</strong> · {{ rows().length }} autos ·
+      <span class="ok">{{ ready().length }} listos</span>
+      @if (blockedCount()) {
+        · <span class="bad">{{ blockedCount() }} con datos faltantes</span>
+      }
+    </p>
+    @if (ignoredColumns().length) {
+      <p class="muted small">Columnas no usadas: {{ ignoredColumns().join(', ') }}</p>
+    }
+
+    <div class="fill" role="group" aria-label="Completar datos faltantes en todos los autos">
+      <label>
+        Sucursal para los que no tienen
+        <select #branch (change)="fillMissing('locationId', branch.value); branch.value = ''">
+          <option value="">Elegir…</option>
+          @for (l of locations(); track l.id) {
+            <option [value]="l.id">{{ l.city }}</option>
+          }
+        </select>
+      </label>
+      @for (f of fills; track f.field) {
+        <label>
+          {{ f.label }} para los que no tienen
+          <select #sel (change)="fillMissing(f.field, sel.value); sel.value = ''">
+            <option value="">Elegir…</option>
+            @for (o of f.options; track o.value) {
+              <option [value]="o.value">{{ o.label }}</option>
+            }
+          </select>
+        </label>
+      }
+    </div>
+
+    <div class="actions">
+      <label class="check">
+        <input
+          type="checkbox"
+          [checked]="onlyProblems()"
+          (change)="onlyProblems.set($any($event.target).checked)"
+        />
+        Ver solo autos con faltantes o errores
+      </label>
+      <span class="grow"></span>
+      <button class="btn" type="button" [disabled]="!!progress()" (click)="reset()">
+        Otro archivo
+      </button>
+      <button
+        class="btn primary"
+        type="button"
+        [disabled]="!ready().length || !!progress()"
+        (click)="importReady()"
+      >
+        @if (progress(); as p) {
+          Importando {{ p.done }}/{{ p.total }}…
+        } @else {
+          Publicar {{ ready().length }} autos
+        }
+      </button>
+    </div>
+    @if (progress(); as p) {
+      <progress [value]="p.done" [max]="p.total" aria-label="Progreso de la importación"></progress>
+    }
+    <p class="muted small" role="status">
+      @if (summary().created || summary().updated || summary().failed) {
+        Resultado: {{ summary().created }} nuevos · {{ summary().updated }} actualizados ·
+        {{ summary().failed }} con error.
+      }
+    </p>
+  </section>
+
+  <cx-import-table
+    [rows]="visibleRows()"
+    [locations]="locations()"
+    [results]="results()"
+    [maxYear]="maxYear"
+    (edited)="edit($event)"
+  />
+
+  @if (published().length) {
+    <section class="card" aria-labelledby="published-title">
+      <h2 id="published-title">Publicados</h2>
+      <ul class="links">
+        @for (p of published(); track p.row.line) {
+          <li>
+            <a [routerLink]="carLink(p.row, p.result.listingId!)" target="_blank"
+              >{{ p.row.draft.brand }} {{ p.row.draft.model }} {{ p.row.draft.year }}</a
+            >
+          </li>
+        }
+      </ul>
+    </section>
+  }
+}

@@ -97,6 +97,11 @@ Patterns:
   Contract: `../carmexio/API_NEEDED.md` §10. Repos: `CONTENT_REPOSITORY` (public read),
   `CMS_REPOSITORY` (admin write). Public pages read everything through `ContentStore`.
 - Admin forms use Signal Forms; constraints live in the schema (not template attributes).
+- `/admin/importar`: Carmexio stock from the WhatsApp Business catalog (CSV/TSV/pasted rows/.xlsx).
+  Parsed in the browser (`features/admin/import/`: column aliases, es-MX price/km/fuel parsing),
+  fixed in the preview, then sent 10 at a time to carmexio-BE `POST /v1/admin/listings/import`
+  (`STOCK_IMPORT_REPOSITORY`, `APP_CONFIG.apiUrl`), which copies the photos and publishes the cars
+  (`listings.source = 'carmexio'`, any number of photos; re-import by catalog id updates).
 
 ## Deployment (Vercel)
 
