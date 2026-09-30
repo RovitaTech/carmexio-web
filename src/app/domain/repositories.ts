@@ -13,11 +13,14 @@ import type {
   OwnerStatusChange,
   Page,
   ProfileChanges,
+  InventoryFilter,
+  StaffConversation,
   StaffListingFilter,
   StaffStats,
 } from './models';
 import type { Advertisement, Draft, MediaAsset, Offer, SiteAlert, SiteContent } from './content';
 import type { StockImportOutcome, StockItem } from './stock-import';
+import type { TeamInvite, TeamMember } from './team';
 
 /**
  * Repository contracts. Implementations: `data/dummy` (now) and
@@ -54,6 +57,8 @@ export interface AuthRepository {
   signUp(fullName: string, email: string, phone: string, password: string): Promise<AppUser | null>;
   signOut(): Promise<void>;
   resetPassword(email: string): Promise<void>;
+  /** Signed-in user (also after an invite or reset link) chooses a new password. */
+  updatePassword(password: string): Promise<void>;
   updateProfile(changes: ProfileChanges): Promise<AppUser>;
   /** Session changes from outside the app (token expiry, other tabs). Returns unsubscribe. */
   onChange(listener: (user: AppUser | null) => void): () => void;
@@ -106,6 +111,17 @@ export interface StockImportRepository {
   importBatch(items: readonly StockItem[]): Promise<StockImportOutcome[]>;
 }
 
+/** Super admin: who can use the portals (carmexio-BE API; the server holds the auth keys). */
+export interface TeamRepository {
+  /** Super admins and branch admins. */
+  members(): Promise<TeamMember[]>;
+  /** Any account by name, email or phone (to promote an existing customer). */
+  search(query: string): Promise<TeamMember[]>;
+  /** Creates the account; Supabase emails a link to set the password. */
+  invite(invite: TeamInvite): Promise<TeamMember>;
+  setRole(userId: string, role: TeamMember['role'], locationId?: string): Promise<TeamMember>;
+}
+
 /** Carmexio staff operations (RLS: branch staff, or admins for every branch). */
 export interface StaffRepository {
   /** Pending ads, oldest first; all branches when `locationId` is omitted. */
@@ -117,6 +133,14 @@ export interface StaffRepository {
   /** Upserts the report; the DB mirrors `overall_score` onto the listing. */
   saveInspection(report: InspectionReport): Promise<void>;
   stats(locationId?: string): Promise<StaffStats>;
+  /** Branch inbox (RLS: own branch; super admins all), unread first. */
+  inbox(locationId?: string): Promise<StaffConversation[]>;
+  /** Answer as Carmexio (sender_role `staff`). */
+  reply(conversationId: string, body: string): Promise<void>;
+  /** Clears the staff-side unread count. */
+  markRead(conversationId: string): Promise<void>;
+  /** Other branches' stock too (live + sold), read-only. */
+  inventory(filter: InventoryFilter): Promise<Car[]>;
 }
 
 export const CATALOG_REPOSITORY = new InjectionToken<CatalogRepository>('CatalogRepository');
@@ -127,6 +151,7 @@ export const CHAT_REPOSITORY = new InjectionToken<ChatRepository>('ChatRepositor
 export const CONTENT_REPOSITORY = new InjectionToken<ContentRepository>('ContentRepository');
 export const CMS_REPOSITORY = new InjectionToken<CmsRepository>('CmsRepository');
 export const STAFF_REPOSITORY = new InjectionToken<StaffRepository>('StaffRepository');
+export const TEAM_REPOSITORY = new InjectionToken<TeamRepository>('TeamRepository');
 export const STOCK_IMPORT_REPOSITORY = new InjectionToken<StockImportRepository>(
   'StockImportRepository',
 );

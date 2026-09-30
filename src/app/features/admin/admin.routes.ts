@@ -1,7 +1,10 @@
 import { Routes } from '@angular/router';
-import { adminGuard } from '../../core/auth/guards';
+import { adminGuard, superAdminGuard } from '../../core/auth/guards';
 
-/** `/admin/**` — site content management. Client-rendered, role `admin` only. */
+/**
+ * `/admin/**` — site content (super admins + branch admins); users and stock import are
+ * super-admin only. Client-rendered.
+ */
 export const ADMIN_ROUTES: Routes = [
   {
     path: 'entrar',
@@ -50,8 +53,15 @@ export const ADMIN_ROUTES: Routes = [
       },
       {
         path: 'importar',
+        canActivate: [superAdminGuard],
         title: 'Importar autos · Admin Carmexio',
         loadComponent: () => import('./import/import.page').then((m) => m.ImportPage),
+      },
+      {
+        path: 'usuarios',
+        canActivate: [superAdminGuard],
+        title: 'Usuarios · Admin Carmexio',
+        loadComponent: () => import('./users/users.page').then((m) => m.UsersPage),
       },
       {
         path: 'textos',

@@ -18,6 +18,17 @@ EN = {
     'errors.inicia-sesion-para-continuar': 'Sign in to continue.',
     'errors.solo-un-administrador-puede-hacer': 'Only an administrator can do this.',
     'errors.este-auto-ya-no-esta': 'This car is no longer listed.',
+    # /nueva-contrasena (password reset + staff invites)
+    'auth.newPassword.title': 'Choose your password',
+    'auth.newPassword.subtitle': 'Use it to sign in to Carmexio from now on.',
+    'auth.newPassword.invalidLink': 'This link is invalid or has expired. Request a new one.',
+    'auth.newPassword.requestNew': 'Request a new link',
+    'auth.newPassword.account': 'Account: {$INTERPOLATION}',
+    'auth.newPassword.label': 'New password (8+ characters, 1 number)',
+    'auth.newPassword.confirm': 'Repeat the password',
+    'auth.newPassword.save': 'Save password',
+    'auth.newPassword.seo': 'New password',
+    'auth.newPassword.mismatch': "The passwords don't match.",
     # Supabase error mapping (data/supabase/supabase-errors.ts)
     'errors.sin-conexion-revisa-tu-internet': 'No connection. Check your internet and try again.',
     'errors.no-encontramos-lo-que-buscas': "We couldn't find what you're looking for.",

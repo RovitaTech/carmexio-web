@@ -61,6 +61,11 @@ export const routes: Routes = [
         loadComponent: () => import('./features/auth/auth.pages').then((m) => m.ResetPage),
       },
       {
+        path: 'nueva-contrasena',
+        loadComponent: () =>
+          import('./features/auth/new-password.page').then((m) => m.NewPasswordPage),
+      },
+      {
         path: 'vender',
         canActivate: [authGuard],
         loadComponent: () => import('./features/sell/sell.page').then((m) => m.SellPage),

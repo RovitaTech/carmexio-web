@@ -62,6 +62,11 @@ export class SupabaseAuthRepository implements AuthRepository {
     if (error) throw toAppError(error);
   }
 
+  async updatePassword(password: string) {
+    const { error } = await this.db.auth.updateUser({ password });
+    if (error) throw toAppError(error);
+  }
+
   async updateProfile(changes: ProfileChanges) {
     const id = await requireUserId(this.db);
     const row: Row = {};

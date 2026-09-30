@@ -3,12 +3,14 @@ import {
   AppError,
   Car,
   InspectionReport,
+  InventoryFilter,
   ListingFlags,
+  StaffConversation,
   StaffListingFilter,
   StaffStats,
 } from '../../domain/models';
 import { StaffRepository } from '../../domain/repositories';
-import { Row, inspectionToRow, toCar } from '../mappers';
+import { Row, inspectionToRow, toCar, toStaffConversation } from '../mappers';
 import { DummyDb, requireUser } from './dummy-db';
 import { SORTS } from './dummy-listing.repository';
 
@@ -102,6 +104,74 @@ export class DummyStaffRepository implements StaffRepository {
     };
   }
 
+  async inbox(locationId?: string): Promise<StaffConversation[]> {
+    await this.db.delay(0.5);
+    this.requireStaff(locationId);
+    return this.db.conversations
+      .filter((c) => this.inBranch(c, locationId))
+      .sort((a, b) => b['last_message_at'].localeCompare(a['last_message_at']))
+      .map((c) => {
+        const listing = c['listing_id'] ? this.db.listing(c['listing_id']) : null;
+        const customer = this.db.profiles.find((p) => p['id'] === c['user_id']);
+        return toStaffConversation({
+          ...c,
+          location: this.db.location(c['location_id']),
+          listing,
+          customer: customer
+            ? { full_name: customer['full_name'], phone: customer['phone'] }
+            : null,
+        });
+      })
+      .sort((a, b) => Number(b.unreadCount > 0) - Number(a.unreadCount > 0));
+  }
+
+  async reply(conversationId: string, body: string): Promise<void> {
+    await this.db.delay(0.3);
+    const conv = this.db.conversations.find((c) => c['id'] === conversationId);
+    if (!conv) throw new AppError('Conversación no encontrada.', 'notFound');
+    const sender = this.requireStaff(conv['location_id']);
+    const text = body.trim();
+    if (!text) throw new AppError('El mensaje está vacío.', 'validation');
+    const now = new Date().toISOString();
+    this.db.messages.push({
+      id: this.db.nextId('msg'),
+      conversation_id: conversationId,
+      sender_id: sender,
+      sender_role: 'staff',
+      body: text,
+      created_at: now,
+      read_at: null,
+    });
+    Object.assign(conv, {
+      last_message: text,
+      last_message_at: now,
+      user_unread_count: (conv['user_unread_count'] ?? 0) + 1,
+    });
+  }
+
+  async markRead(conversationId: string): Promise<void> {
+    const conv = this.db.conversations.find((c) => c['id'] === conversationId);
+    if (conv) conv['staff_unread_count'] = 0;
+  }
+
+  async inventory(filter: InventoryFilter): Promise<Car[]> {
+    await this.db.delay();
+    this.requireStaff();
+    const q = filter.query?.trim().toLowerCase() ?? '';
+    return this.cars(
+      this.db.listings
+        .filter(
+          (l) =>
+            (filter.status
+              ? l['status'] === filter.status
+              : ['active', 'sold'].includes(l['status'])) &&
+            this.inBranch(l, filter.locationId) &&
+            (!q || `${l['brand']} ${l['model']}`.toLowerCase().includes(q)),
+        )
+        .sort(SORTS['newest']),
+    );
+  }
+
   private cars(rows: Row[]): Car[] {
     return rows.map((r) => toCar(this.db.withLocation(r)));
   }
@@ -123,7 +193,8 @@ export class DummyStaffRepository implements StaffRepository {
   }
 
   /** `is_staff(p_location)`: admins everywhere, staff only in their branch. */
-  private requireStaff(locationId?: string): void {
+  /** Mirrors RLS `is_staff(location)`; returns the staff user's id. */
+  private requireStaff(locationId?: string): string {
     const id = requireUser(this.db);
     const profile = this.db.profiles.find((p) => p['id'] === id);
     const role = profile?.['role'];
@@ -131,5 +202,6 @@ export class DummyStaffRepository implements StaffRepository {
       role === 'admin' ||
       (role === 'staff' && (!locationId || profile?.['location_id'] === locationId));
     if (!allowed) throw new AppError('No tienes permiso para esta sucursal.', 'auth');
+    return id;
   }
 }

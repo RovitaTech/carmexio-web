@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SessionStore } from '../../core/auth/session.store';
 import { SeoService } from '../../core/seo/seo.service';
+import { ROLE_LABELS } from '../../domain/models';
 import { Logo } from '../../shared/ui/logo';
 
 /** Admin chrome: navy sidebar (desktop) / scrollable nav bar (mobile). */
@@ -17,7 +18,7 @@ import { Logo } from '../../shared/ui/logo';
           <span class="tag">Admin</span>
         </a>
         <nav aria-label="Administración">
-          @for (item of nav; track item.path) {
+          @for (item of visibleNav(); track item.path) {
             <a
               [routerLink]="item.path"
               routerLinkActive="active"
@@ -30,7 +31,10 @@ import { Logo } from '../../shared/ui/logo';
         <div class="foot">
           <a href="/" target="_blank" rel="noopener">Ver sitio ↗</a>
           <a routerLink="/staff">Portal staff</a>
-          <p>{{ session.user()?.fullName }}</p>
+          <p>
+            {{ session.user()?.fullName }}
+            <small>{{ roleLabel() }}</small>
+          </p>
           <button type="button" (click)="signOut()">Cerrar sesión</button>
         </div>
       </aside>
@@ -117,6 +121,10 @@ import { Logo } from '../../shared/ui/logo';
       cursor: pointer;
       text-align: left;
     }
+    .foot small {
+      display: block;
+      opacity: 0.8;
+    }
     .foot p {
       padding: 0 12px;
       color: var(--cx-on-dark-2);
@@ -166,13 +174,19 @@ export class AdminShell {
 
   protected readonly nav = [
     { path: '/admin', label: 'Resumen', icon: '▦', exact: true },
-    { path: '/admin/importar', label: 'Importar autos', icon: '⇪', exact: false },
+    { path: '/admin/importar', label: 'Importar autos', icon: '⇪', exact: false, superOnly: true },
     { path: '/admin/anuncios', label: 'Anuncios', icon: '◧', exact: false },
     { path: '/admin/ofertas', label: 'Ofertas', icon: '％', exact: false },
     { path: '/admin/avisos', label: 'Avisos', icon: '📣', exact: false },
     { path: '/admin/medios', label: 'Medios', icon: '🖼', exact: false },
     { path: '/admin/textos', label: 'Textos', icon: '✎', exact: false },
+    { path: '/admin/usuarios', label: 'Usuarios', icon: '👥', exact: false, superOnly: true },
   ];
+  /** Branch admins don't see the super-admin tools. */
+  protected readonly visibleNav = computed(() =>
+    this.nav.filter((item) => !('superOnly' in item) || this.session.isAdmin()),
+  );
+  protected readonly roleLabel = computed(() => ROLE_LABELS[this.session.user()?.role ?? 'user']);
 
   constructor() {
     inject(SeoService).set({ title: 'Admin', noindex: true });

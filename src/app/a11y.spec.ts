@@ -21,6 +21,7 @@ const PUBLIC_PAGES = [
   '/admin/entrar',
   '/entrar',
   '/registro',
+  '/nueva-contrasena',
 ];
 const SIGNED_IN_PAGES = ['/mis-anuncios', '/favoritos', '/mensajes', '/cuenta', '/vender'];
 const STAFF_PAGES = [
@@ -29,6 +30,9 @@ const STAFF_PAGES = [
   '/staff/revision/car-26',
   '/staff/anuncios',
   '/staff/inspecciones/car-1',
+  '/staff/mensajes',
+  '/staff/mensajes/conv-1',
+  '/staff/inventario',
   '/admin',
   '/admin/anuncios',
   '/admin/anuncios/nuevo',
@@ -38,6 +42,7 @@ const STAFF_PAGES = [
   '/admin/avisos',
   '/admin/medios',
   '/admin/importar',
+  '/admin/usuarios',
   '/admin/textos',
 ];
 

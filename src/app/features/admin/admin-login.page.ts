@@ -91,7 +91,7 @@ export class AdminLoginPage {
 
   constructor() {
     inject(SeoService).set({ title: 'Acceso administrador', noindex: true });
-    if (this.session.isAdmin()) void this.router.navigateByUrl('/admin');
+    if (this.session.isStaff()) void this.router.navigateByUrl('/admin');
   }
 
   protected signIn(): Promise<boolean> {
@@ -102,7 +102,7 @@ export class AdminLoginPage {
         this.error.set(this.session.error());
         return;
       }
-      if (!this.session.isAdmin()) {
+      if (!this.session.isStaff()) {
         await this.session.signOut();
         this.error.set('Esta cuenta no tiene acceso de administrador.');
         return;

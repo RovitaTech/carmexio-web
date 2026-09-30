@@ -49,7 +49,12 @@ const EMAIL = /^[\w.+-]+@[\w-]+\.[\w.-]+$/;
         </button>
       </form>
       @if (demoMode) {
-        <button class="demo" type="button" (click)="fillDemo()" i18n="@@auth.modo-demo-usar-demo-64">
+        <button
+          class="demo"
+          type="button"
+          (click)="fillDemo()"
+          i18n="@@auth.modo-demo-usar-demo-64"
+        >
           Modo demo: usar demo&#64;carmexio.mx / carmexio123 (staff: staff&#64;carmexio.mx)
         </button>
       }

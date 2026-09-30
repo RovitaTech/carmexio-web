@@ -1,0 +1,133 @@
+<header class="head">
+  <div>
+    <h1>Usuarios</h1>
+    <p class="muted">
+      <strong>Super admin:</strong> todas las sucursales, usuarios e importación.
+      <strong>Admin de sucursal:</strong> anuncios y chats de su sucursal, inventario de todas y
+      contenido del sitio.
+    </p>
+  </div>
+</header>
+
+<form class="card invite" novalidate (submit)="$event.preventDefault(); invite()">
+  <h2>Invitar por correo</h2>
+  <p class="muted small">
+    Le llega un correo para elegir su contraseña. Una cuenta por persona (no compartan accesos).
+  </p>
+  <div class="grid">
+    <div class="field">
+      <label for="inv-email">Correo</label>
+      <input id="inv-email" type="email" autocomplete="off" [formField]="inviteForm.email" />
+    </div>
+    <div class="field">
+      <label for="inv-name">Nombre</label>
+      <input id="inv-name" autocomplete="off" [formField]="inviteForm.fullName" />
+    </div>
+    <div class="field">
+      <label for="inv-role">Rol</label>
+      <select id="inv-role" [formField]="inviteForm.role">
+        <option value="staff">Admin de sucursal</option>
+        <option value="admin">Super admin</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="inv-branch">Sucursal</label>
+      <select id="inv-branch" [formField]="inviteForm.locationId">
+        <option value="">{{ inviteModel().role === 'staff' ? 'Elegir…' : 'Todas' }}</option>
+        @for (l of locations.value(); track l.id) {
+          <option [value]="l.id">{{ l.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  @if (inviteError()) {
+    <p class="error" role="alert">{{ inviteError() }}</p>
+  }
+  <button class="btn primary" type="submit" [disabled]="inviteForm().submitting()">
+    {{ inviteForm().submitting() ? 'Enviando…' : 'Enviar invitación' }}
+  </button>
+</form>
+
+<section class="card" aria-labelledby="team-title">
+  <h2 id="team-title">Equipo con acceso</h2>
+  @if (members.error()) {
+    <cx-error-state [error]="members.error()" (retry)="members.reload()" />
+  } @else if (!members.hasValue()) {
+    <cx-skeleton height="160px" radius="16px" />
+  } @else {
+    <ul class="people">
+      @for (m of sorted(); track m.id) {
+        <li>
+          <ng-container [ngTemplateOutlet]="row" [ngTemplateOutletContext]="{ $implicit: m }" />
+        </li>
+      }
+    </ul>
+  }
+</section>
+
+<section class="card" aria-labelledby="search-title">
+  <h2 id="search-title">Dar acceso a una cuenta existente</h2>
+  <form class="search" (submit)="$event.preventDefault(); search()">
+    <label class="visually-hidden" for="user-q">Buscar por nombre, correo o teléfono</label>
+    <input
+      id="user-q"
+      type="search"
+      placeholder="Nombre, correo o teléfono"
+      [value]="query()"
+      (input)="query.set($any($event.target).value)"
+    />
+    <button class="btn" type="submit" [disabled]="query().trim().length < 2">Buscar</button>
+  </form>
+  @if (results(); as found) {
+    @if (found.length) {
+      <ul class="people">
+        @for (m of found; track m.id) {
+          <li>
+            <ng-container [ngTemplateOutlet]="row" [ngTemplateOutletContext]="{ $implicit: m }" />
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="muted">Sin resultados.</p>
+    }
+  }
+</section>
+
+<ng-template #row let-m>
+  @let a = access(m);
+  <div class="who">
+    <strong>{{ m.fullName }}</strong>
+    <small class="muted">{{ m.email }}</small>
+  </div>
+  @if (m.id === me()?.id) {
+    <p class="muted small">Tú · {{ roleLabel(m.role) }}</p>
+  } @else {
+    <label class="visually-hidden" [for]="'role-' + m.id">Rol de {{ m.fullName }}</label>
+    <select [id]="'role-' + m.id" (change)="edit(m, { role: $any($event.target).value })">
+      @for (r of roles; track r.value) {
+        <option [value]="r.value" [selected]="a.role === r.value">{{ r.label }}</option>
+      }
+    </select>
+    <label class="visually-hidden" [for]="'branch-' + m.id">Sucursal de {{ m.fullName }}</label>
+    <select
+      [id]="'branch-' + m.id"
+      [disabled]="a.role !== 'staff'"
+      (change)="edit(m, { locationId: $any($event.target).value })"
+    >
+      <option value="" [selected]="!a.locationId">
+        {{ a.role === 'staff' ? 'Elegir…' : 'Todas' }}
+      </option>
+      @for (l of locations.value(); track l.id) {
+        <option [value]="l.id" [selected]="a.locationId === l.id">{{ l.city }}</option>
+      }
+    </select>
+    <button
+      class="btn"
+      type="button"
+      [disabled]="!changed(m) || saving() === m.id"
+      (click)="save(m)"
+    >
+      {{ saving() === m.id ? 'Guardando…' : 'Guardar' }}
+    </button>
+  }
+</ng-template>

@@ -1,0 +1,78 @@
+.invite {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+}
+
+.card {
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.error {
+  color: var(--cx-error-text);
+  font-weight: 600;
+}
+
+select,
+input[type='search'] {
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-sm);
+  background: var(--cx-bg);
+  color: inherit;
+  font: inherit;
+}
+
+.people {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) repeat(2, minmax(0, 170px)) auto;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid var(--cx-border);
+  }
+}
+
+.who {
+  display: grid;
+  min-width: 0;
+
+  small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.search {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+
+  input {
+    flex: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .people li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

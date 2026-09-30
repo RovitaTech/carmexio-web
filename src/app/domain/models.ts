@@ -262,6 +262,13 @@ export function categoryScore(category: InspectionCategory): number {
 
 export type UserRole = 'user' | 'staff' | 'admin';
 
+/** Internal names: `admin` sees every branch; `staff` is the admin of one branch. */
+export const ROLE_LABELS: Record<UserRole, string> = {
+  user: 'Cliente',
+  staff: 'Admin de sucursal',
+  admin: 'Super admin',
+};
+
 export interface AppUser {
   id: string;
   email: string;
@@ -329,6 +336,19 @@ export interface StaffListingFilter {
   locationId?: string;
   status?: ListingStatus;
   query?: string;
+}
+
+/** Inventory check: every branch's stock, read-only (live and sold cars). */
+export interface InventoryFilter {
+  locationId?: string;
+  status?: 'active' | 'sold';
+  query?: string;
+}
+
+/** A customer thread as the branch inbox shows it. */
+export interface StaffConversation extends Conversation {
+  customerName: string;
+  customerPhone?: string;
 }
 
 export interface StaffStats {

@@ -53,6 +53,10 @@ export class SessionStore {
     return this.run(() => this.repo.resetPassword(email));
   }
 
+  updatePassword(password: string) {
+    return this.run(() => this.repo.updatePassword(password));
+  }
+
   updateProfile(changes: ProfileChanges) {
     return this.run(async () => this.user.set(await this.repo.updateProfile(changes)));
   }

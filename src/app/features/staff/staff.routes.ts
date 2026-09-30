@@ -29,6 +29,21 @@ export const STAFF_ROUTES: Routes = [
         loadComponent: () => import('./listings.page').then((m) => m.StaffListingsPage),
       },
       {
+        path: 'mensajes',
+        title: 'Mensajes · Staff Carmexio',
+        loadComponent: () => import('./messages/inbox.page').then((m) => m.StaffInboxPage),
+      },
+      {
+        path: 'mensajes/:id',
+        title: 'Conversación · Staff Carmexio',
+        loadComponent: () => import('./messages/thread.page').then((m) => m.StaffThreadPage),
+      },
+      {
+        path: 'inventario',
+        title: 'Inventario · Staff Carmexio',
+        loadComponent: () => import('./inventory.page').then((m) => m.InventoryPage),
+      },
+      {
         path: 'inspecciones/:id',
         title: 'Inspección · Staff Carmexio',
         loadComponent: () =>

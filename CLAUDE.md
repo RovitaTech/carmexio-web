@@ -91,7 +91,14 @@ Patterns:
 
 ## Admin panel & site content
 
-- `/admin` (own layout, outside `Shell`), role `admin` only, login at `/admin/entrar`.
+- Roles: `admin` = **Super admin** (every branch, `/admin/usuarios`, `/admin/importar`);
+  `staff` = **Admin de sucursal** (`profiles.location_id`): their branch's ads and chats in `/staff`,
+  **Inventario** of every branch (live + sold, read-only) and site content in `/admin`. RLS enforces
+  it (carmexio-BE migration 0007). `ROLE_LABELS` holds the display names; `superAdminGuard` gates
+  the super-admin pages.
+- Accounts: the super admin invites by email in `/admin/usuarios` (carmexio-BE sends the Supabase
+  invite); invites and password resets land on `/nueva-contrasena`.
+- `/admin` (own layout, outside `Shell`), super admins + branch admins, login at `/admin/entrar`.
 - Manages `banners` (hero slides, promo strips, ad slots — image or video), `site_alerts`,
   `offers`, `site_texts` (overrides of `SITE_TEXTS` defaults) and the `site-media` library.
   Contract: `../carmexio/API_NEEDED.md` §10. Repos: `CONTENT_REPOSITORY` (public read),

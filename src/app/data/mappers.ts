@@ -12,6 +12,7 @@ import {
   ListingDraft,
   PHOTO_ANGLES,
   PhotoAngle,
+  StaffConversation,
 } from '../domain/models';
 
 // Untyped DB rows stop here: mappers are the only place that reads them.
@@ -109,6 +110,17 @@ export function toConversation(r: Row): Conversation {
     lastMessage: r['last_message'] ?? undefined,
     lastMessageAt: r['last_message_at'] ?? r['created_at'],
     unreadCount: r['user_unread_count'] ?? 0,
+  };
+}
+
+/** Branch inbox row: staff-side unread count + the customer (staff may read linked profiles). */
+export function toStaffConversation(r: Row): StaffConversation {
+  const customer = r['customer'] as Row | null;
+  return {
+    ...toConversation(r),
+    unreadCount: r['staff_unread_count'] ?? 0,
+    customerName: customer?.['full_name'] || 'Cliente',
+    customerPhone: customer?.['phone'] ?? undefined,
   };
 }
 

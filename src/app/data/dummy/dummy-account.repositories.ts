@@ -62,6 +62,13 @@ export class DummyAuthRepository implements AuthRepository {
     await this.db.delay();
   }
 
+  async updatePassword(password: string) {
+    await this.db.delay();
+    const id = requireUser(this.db);
+    const email = this.db.profiles.find((p) => p['id'] === id)?.['email'];
+    if (email) this.db.passwords.set(email, password);
+  }
+
   async updateProfile(changes: ProfileChanges) {
     await this.db.delay();
     const id = requireUser(this.db);

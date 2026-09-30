@@ -9,7 +9,11 @@ import {
   LISTING_REPOSITORY,
   STAFF_REPOSITORY,
   STOCK_IMPORT_REPOSITORY,
+  TEAM_REPOSITORY,
 } from '../domain/repositories';
+import { ApiClient } from './api/api-client';
+import { ApiTeamRepository } from './api/api-team.repository';
+import { DummyTeamRepository } from './dummy/dummy-team.repository';
 import { ApiStockImportRepository } from './api/api-stock-import.repository';
 import { DummyStockImportRepository } from './dummy/dummy-stock-import.repository';
 import { DummyDb } from './dummy/dummy-db';
@@ -69,6 +73,7 @@ export function provideDummyData(options: DummyDataOptions = {}): EnvironmentPro
       provide: STOCK_IMPORT_REPOSITORY,
       useFactory: () => new DummyStockImportRepository(inject(DummyDb)),
     },
+    { provide: TEAM_REPOSITORY, useFactory: () => new DummyTeamRepository(inject(DummyDb)) },
   ]);
 }
 
@@ -92,7 +97,7 @@ export function provideSupabaseData(): EnvironmentProviders {
       useFactory: () =>
         new SupabaseAuthRepository(
           inject(SUPABASE_CLIENT),
-          `${inject(APP_CONFIG).siteUrl}/recuperar`,
+          `${inject(APP_CONFIG).siteUrl}/nueva-contrasena`,
         ),
     },
     {
@@ -116,14 +121,19 @@ export function provideSupabaseData(): EnvironmentProviders {
       useFactory: () => new SupabaseCmsRepository(inject(SUPABASE_CLIENT)),
     },
     {
-      provide: STOCK_IMPORT_REPOSITORY,
+      provide: ApiClient,
       useFactory: () => {
         const db = inject(SUPABASE_CLIENT);
-        return new ApiStockImportRepository(
+        return new ApiClient(
           inject(APP_CONFIG).apiUrl,
           async () => (await db.auth.getSession()).data.session?.access_token ?? null,
         );
       },
     },
+    {
+      provide: STOCK_IMPORT_REPOSITORY,
+      useFactory: () => new ApiStockImportRepository(inject(ApiClient)),
+    },
+    { provide: TEAM_REPOSITORY, useFactory: () => new ApiTeamRepository(inject(ApiClient)) },
   ]);
 }

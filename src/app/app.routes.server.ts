@@ -16,6 +16,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'entrar', renderMode: RenderMode.Client },
   { path: 'registro', renderMode: RenderMode.Client },
   { path: 'recuperar', renderMode: RenderMode.Client },
+  { path: 'nueva-contrasena', renderMode: RenderMode.Client },
   { path: 'vender', renderMode: RenderMode.Client },
   { path: 'vender/:id/editar', renderMode: RenderMode.Client },
   { path: 'mis-anuncios', renderMode: RenderMode.Client },

@@ -3,13 +3,15 @@ import {
   AppError,
   InspectionReport,
   ListingFlags,
+  InventoryFilter,
   ListingStatus,
+  StaffConversation,
   StaffListingFilter,
   StaffStats,
 } from '../../domain/models';
 import { StaffRepository } from '../../domain/repositories';
-import { Row, inspectionToRow, toCar } from '../mappers';
-import { LISTING_SELECT } from './supabase-constants';
+import { Row, inspectionToRow, toCar, toStaffConversation } from '../mappers';
+import { CONVERSATION_SELECT, LISTING_SELECT } from './supabase-constants';
 import { check, toAppError, unwrap } from './supabase-errors';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -80,6 +82,55 @@ export class SupabaseStaffRepository implements StaffRepository {
         this.countWithoutInspection(locationId),
       ]);
     return { pending, active, rejected, soldThisMonth, unreadChats, withoutInspection };
+  }
+
+  async inbox(locationId?: string): Promise<StaffConversation[]> {
+    let q = this.db
+      .from('conversations')
+      .select(
+        `${CONVERSATION_SELECT}, customer:profiles!conversations_user_id_fkey(full_name, phone)`,
+      );
+    if (locationId) q = q.eq('location_id', locationId);
+    const rows = unwrap(await q.order('last_message_at', { ascending: false }).limit(200));
+    return rows
+      .map(toStaffConversation)
+      .sort(
+        (a: StaffConversation, b: StaffConversation) =>
+          Number(b.unreadCount > 0) - Number(a.unreadCount > 0),
+      );
+  }
+
+  async reply(conversationId: string, body: string): Promise<void> {
+    const text = body.trim();
+    if (!text) throw new AppError('El mensaje está vacío.', 'validation');
+    const { data } = await this.db.auth.getSession();
+    const senderId = data.session?.user.id;
+    if (!senderId) throw new AppError('Inicia sesión para continuar.', 'auth');
+    check(
+      await this.db.from('messages').insert({
+        conversation_id: conversationId,
+        sender_id: senderId,
+        sender_role: 'staff',
+        body: text,
+      }),
+    );
+  }
+
+  /** The RPC clears the staff-side count when the caller is staff of that branch. */
+  async markRead(conversationId: string): Promise<void> {
+    check(await this.db.rpc('mark_conversation_read', { p_conversation_id: conversationId }));
+  }
+
+  async inventory(filter: InventoryFilter) {
+    let q = this.db
+      .from('listings')
+      .select(LISTING_SELECT)
+      .in('status', filter.status ? [filter.status] : ['active', 'sold']);
+    if (filter.locationId) q = q.eq('location_id', filter.locationId);
+    const text = filter.query?.replace(/[,()"'\\%*:.]/g, ' ').trim();
+    if (text) q = q.or(`brand.ilike.%${text}%,model.ilike.%${text}%`);
+    const rows = unwrap(await q.order('updated_at', { ascending: false }).limit(300));
+    return rows.map(toCar);
   }
 
   private async review(listingId: string, status: ListingStatus, reason: string | null) {

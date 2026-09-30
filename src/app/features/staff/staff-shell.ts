@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SessionStore } from '../../core/auth/session.store';
 import { SeoService } from '../../core/seo/seo.service';
+import { ROLE_LABELS } from '../../domain/models';
 import { StaffScope } from './staff-scope.store';
 
 /** Staff portal layout: sidebar (top bar on mobile) + branch scope. */
@@ -120,6 +121,9 @@ export class StaffShell {
     { path: '/staff', label: 'Panel', icon: '▦', exact: true },
     { path: '/staff/revision', label: 'Revisión', icon: '✓', exact: false },
     { path: '/staff/anuncios', label: 'Anuncios', icon: '☰', exact: false },
+    { path: '/staff/mensajes', label: 'Mensajes', icon: '✉', exact: false },
+    { path: '/staff/inventario', label: 'Inventario', icon: '▤', exact: false },
+    { path: '/admin', label: 'Contenido del sitio', icon: '✎', exact: false },
   ];
 
   constructor() {
@@ -127,6 +131,6 @@ export class StaffShell {
   }
 
   protected roleLabel(): string {
-    return this.session.user()?.role === 'admin' ? 'Administrador' : 'Staff de sucursal';
+    return ROLE_LABELS[this.session.user()?.role ?? 'staff'];
   }
 }
