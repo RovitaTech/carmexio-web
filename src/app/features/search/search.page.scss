@@ -97,3 +97,13 @@
     display: none;
   }
 }
+
+.stock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stock-note {
+  color: var(--cx-text-2);
+}

@@ -1,7 +1,8 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
+import { APP_CONFIG } from '../../core/config/app-config';
 
-/** Eagle mark + "CARMEXIO" wordmark. */
+/** Eagle mark + "CARMEXIO" wordmark with the branch underneath ("GUANAJUATO"). */
 @Component({
   selector: 'cx-logo',
   imports: [NgOptimizedImage],
@@ -13,7 +14,10 @@ import { NgOptimizedImage } from '@angular/common';
       alt=""
     />
     @if (wordmark()) {
-      <span [style.font-size.px]="size() * 0.62" [class.white]="white()">CARMEXIO</span>
+      <span class="word" [class.white]="white()">
+        <span class="name" [style.font-size.px]="size() * 0.62">CARMEXIO</span>
+        <span class="region" [style.font-size.px]="size() * 0.3">{{ region }}</span>
+      </span>
     }
   `,
   styles: `
@@ -22,17 +26,27 @@ import { NgOptimizedImage } from '@angular/common';
       align-items: center;
       gap: 10px;
     }
-    span {
-      font-weight: 800;
-      letter-spacing: 0.08em;
+    .word {
+      display: grid;
+      line-height: 1;
       color: var(--cx-text);
     }
-    span.white {
+    .word.white {
       color: var(--cx-on-dark);
+    }
+    .name {
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+    .region {
+      margin-top: 3px;
+      font-weight: 700;
+      letter-spacing: 0.34em;
+      opacity: 0.85;
     }
     /* Narrow phones: eagle only, so the header actions keep their room. */
     @media (max-width: 419px) {
-      :host(.collapse) span {
+      :host(.collapse) .word {
         display: none;
       }
     }
@@ -44,4 +58,5 @@ export class Logo {
   readonly wordmark = input(true);
   readonly white = input(false);
   readonly collapseOnPhone = input(false);
+  protected readonly region = inject(APP_CONFIG).site.region.toUpperCase();
 }

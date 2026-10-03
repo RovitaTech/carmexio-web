@@ -45,6 +45,21 @@ export class DummyDb {
     this.locations = data.locations as Row[];
     this.brands = data.brands as Row[];
     this.listings = data.listings as Row[];
+    // The website's branch (environment.site.branchId): the Tijuana demo stock becomes its own.
+    const base = this.locations.find((l) => l['id'] === 'loc-tij') ?? this.locations[0];
+    this.locations.unshift({
+      ...base,
+      id: 'loc-gto',
+      name: 'Carmexio Guanajuato',
+      city: 'Guanajuato',
+      phone: '+52 442 669 8432',
+      whatsapp: '524426698432',
+      sort_order: -1,
+    });
+    for (const l of this.listings) {
+      if (l['location_id'] === 'loc-tij')
+        Object.assign(l, { location_id: 'loc-gto', city: 'Guanajuato' });
+    }
     this.inspections = data.inspection_reports as Row[];
     this.conversations = data.conversations as Row[];
     this.messages = data.messages as Row[];

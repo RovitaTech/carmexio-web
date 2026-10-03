@@ -119,30 +119,21 @@ export const SITE_TEXTS = {
     label: 'Cifra 1 · texto',
     value: { es: 'puntos de inspección', en: 'inspection points' },
   },
-  'home.stats.2.value': { group: 'stats', label: 'Cifra 2 · valor', value: { es: '4' } },
+  'home.stats.2.value': {
+    group: 'stats',
+    label: 'Cifra 2 · valor',
+    value: { es: '6 meses', en: '6 months' },
+  },
   'home.stats.2.label': {
     group: 'stats',
     label: 'Cifra 2 · texto',
-    value: { es: 'sucursales en México', en: 'showrooms in Mexico' },
+    value: { es: 'de garantía en certificados', en: 'warranty on certified cars' },
   },
   'home.stats.3.value': { group: 'stats', label: 'Cifra 3 · valor', value: { es: '98%' } },
   'home.stats.3.label': {
     group: 'stats',
     label: 'Cifra 3 · texto',
     value: { es: 'clientes satisfechos', en: 'happy customers' },
-  },
-  'home.sell.title': {
-    group: 'home',
-    label: 'Bloque vender · título',
-    value: { es: '¿Vendes tu auto?', en: 'Selling your car?' },
-  },
-  'home.sell.subtitle': {
-    group: 'home',
-    label: 'Bloque vender · texto',
-    value: {
-      es: 'Publica gratis con 11 fotos guiadas. Carmexio lo inspecciona y atiende a los compradores.',
-      en: 'List it free with 11 guided photos. Carmexio inspects it and handles the buyers.',
-    },
   },
   'offers.intro': {
     group: 'offers',

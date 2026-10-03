@@ -39,10 +39,22 @@ export const routes: Routes = [
         path: 'ofertas',
         loadComponent: () => import('./features/offers/offers.page').then((m) => m.OffersPage),
       },
+      { path: 'sucursales', redirectTo: 'contacto' },
       {
-        path: 'sucursales',
-        loadComponent: () =>
-          import('./features/showrooms/showrooms.page').then((m) => m.ShowroomsPage),
+        path: 'contacto',
+        loadComponent: () => import('./features/static/info.pages').then((m) => m.ContactPage),
+      },
+      {
+        path: 'financiamiento',
+        loadComponent: () => import('./features/static/info.pages').then((m) => m.FinancingPage),
+      },
+      {
+        path: 'nosotros',
+        loadComponent: () => import('./features/static/info.pages').then((m) => m.AboutPage),
+      },
+      {
+        path: 'ayuda',
+        loadComponent: () => import('./features/static/info.pages').then((m) => m.HelpPage),
       },
       {
         path: 'como-funciona',
@@ -65,19 +77,20 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/auth/new-password.page').then((m) => m.NewPasswordPage),
       },
+      // The website only sells: adding a car by hand is a staff tool (not linked publicly).
       {
         path: 'vender',
-        canActivate: [authGuard],
+        canActivate: [staffGuard],
         loadComponent: () => import('./features/sell/sell.page').then((m) => m.SellPage),
       },
       {
         path: 'vender/:id/editar',
-        canActivate: [authGuard],
+        canActivate: [staffGuard],
         loadComponent: () => import('./features/sell/sell.page').then((m) => m.SellPage),
       },
       {
         path: 'mis-anuncios',
-        canActivate: [authGuard],
+        canActivate: [staffGuard],
         loadComponent: () => import('./features/my-ads/my-ads.page').then((m) => m.MyAdsPage),
       },
       {

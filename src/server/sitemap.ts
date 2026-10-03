@@ -2,7 +2,16 @@
 import { carSlug } from '../app/core/utils/format';
 
 /** Public, indexable pages that don't depend on data. */
-const STATIC_PATHS = ['', '/autos', '/ofertas', '/sucursales', '/como-funciona'];
+const STATIC_PATHS = [
+  '',
+  '/autos',
+  '/ofertas',
+  '/financiamiento',
+  '/como-funciona',
+  '/nosotros',
+  '/contacto',
+  '/ayuda',
+];
 /** Every page exists in Spanish (`/…`) and English (`/en/…`). */
 const LANG_PREFIXES = ['', '/en'];
 

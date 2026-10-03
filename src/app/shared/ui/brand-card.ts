@@ -19,9 +19,10 @@ import { Icon } from './icon';
       <span class="logo"><cx-brand-logo [name]="b.name" [logoUrl]="b.logoUrl" [size]="36" /></span>
       <span class="go"><cx-icon name="arrowRight" [size]="18" /></span>
       <strong>{{ b.name }}</strong>
-      <span class="count" i18n="@@brand.count"
-        >{b.listingsCount, plural, =1 {1 auto disponible} other {{{ b.listingsCount }} autos disponibles}}</span
-      >
+      <span class="count" i18n="@@brand.count">{b.listingsCount, plural,
+        =1 {1 auto disponible}
+        other {{{ b.listingsCount }} autos disponibles}
+      }</span>
       @if (models()) {
         <span class="models">{{ models() }}</span>
       }

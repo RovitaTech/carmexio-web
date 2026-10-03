@@ -1,6 +1,11 @@
 import { SupabaseClient, User } from '@supabase/supabase-js';
 import { AppError, AppUser, ChatMessage, ProfileChanges } from '../../domain/models';
-import { AuthRepository, ChatRepository, FavoritesRepository } from '../../domain/repositories';
+import {
+  AuthRepository,
+  ChatRepository,
+  ChatTarget,
+  FavoritesRepository,
+} from '../../domain/repositories';
 import { Row, toCar, toConversation, toMessage, toUser } from '../mappers';
 import { CONVERSATION_SELECT, LISTING_SELECT } from './supabase-constants';
 import { check, toAppError, unwrap } from './supabase-errors';
@@ -158,12 +163,13 @@ export class SupabaseChatRepository implements ChatRepository {
     );
   }
 
-  async start(target: { listingId: string } | { locationId: string }) {
+  async start(target: ChatTarget) {
     await requireUserId(this.db);
-    const params =
-      'listingId' in target
-        ? { p_listing_id: target.listingId }
-        : { p_location_id: target.locationId };
+    // Both set = this site's branch handles the enquiry about that car (migration 0008).
+    const params = {
+      ...(target.listingId ? { p_listing_id: target.listingId } : {}),
+      ...(target.locationId ? { p_location_id: target.locationId } : {}),
+    };
     return unwrap(await this.db.rpc('get_or_create_conversation', params)) as string;
   }
 

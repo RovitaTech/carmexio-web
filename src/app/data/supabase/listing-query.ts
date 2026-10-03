@@ -3,6 +3,7 @@ import { CarFilter, SortOption } from '../../domain/models';
 /** The subset of PostgREST's filter builder the listing search uses. */
 export interface ListingQuery<Q> {
   eq(column: string, value: unknown): Q;
+  neq(column: string, value: unknown): Q;
   gte(column: string, value: unknown): Q;
   lte(column: string, value: unknown): Q;
   or(filters: string): Q;
@@ -36,6 +37,8 @@ export function applyListingFilter<Q extends ListingQuery<Q>>(query: Q, f: CarFi
   if (f.fuelType) q = q.eq('fuel_type', f.fuelType);
   if (f.transmission) q = q.eq('transmission', f.transmission);
   if (f.city) q = q.eq('city', f.city);
+  if (f.locationId) q = q.eq('location_id', f.locationId);
+  if (f.excludeLocationId) q = q.neq('location_id', f.excludeLocationId);
   if (f.minPrice != null) q = q.gte('price', f.minPrice);
   if (f.maxPrice != null) q = q.lte('price', f.maxPrice);
   if (f.minYear != null) q = q.gte('year', f.minYear);

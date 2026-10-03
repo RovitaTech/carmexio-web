@@ -9,32 +9,9 @@ import { SeoService } from '../../core/seo/seo.service';
     <div class="container page">
       <h1 i18n="@@static.como-funciona-carmexio">Cómo funciona Carmexio</h1>
       <p class="lead" i18n="@@static.carmexio-es-la-agencia-verificamos">
-        Carmexio es la agencia: verificamos cada auto y atendemos a cada comprador.
+        Carmexio es la agencia: verificamos cada auto y te atendemos en la sucursal.
       </p>
       <div class="cols">
-        <section class="card block">
-          <h2 i18n="@@static.si-vendes">Si vendes</h2>
-          <ol>
-            <li i18n="@@static.crea-tu-cuenta-y-publica">
-              Crea tu cuenta y publica tu auto gratis.
-            </li>
-            <li i18n="@@static.toma-las-11-fotos-guiadas">
-              Toma las 11 fotos guiadas (frente, costados, tablero, motor…).
-            </li>
-            <li i18n="@@static.elige-la-sucursal-carmexio-y">
-              Elige la sucursal Carmexio y lleva el auto a inspección.
-            </li>
-            <li i18n="@@static.publicamos-tu-auto-con-reporte">
-              Publicamos tu auto con reporte verificado.
-            </li>
-            <li i18n="@@static.atendemos-a-los-compradores-y">
-              Atendemos a los compradores y coordinamos visitas y pago.
-            </li>
-          </ol>
-          <a class="btn primary" routerLink="/vender" i18n="@@static.vender-mi-auto"
-            >Vender mi auto</a
-          >
-        </section>
         <section class="card block">
           <h2 i18n="@@static.si-compras">Si compras</h2>
           <ol>
@@ -50,8 +27,24 @@ import { SeoService } from '../../core/seo/seo.service';
             <li i18n="@@static.revisamos-papeles-factura-tenencias-repuve">
               Revisamos papeles (factura, tenencias, REPUVE) contigo.
             </li>
+            <li i18n="@@static.recoges-en-guanajuato">
+              Recoges tu auto en nuestra sucursal de Guanajuato.
+            </li>
           </ol>
-          <a class="btn outline" routerLink="/autos" i18n="@@static.ver-autos">Ver autos</a>
+          <a class="btn primary" routerLink="/autos" i18n="@@static.ver-autos">Ver autos</a>
+        </section>
+        <section class="card block">
+          <h2 i18n="@@static.dos-tipos">Dos formas de encontrar tu auto</h2>
+          <ol>
+            <li i18n="@@static.tipo-local">
+              Autos en Guanajuato: ya están en la sucursal, puedes verlos hoy.
+            </li>
+            <li i18n="@@static.tipo-pickup">
+              Autos que puedes recoger en Guanajuato: están en otra sucursal Carmexio y los traemos
+              para ti.
+            </li>
+          </ol>
+          <a class="btn outline" routerLink="/contacto" i18n="@@nav.contact">Contacto</a>
         </section>
       </div>
     </div>
@@ -90,7 +83,7 @@ export class HowItWorksPage {
   constructor() {
     inject(SeoService).set({
       title: $localize`:@@static.como-funciona:Cómo funciona`,
-      description: $localize`:@@static.vende-tu-auto-con-carmexio:Vende tu auto con Carmexio o compra un seminuevo verificado e inspeccionado.`,
+      description: $localize`:@@static.vende-tu-auto-con-carmexio:Cómo comprar un seminuevo verificado e inspeccionado en Carmexio Guanajuato.`,
     });
   }
 }

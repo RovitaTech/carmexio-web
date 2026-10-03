@@ -7,7 +7,7 @@ import {
   quoteLoan,
 } from '../../core/utils/finance';
 import { formatPrice } from '../../core/utils/format';
-import { Icon } from '../../shared/ui/icon';
+import { Icon } from './icon';
 
 /** Estimated monthly payment; "Solicitar" opens a chat with Carmexio about the car. */
 @Component({

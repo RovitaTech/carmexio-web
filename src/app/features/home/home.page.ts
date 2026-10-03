@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { SeoService } from '../../core/seo/seo.service';
 import { ContentStore } from '../../core/state/content.store';
 import { RecentlyViewedStore } from '../../core/state/recently-viewed.store';
+import { SiteStore } from '../../core/state/site.store';
 import { compactPrice } from '../../core/utils/format';
 import { webLink } from '../../core/utils/links';
 import { optional, valueOr } from '../../core/utils/resource';
@@ -26,21 +27,35 @@ export class HomePage {
   private readonly recentlyViewed = inject(RecentlyViewedStore);
   protected readonly content = inject(ContentStore);
 
-  protected readonly featured = resource({
-    id: 'home:featured',
-    loader: () => optional(this.listings.featured(8), []),
+  protected readonly site = inject(SiteStore);
+  protected readonly region = this.site.site.region;
+  private readonly branchId = this.site.site.branchId;
+
+  /** In stock at this branch. */
+  protected readonly local = resource({
+    id: 'home:local',
+    loader: () =>
+      optional(
+        this.listings
+          .search({ locationId: this.branchId, sort: 'newest' }, 0, 8)
+          .then((p) => p.items),
+        [],
+      ),
   });
-  protected readonly recent = resource({
-    id: 'home:recent',
-    loader: () => optional(this.listings.recent(8), []),
+  /** At the other branches: brought over on request. */
+  protected readonly pickup = resource({
+    id: 'home:pickup',
+    loader: () =>
+      optional(
+        this.listings
+          .search({ excludeLocationId: this.branchId, sort: 'newest' }, 0, 8)
+          .then((p) => p.items),
+        [],
+      ),
   });
   protected readonly brands = resource({
     id: 'home:brands',
     loader: () => optional(this.catalog.brands(), []),
-  });
-  protected readonly locations = resource({
-    id: 'home:locations',
-    loader: () => optional(this.catalog.locations(), []),
   });
   /** Browser-only history, so no SSR id. */
   protected readonly viewed = resource({
@@ -70,24 +85,24 @@ export class HomePage {
 
   protected readonly steps: { icon: IconName; title: string; text: string }[] = [
     {
-      icon: 'plus',
-      title: $localize`:@@how.1.title:Publica gratis`,
-      text: $localize`:@@how.1.text:Toma las 11 fotos guiadas y completa los datos.`,
-    },
-    {
       icon: 'search',
-      title: $localize`:@@how.2.title:Verificamos`,
-      text: $localize`:@@how.2.text:Carmexio revisa tu anuncio y lo inspecciona en sucursal.`,
-    },
-    {
-      icon: 'shield',
-      title: $localize`:@@how.3.title:Sale publicado`,
-      text: $localize`:@@how.3.text:Con reporte de inspección de 150 puntos.`,
+      title: $localize`:@@buy.1.title:Elige tu auto`,
+      text: $localize`:@@buy.1.text:Explora el inventario con fotos, precio y reporte de inspección.`,
     },
     {
       icon: 'chat',
-      title: $localize`:@@how.4.title:Nosotros vendemos`,
-      text: $localize`:@@how.4.text:Atendemos a los compradores y agendamos visitas.`,
+      title: $localize`:@@buy.2.title:Escríbenos`,
+      text: $localize`:@@buy.2.text:Por chat, WhatsApp o teléfono resolvemos tus dudas y agendamos tu visita.`,
+    },
+    {
+      icon: 'car',
+      title: $localize`:@@buy.3.title:Pruébalo`,
+      text: $localize`:@@buy.3.text:Ven a la sucursal, revísalo y haz tu prueba de manejo.`,
+    },
+    {
+      icon: 'shield',
+      title: $localize`:@@buy.4.title:Recógelo en Guanajuato`,
+      text: $localize`:@@buy.4.text:Revisamos papeles contigo y te lo entregamos en nuestra sucursal.`,
     },
   ];
 
@@ -95,11 +110,11 @@ export class HomePage {
     const seo = inject(SeoService);
     seo.set({
       title: $localize`:@@home.seo.title:Autos seminuevos verificados`,
-      description: $localize`:@@home.seo.description:Compra autos seminuevos verificados e inspeccionados por Carmexio en CDMX, Guadalajara, Querétaro y Tijuana.`,
+      description: $localize`:@@home.seo.description:Autos seminuevos verificados e inspeccionados por Carmexio Guanajuato. Míralos en la sucursal o recógelos en Guanajuato.`,
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'AutoDealer',
-        name: 'Carmexio',
+        name: `Carmexio ${this.region}`,
         url: seo.absolute('/'),
       },
     });

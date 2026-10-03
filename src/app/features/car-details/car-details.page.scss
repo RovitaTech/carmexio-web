@@ -212,3 +212,13 @@ h1 {
   display: grid;
   gap: 16px;
 }
+
+.where {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cx-text-2);
+
+  &.here {
+    color: var(--cx-success-text);
+  }
+}

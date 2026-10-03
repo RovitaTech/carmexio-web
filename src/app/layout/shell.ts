@@ -4,14 +4,16 @@ import { AlertBar } from './alert-bar';
 import { SiteFooter } from './site-footer';
 import { SiteHeader } from './site-header';
 import { TabBar } from './tab-bar';
+import { TopBar } from './top-bar';
 
 /** Public site layout (route component for everything except /admin). */
 @Component({
   selector: 'cx-shell',
-  imports: [RouterOutlet, AlertBar, SiteHeader, SiteFooter, TabBar],
+  imports: [RouterOutlet, AlertBar, TopBar, SiteHeader, SiteFooter, TabBar],
   template: `
     <a class="skip" href="#main" i18n="@@nav.skip">Saltar al contenido</a>
     <cx-alert-bar />
+    <cx-top-bar />
     <cx-site-header />
     <main id="main"><router-outlet /></main>
     <cx-site-footer />

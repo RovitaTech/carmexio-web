@@ -29,7 +29,7 @@ describe('sitemap', () => {
     expect(xml).toContain('<loc>https://carmexio.mx</loc>');
     expect(xml).toContain('<loc>https://carmexio.mx/en</loc>');
     expect(xml).toContain('<loc>https://carmexio.mx/ofertas</loc>');
-    expect(xml).toContain('<loc>https://carmexio.mx/en/sucursales</loc>');
+    expect(xml).toContain('<loc>https://carmexio.mx/en/contacto</loc>');
     expect(xml).toMatch(/<loc>https:\/\/carmexio\.mx\/autos\/car-1--[a-z0-9-]+<\/loc>/);
     expect(xml).toMatch(
       /<loc>https:\/\/carmexio\.mx\/en\/autos\/car-1--[a-z0-9-]+\/inspeccion<\/loc>/,

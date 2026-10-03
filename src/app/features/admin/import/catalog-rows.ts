@@ -157,6 +157,7 @@ function guessModel(title: string, brand: string, brands: readonly Brand[]): str
 }
 
 const BRANCH_ALIASES: Record<string, string[]> = {
+  'loc-gto': ['gto', 'guanajuato', 'guanajuato capital'],
   'loc-cdmx': ['cdmx', 'df', 'ciudad de mexico', 'mexico city', 'mexico'],
   'loc-gdl': ['gdl', 'guadalajara', 'jalisco', 'zapopan'],
   'loc-qro': ['qro', 'queretaro'],

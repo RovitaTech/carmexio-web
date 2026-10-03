@@ -1,6 +1,25 @@
 <div class="container page">
   <header class="top">
-    <h1 i18n="@@search.autos-en-venta">Autos en venta</h1>
+    <h1 i18n="@@search.inventory">Inventario</h1>
+    <div class="stock" role="group" i18n-aria-label="@@nav.byStock" aria-label="Disponibilidad">
+      @for (s of stocks; track s.label) {
+        <button
+          type="button"
+          class="chip"
+          [class.active]="stock() === s.value"
+          [attr.aria-pressed]="stock() === s.value"
+          (click)="setStock(s.value)"
+        >
+          {{ s.label }}
+        </button>
+      }
+    </div>
+    @if (stock() === 'pickup') {
+      <p class="stock-note" i18n="@@search.pickupNote">
+        Estos autos están en otra sucursal Carmexio. Los traemos a {{ region }} para que los veas y
+        los recojas aquí.
+      </p>
+    }
     <form
       class="search"
       role="search"

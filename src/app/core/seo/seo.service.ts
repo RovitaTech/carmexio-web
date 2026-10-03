@@ -16,7 +16,7 @@ export interface SeoData {
   jsonLd?: object | object[];
 }
 
-const SITE_NAME = 'Carmexio';
+const SITE_NAME = 'Carmexio Guanajuato';
 const DEFAULT_IMAGE = '/icon-512.png';
 
 /**

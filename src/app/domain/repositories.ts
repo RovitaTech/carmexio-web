@@ -74,13 +74,17 @@ export interface FavoritesRepository {
 export interface ChatRepository {
   conversations(): Promise<Conversation[]>;
   conversation(id: string): Promise<Conversation>;
-  start(target: { listingId: string } | { locationId: string }): Promise<string>;
+  /** A car, a branch (general enquiry), or a car handled by the given branch. */
+  start(target: ChatTarget): Promise<string>;
   messages(conversationId: string): Promise<ChatMessage[]>;
   /** Realtime subscription; returns an unsubscribe function. */
   watch(conversationId: string, onChange: (messages: ChatMessage[]) => void): () => void;
   send(conversationId: string, body: string): Promise<void>;
   markRead(conversationId: string): Promise<void>;
 }
+
+export type ChatTarget =
+  { listingId: string; locationId?: string } | { listingId?: undefined; locationId: string };
 
 /** Public site content (alerts, ads, offers, copy overrides) — live items only. */
 export interface ContentRepository {

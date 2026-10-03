@@ -1,7 +1,23 @@
 # CLAUDE.md — Carmexio web (Angular 22)
 
-Website for **Carmexio**, a used-car dealer in Mexico with branches (CDMX,
-Guadalajara, Querétaro, Tijuana). Public marketplace + staff portal.
+Website of **Carmexio Guanajuato** (carmexioguanajuato.com), one branch of Carmexio, a
+used-car dealer in Mexico. The site **only sells** cars. Public catalog + staff portal.
+
+## This site = the Guanajuato branch (owner review, 2026-10)
+
+- `APP_CONFIG.site` (`environment.ts`): `branchId` (`loc-gto`), `region`, phones, WhatsApp,
+  Facebook link (empty hides it). `SiteStore` (core/state) exposes it plus the branch record.
+- Catalog in two parts: **"Autos en Guanajuato"** (`locationId = branchId`) and **"Autos que
+  puedes recoger en Guanajuato"** (`excludeLocationId = branchId`: cars at other branches,
+  brought over on request). URL: `/autos?stock=local|pickup`; car cards say where the car is.
+- Buyers always deal with this branch: chats start with `{ listingId, locationId: branchId }`
+  (carmexio-BE migration 0008), and contact buttons use the site's phones/WhatsApp.
+- No "sell your car" on the public site. `/vender` and `/mis-anuncios` are staff tools
+  (`staffGuard`, linked from the staff portal as "Agregar auto"); old links map to `/contacto`.
+- Header: contact strip (`layout/top-bar.ts`: phones, hours, Ayuda · Nosotros · Contacto) and
+  nav Inventario · Financiamiento · Ofertas · Contacto. Logo wordmark: CARMEXIO / GUANAJUATO.
+- Info pages in `features/static/info.pages.ts`: `/financiamiento`, `/nosotros`, `/contacto`
+  (replaces `/sucursales`), `/ayuda`. No "Membresía" page until the owner defines it.
 
 - **Work plan:** `FRONTEND_PLAN.md` (checklists, design refs, milestones). Tick items as you finish them.
 - **Backend contract:** `../carmexio/API_NEEDED.md` (Supabase, shared with the Flutter app).

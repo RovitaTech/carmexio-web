@@ -1,5 +1,13 @@
-/** Deep links from the mobile app → web routes (`/search?x` → `/autos?x`). */
-const APP_ROUTES: Record<string, string> = { '/search': '/autos', '/sell': '/vender' };
+/**
+ * Deep links from the mobile app → web routes (`/search?x` → `/autos?x`). The website
+ * only sells, so links to the sell flow (app or old site content) go to the contact page.
+ */
+const APP_ROUTES: Record<string, string> = {
+  '/search': '/autos',
+  '/sell': '/contacto',
+  '/vender': '/contacto',
+  '/sucursales': '/contacto',
+};
 
 export interface WebLink {
   /** Set for links inside the site (use with routerLink + queryParams). */

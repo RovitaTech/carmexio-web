@@ -1,10 +1,9 @@
-import { Component, inject, resource } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ContentStore } from '../core/state/content.store';
+import { SiteStore } from '../core/state/site.store';
 import { ThemeMode, ThemeService } from '../core/theme/theme.service';
-import { optional } from '../core/utils/resource';
 import { BODY_LABELS, BodyType } from '../domain/models';
-import { CATALOG_REPOSITORY } from '../domain/repositories';
 import { Logo } from '../shared/ui/logo';
 import { LangSwitch } from './lang-switch';
 
@@ -21,7 +20,10 @@ import { LangSwitch } from './lang-switch';
             <a href="https://www.instagram.com/carmexio.mx/" target="_blank" rel="noopener"
               >Instagram</a
             >
-            <a href="https://wa.me/5215580001001" target="_blank" rel="noopener">WhatsApp</a>
+            <a [href]="site.whatsappUrl" target="_blank" rel="noopener">WhatsApp</a>
+            @if (site.site.facebookUrl; as fb) {
+              <a [href]="fb" target="_blank" rel="noopener">Facebook</a>
+            }
           </div>
         </div>
         <nav aria-labelledby="f-buy">
@@ -35,19 +37,24 @@ import { LangSwitch } from './lang-switch';
         </nav>
         <nav aria-labelledby="f-company">
           <h2 id="f-company">Carmexio</h2>
+          <a routerLink="/nosotros" i18n="@@nav.about">Nosotros</a>
           <a routerLink="/como-funciona" i18n="@@nav.howItWorks">Cómo funciona</a>
-          <a routerLink="/vender" i18n="@@nav.sell">Vender mi auto</a>
+          <a routerLink="/financiamiento" i18n="@@nav.financing">Financiamiento</a>
           <a routerLink="/ofertas" i18n="@@nav.offers">Ofertas</a>
-          <a routerLink="/sucursales" i18n="@@nav.showrooms">Sucursales</a>
+          <a routerLink="/ayuda" i18n="@@nav.help">Ayuda</a>
         </nav>
         <div>
-          <h2 i18n="@@footer.showrooms">Sucursales</h2>
-          @for (l of locations.value() ?? []; track l.id) {
-            <p class="branch">
-              <strong>{{ l.name }}</strong>
-              <span>{{ l.hours }}</span>
-            </p>
-          }
+          <h2 i18n="@@nav.contact">Contacto</h2>
+          <p class="branch">
+            <strong>Carmexio {{ site.site.region }}</strong>
+            @if (site.branch(); as b) {
+              <span>{{ b.address }}</span>
+            }
+            <span i18n="@@site.hours">Lun – Sáb 10 a 19 hrs</span>
+            @for (phone of site.site.phones; track phone) {
+              <a [href]="site.tel(phone)">{{ phone }}</a>
+            }
+          </p>
         </div>
       </div>
       <div class="container bottom">
@@ -159,12 +166,7 @@ import { LangSwitch } from './lang-switch';
 export class SiteFooter {
   protected readonly content = inject(ContentStore);
   protected readonly theme = inject(ThemeService);
-  private readonly catalog = inject(CATALOG_REPOSITORY);
-
-  protected readonly locations = resource({
-    id: 'footer:locations',
-    loader: () => optional(this.catalog.locations(), []),
-  });
+  protected readonly site = inject(SiteStore);
   protected readonly bodies = (Object.keys(BODY_LABELS) as BodyType[])
     .filter((b) => b !== 'convertible')
     .map((value) => ({ value, label: BODY_LABELS[value] }));

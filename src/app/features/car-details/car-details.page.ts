@@ -13,6 +13,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { SessionStore } from '../../core/auth/session.store';
+import { SiteStore } from '../../core/state/site.store';
 import { SeoService } from '../../core/seo/seo.service';
 import { carSlug, formatKm, formatPrice, idFromSlug, timeAgo } from '../../core/utils/format';
 import {
@@ -29,7 +30,7 @@ import { ChatInboxStore } from '../../core/state/chat-inbox.store';
 import { FavoritesStore } from '../../core/state/favorites.store';
 import { RecentlyViewedStore } from '../../core/state/recently-viewed.store';
 import { CarCard } from '../../shared/ui/car-card';
-import { FinancingCalculator } from './financing-calculator';
+import { FinancingCalculator } from '../../shared/ui/financing-calculator';
 import { EmptyState, ScoreRing, Skeleton } from '../../shared/ui/state-views';
 import { optional, valueOr } from '../../core/utils/resource';
 
@@ -50,6 +51,7 @@ export class CarDetailsPage {
   private readonly recentlyViewed = inject(RecentlyViewedStore);
   private readonly inbox = inject(ChatInboxStore);
   protected readonly session = inject(SessionStore);
+  protected readonly site = inject(SiteStore);
   protected readonly favorites = inject(FavoritesStore);
 
   protected readonly car = resource({
@@ -146,7 +148,7 @@ export class CarDetailsPage {
     const text = encodeURIComponent(
       $localize`:@@car.whatsappMessage:Hola Carmexio, me interesa el ${car.brand}:brand: ${car.model}:model: ${car.year}:year: (anuncio ${car.id.toUpperCase()}:id:).`,
     );
-    return `https://wa.me/${car.location?.whatsapp ?? ''}?text=${text}`;
+    return `${this.site.whatsappUrl}?text=${text}`;
   }
 
   protected async chat(car: Car): Promise<void> {
@@ -156,7 +158,8 @@ export class CarDetailsPage {
     }
     this.starting.set(true);
     try {
-      const id = await this.inbox.start({ listingId: car.id });
+      // This site's branch answers, also for cars that sit in another branch.
+      const id = await this.inbox.start({ listingId: car.id, locationId: this.site.site.branchId });
       await this.router.navigate(['/mensajes', id]);
     } finally {
       this.starting.set(false);

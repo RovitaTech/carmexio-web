@@ -17,8 +17,8 @@ describe('App', () => {
     await TestBed.inject(Router).navigateByUrl('/');
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('header nav')?.textContent).toContain('Comprar');
-    expect(el.querySelector('header .cta')?.textContent).toContain('Vende tu auto');
+    expect(el.querySelector('header nav')?.textContent).toContain('Inventario');
+    expect(el.querySelector('header .cta')?.textContent).toContain('Ver inventario');
     expect(el.querySelector('footer')?.textContent).toContain('Carmexio');
     expect(el.querySelector('.tabbar')).toBeTruthy();
   });

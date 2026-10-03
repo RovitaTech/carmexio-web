@@ -29,12 +29,19 @@
           [attr.aria-expanded]="buyOpen()"
           (click)="toggleBuy()"
         >
-          <ng-container i18n="@@nav.buy">Comprar</ng-container>
+          <ng-container i18n="@@nav.inventory">Inventario</ng-container>
           <cx-icon name="chevronDown" [size]="16" />
         </button>
         @if (buyOpen()) {
           <div id="buy-menu" class="mega card">
             <div class="col">
+              <h2 i18n="@@nav.byStock">Disponibilidad</h2>
+              <a routerLink="/autos" [queryParams]="{ stock: 'local' }" i18n="@@stock.local"
+                >Autos en {{ region }}</a
+              >
+              <a routerLink="/autos" [queryParams]="{ stock: 'pickup' }" i18n="@@stock.pickup"
+                >Autos que puedes recoger en {{ region }}</a
+              >
               <h2 i18n="@@nav.byBody">Por carrocería</h2>
               @for (b of bodies; track b.value) {
                 <a routerLink="/autos" [queryParams]="{ body: b.value }">{{ b.label }}</a>
@@ -79,18 +86,18 @@
           </div>
         }
       </div>
+      <a
+        class="nav-link"
+        routerLink="/financiamiento"
+        routerLinkActive="active"
+        i18n="@@nav.financing"
+        >Financiamiento</a
+      >
       <a class="nav-link" routerLink="/ofertas" routerLinkActive="active" i18n="@@nav.offers"
         >Ofertas</a
       >
-      <a class="nav-link" routerLink="/sucursales" routerLinkActive="active" i18n="@@nav.showrooms"
-        >Sucursales</a
-      >
-      <a
-        class="nav-link"
-        routerLink="/como-funciona"
-        routerLinkActive="active"
-        i18n="@@nav.howItWorks"
-        >Cómo funciona</a
+      <a class="nav-link" routerLink="/contacto" routerLinkActive="active" i18n="@@nav.contact"
+        >Contacto</a
       >
       @if (session.isStaff()) {
         <a class="nav-link" routerLink="/staff" routerLinkActive="active">Staff</a>
@@ -129,8 +136,8 @@
       } @else {
         <a class="btn ghost sm" routerLink="/entrar" i18n="@@nav.signIn">Entrar</a>
       }
-      <a class="btn primary sm cta" routerLink="/vender">
-        <ng-container i18n="@@nav.sellCta">Vende tu auto</ng-container>
+      <a class="btn primary sm cta" routerLink="/autos">
+        <ng-container i18n="@@nav.inventoryCta">Ver inventario</ng-container>
         <cx-icon name="arrowRight" [size]="18" />
       </a>
     </div>
@@ -152,21 +159,24 @@
   </div>
   <nav class="drawer-nav" i18n-aria-label="@@nav.main" aria-label="Principal">
     <a routerLink="/autos"
-      ><cx-icon name="car" /><ng-container i18n="@@nav.buyCars">Comprar autos</ng-container></a
+      ><cx-icon name="car" /><ng-container i18n="@@nav.inventory">Inventario</ng-container></a
     >
-    <a routerLink="/vender"
-      ><cx-icon name="plus" /><ng-container i18n="@@nav.sell">Vender mi auto</ng-container></a
+    <a routerLink="/financiamiento"
+      ><cx-icon name="calculator" /><ng-container i18n="@@nav.financing"
+        >Financiamiento</ng-container
+      ></a
     >
     <a routerLink="/ofertas"
       ><cx-icon name="tag" /><ng-container i18n="@@nav.offers">Ofertas</ng-container></a
     >
-    <a routerLink="/sucursales"
-      ><cx-icon name="pin" /><ng-container i18n="@@nav.showrooms">Sucursales</ng-container></a
+    <a routerLink="/contacto"
+      ><cx-icon name="pin" /><ng-container i18n="@@nav.contact">Contacto</ng-container></a
     >
-    <a routerLink="/como-funciona"
-      ><cx-icon name="shield" /><ng-container i18n="@@nav.howItWorks"
-        >Cómo funciona</ng-container
-      ></a
+    <a routerLink="/nosotros"
+      ><cx-icon name="shield" /><ng-container i18n="@@nav.about">Nosotros</ng-container></a
+    >
+    <a routerLink="/ayuda"
+      ><cx-icon name="chat" /><ng-container i18n="@@nav.help">Ayuda</ng-container></a
     >
     <a routerLink="/favoritos"
       ><cx-icon name="heart" /><ng-container i18n="@@nav.favorites">Guardados</ng-container></a
@@ -177,6 +187,11 @@
       <a class="chip" routerLink="/autos" [queryParams]="{ body: b.value }">{{ b.label }}</a>
     }
   </div>
+  <p class="drawer-phones">
+    @for (phone of site.site.phones; track phone) {
+      <a [href]="site.tel(phone)"><cx-icon name="phone" [size]="18" />{{ phone }}</a>
+    }
+  </p>
   <div class="drawer-foot">
     <cx-lang-switch />
     <label class="theme">

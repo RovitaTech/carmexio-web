@@ -1,7 +1,7 @@
 import { Service, computed, effect, inject, signal } from '@angular/core';
 import { SessionStore } from '../auth/session.store';
 import { Conversation } from '../../domain/models';
-import { CHAT_REPOSITORY } from '../../domain/repositories';
+import { CHAT_REPOSITORY, ChatTarget } from '../../domain/repositories';
 
 /** User ↔ Carmexio conversations + unread badge. Empty for guests. */
 @Service()
@@ -40,7 +40,7 @@ export class ChatInboxStore {
   }
 
   /** Opens (or creates) a thread about a car or with a branch. */
-  start(target: { listingId: string } | { locationId: string }): Promise<string> {
+  start(target: ChatTarget): Promise<string> {
     return this.repo.start(target);
   }
 }

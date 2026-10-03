@@ -39,4 +39,14 @@ describe('search query', () => {
       3,
     );
   });
+
+  it("maps ?stock=local|pickup to this site's branch and back", () => {
+    const local = parseFilter(convertToParamMap({ stock: 'local' }), 'loc-gto');
+    expect(local).toMatchObject({ locationId: 'loc-gto', excludeLocationId: undefined });
+    const pickup = parseFilter(convertToParamMap({ stock: 'pickup', body: 'suv' }), 'loc-gto');
+    expect(pickup).toMatchObject({ excludeLocationId: 'loc-gto', bodyType: 'suv' });
+    expect(filterToParams(pickup, 'loc-gto')['stock']).toBe('pickup');
+    expect(filterToParams(local, 'loc-gto')['stock']).toBe('local');
+    expect(filterToParams({ sort: 'newest' }, 'loc-gto')['stock']).toBeNull();
+  });
 });

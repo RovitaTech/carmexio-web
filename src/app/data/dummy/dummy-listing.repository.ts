@@ -71,6 +71,8 @@ export class DummyListingRepository implements ListingRepository {
           (!f.fuelType || l['fuel_type'] === f.fuelType) &&
           (!f.transmission || l['transmission'] === f.transmission) &&
           (!f.city || l['city'] === f.city) &&
+          (!f.locationId || l['location_id'] === f.locationId) &&
+          (!f.excludeLocationId || l['location_id'] !== f.excludeLocationId) &&
           (f.minPrice == null || l['price'] >= f.minPrice) &&
           (f.maxPrice == null || l['price'] <= f.maxPrice) &&
           (f.minYear == null || l['year'] >= f.minYear) &&

@@ -16,15 +16,21 @@ const PUBLIC_PAGES = [
   '/autos/car-1--ram-1500-2022',
   '/autos/car-1--ram-1500-2022/inspeccion',
   '/ofertas',
-  '/sucursales',
+  '/contacto',
+  '/financiamiento',
+  '/nosotros',
+  '/ayuda',
   '/como-funciona',
   '/admin/entrar',
   '/entrar',
   '/registro',
   '/nueva-contrasena',
 ];
-const SIGNED_IN_PAGES = ['/mis-anuncios', '/favoritos', '/mensajes', '/cuenta', '/vender'];
+const SIGNED_IN_PAGES = ['/favoritos', '/mensajes', '/cuenta'];
 const STAFF_PAGES = [
+  // Adding a car by hand is a staff tool now (the public site only sells).
+  '/vender',
+  '/mis-anuncios',
   '/staff',
   '/staff/revision',
   '/staff/revision/car-26',

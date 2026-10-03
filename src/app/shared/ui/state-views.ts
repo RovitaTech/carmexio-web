@@ -5,7 +5,7 @@ import { errorMessage } from '../../core/utils/errors';
   selector: 'cx-empty-state',
   template: `
     <div class="icon" aria-hidden="true">{{ icon() }}</div>
-    <h3>{{ title() }}</h3>
+    <h2>{{ title() }}</h2>
     <p>{{ message() }}</p>
     @if (actionLabel()) {
       <button class="btn primary" type="button" (click)="action.emit()">{{ actionLabel() }}</button>
@@ -28,6 +28,10 @@ import { errorMessage } from '../../core/utils/errors';
       background: var(--cx-primary-soft);
       color: var(--cx-primary-text);
       font-size: 2.2rem;
+    }
+    /* An h2 so it follows the page's h1 (heading order), sized like a card title. */
+    h2 {
+      font-size: 1.17rem;
     }
     p {
       max-width: 360px;

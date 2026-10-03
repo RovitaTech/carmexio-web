@@ -19,6 +19,7 @@ import { filter, map } from 'rxjs';
 import { SessionStore } from '../core/auth/session.store';
 import { ChatInboxStore } from '../core/state/chat-inbox.store';
 import { ThemeMode, ThemeService } from '../core/theme/theme.service';
+import { SiteStore } from '../core/state/site.store';
 import { scrolledPast } from '../core/ui/scroll';
 import { compactPrice } from '../core/utils/format';
 import { optional } from '../core/utils/resource';
@@ -47,6 +48,8 @@ function wantsOverlay(route: ActivatedRouteSnapshot | null): boolean {
 })
 export class SiteHeader {
   protected readonly session = inject(SessionStore);
+  protected readonly site = inject(SiteStore);
+  protected readonly region = this.site.site.region;
   protected readonly inbox = inject(ChatInboxStore);
   protected readonly theme = inject(ThemeService);
   private readonly router = inject(Router);

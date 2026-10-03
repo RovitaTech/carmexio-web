@@ -5,8 +5,19 @@ import { BodyType, CarFilter, FuelType, SortOption, Transmission } from '../../d
  * Same query keys as the Flutter deep links (SearchQueryParser):
  * q, brand, body, fuel, transmission, city, minPrice, maxPrice, minYear,
  * maxYear, maxKm, verified, featured, sort.
+ *
+ * Web only: `stock=local|pickup` splits the catalog by this site's branch — cars at
+ * the branch, or cars at the other branches that can be picked up here.
  */
-export function parseFilter(params: ParamMap): CarFilter {
+export type Stock = 'local' | 'pickup';
+
+export function stockOf(f: CarFilter, branchId?: string): Stock | undefined {
+  if (!branchId) return undefined;
+  if (f.locationId === branchId) return 'local';
+  return f.excludeLocationId === branchId ? 'pickup' : undefined;
+}
+
+export function parseFilter(params: ParamMap, branchId?: string): CarFilter {
   const num = (key: string) => {
     const value = Number(params.get(key));
     return params.has(key) && Number.isFinite(value) ? value : undefined;
@@ -18,6 +29,8 @@ export function parseFilter(params: ParamMap): CarFilter {
     fuelType: (params.get('fuel') as FuelType) ?? undefined,
     transmission: (params.get('transmission') as Transmission) ?? undefined,
     city: params.get('city') ?? undefined,
+    locationId: params.get('stock') === 'local' ? branchId : undefined,
+    excludeLocationId: params.get('stock') === 'pickup' ? branchId : undefined,
     minPrice: num('minPrice'),
     maxPrice: num('maxPrice'),
     minYear: num('minYear'),
@@ -29,8 +42,9 @@ export function parseFilter(params: ParamMap): CarFilter {
   };
 }
 
-export function filterToParams(f: CarFilter): Params {
+export function filterToParams(f: CarFilter, branchId?: string): Params {
   const params: Params = {
+    stock: stockOf(f, branchId) ?? null,
     q: f.query || null,
     brand: f.brand ?? null,
     body: f.bodyType ?? null,

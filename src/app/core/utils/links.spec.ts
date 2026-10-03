@@ -3,7 +3,8 @@ import { webLink } from './links';
 describe('webLink', () => {
   it('maps app deep links and keeps the query', () => {
     expect(webLink('/search?body=pickup')).toEqual({ path: '/autos', query: { body: 'pickup' } });
-    expect(webLink('/sell')).toEqual({ path: '/vender', query: {} });
+    expect(webLink('/sell')).toEqual({ path: '/contacto', query: {} });
+    expect(webLink('/vender')).toEqual({ path: '/contacto', query: {} });
     expect(webLink('/ofertas')).toEqual({ path: '/ofertas', query: {} });
   });
 

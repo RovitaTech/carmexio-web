@@ -123,6 +123,7 @@ export class StaffShell {
     { path: '/staff/anuncios', label: 'Anuncios', icon: '☰', exact: false },
     { path: '/staff/mensajes', label: 'Mensajes', icon: '✉', exact: false },
     { path: '/staff/inventario', label: 'Inventario', icon: '▤', exact: false },
+    { path: '/vender', label: 'Agregar auto', icon: '＋', exact: false },
     { path: '/admin', label: 'Contenido del sitio', icon: '✎', exact: false },
   ];
 

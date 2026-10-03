@@ -105,6 +105,10 @@
   color: var(--cx-text);
   animation: drop 0.18s ease-out;
 
+  h2:not(:first-child) {
+    margin-top: 14px;
+  }
+
   h2 {
     margin-bottom: 6px;
     color: var(--cx-text-3);
@@ -341,6 +345,19 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+.drawer-phones {
+  display: grid;
+  gap: 8px;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: var(--cx-primary-text);
+  }
 }
 
 .drawer-foot {

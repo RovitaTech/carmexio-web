@@ -22,21 +22,49 @@
   </section>
 }
 
-<section class="container section" aria-labelledby="featured-title">
+<section class="container section" aria-labelledby="local-title">
   <div class="section-head">
-    <h2 id="featured-title" i18n="@@home.featured">Destacados y certificados</h2>
-    <a routerLink="/autos" [queryParams]="{ featured: true }" i18n="@@common.seeAll">Ver todos</a>
+    <div>
+      <h2 id="local-title" i18n="@@stock.local">Autos en {{ region }}</h2>
+      <p class="sub" i18n="@@home.local.sub">En nuestra sucursal: ven a verlos y manejarlos hoy.</p>
+    </div>
+    <a routerLink="/autos" [queryParams]="{ stock: 'local' }" i18n="@@common.seeAll">Ver todos</a>
   </div>
   <div class="grid-cars">
-    @for (car of featured.value() ?? []; track car.id) {
+    @for (car of local.value() ?? []; track car.id) {
       <cx-car-card [car]="car" />
     } @empty {
-      @for (i of [1, 2, 3, 4]; track i) {
-        <cx-skeleton height="320px" radius="20px" />
+      @if (local.isLoading()) {
+        @for (i of [1, 2, 3, 4]; track i) {
+          <cx-skeleton height="320px" radius="20px" />
+        }
+      } @else {
+        <p class="sub" i18n="@@home.local.empty">Pronto habrá más autos en la sucursal.</p>
       }
     }
   </div>
 </section>
+
+@if (pickup.value()?.length) {
+  <section class="container section" aria-labelledby="pickup-title">
+    <div class="section-head">
+      <div>
+        <h2 id="pickup-title" i18n="@@stock.pickup">Autos que puedes recoger en {{ region }}</h2>
+        <p class="sub" i18n="@@home.pickup.sub">
+          Están en otra sucursal Carmexio: los traemos a {{ region }} para ti.
+        </p>
+      </div>
+      <a routerLink="/autos" [queryParams]="{ stock: 'pickup' }" i18n="@@common.seeAll"
+        >Ver todos</a
+      >
+    </div>
+    <div class="grid-cars">
+      @for (car of pickup.value(); track car.id) {
+        <cx-car-card [car]="car" />
+      }
+    </div>
+  </section>
+}
 
 @if (offers().length) {
   <section class="offers-band" aria-labelledby="offers-title">
@@ -60,7 +88,7 @@
 <section class="how" aria-labelledby="how-title">
   <div class="container section">
     <div class="section-head">
-      <h2 id="how-title" i18n="@@home.how">Así funciona Carmexio</h2>
+      <h2 id="how-title" i18n="@@home.howBuy">Así compras en Carmexio</h2>
       <a routerLink="/como-funciona" i18n="@@home.howMore">Conoce el proceso</a>
     </div>
     <ol class="steps">
@@ -110,22 +138,6 @@
   </section>
 }
 
-@defer (on viewport) {
-  <section class="container section" aria-labelledby="recent-title">
-    <div class="section-head">
-      <h2 id="recent-title" i18n="@@home.recent">Recién llegados</h2>
-      <a routerLink="/autos" i18n="@@common.seeAll">Ver todos</a>
-    </div>
-    <div class="grid-cars">
-      @for (car of recent.value() ?? []; track car.id) {
-        <cx-car-card [car]="car" />
-      }
-    </div>
-  </section>
-} @placeholder {
-  <div class="container section"><cx-skeleton height="320px" radius="20px" /></div>
-}
-
 @if (strip().length) {
   <section class="container section banners" aria-labelledby="promos-title">
     <h2 id="promos-title" class="visually-hidden" i18n="@@home.promos">Promociones</h2>
@@ -145,33 +157,24 @@
   </section>
 }
 
-<section class="container section" aria-labelledby="locations-title">
-  <div class="section-head">
-    <h2 id="locations-title" i18n="@@home.showrooms">Nuestras sucursales</h2>
-    <a routerLink="/sucursales" i18n="@@home.allShowrooms">Ver sucursales</a>
-  </div>
-  <div class="locations">
-    @for (l of locations.value() ?? []; track l.id) {
-      <a class="location" routerLink="/autos" [queryParams]="{ city: l.city }">
-        <img [src]="l.imageUrl" alt="" loading="lazy" />
-        <div>
-          <strong>{{ l.name }}</strong>
-          <small>{{ l.hours }}</small>
+@if (site.branch(); as b) {
+  <section class="container section" aria-labelledby="visit-title">
+    <div class="visit">
+      <img [src]="b.imageUrl" alt="" loading="lazy" />
+      <div>
+        <h2 id="visit-title" i18n="@@home.visit">Visítanos en {{ region }}</h2>
+        <p>{{ b.address }}</p>
+        <p>{{ b.hours }}</p>
+        <div class="visit-actions">
+          <a class="btn primary" routerLink="/contacto">
+            <ng-container i18n="@@home.visit.cta">Cómo llegar y contacto</ng-container>
+            <cx-icon name="arrowRight" [size]="18" />
+          </a>
+          <a class="btn outline" [href]="site.whatsappUrl" target="_blank" rel="noopener"
+            >WhatsApp</a
+          >
         </div>
-      </a>
-    }
-  </div>
-</section>
-
-<section class="container section">
-  <div class="sell-cta">
-    <div>
-      <h2>{{ content.text('home.sell.title') }}</h2>
-      <p>{{ content.text('home.sell.subtitle') }}</p>
+      </div>
     </div>
-    <a class="btn primary" routerLink="/vender">
-      <ng-container i18n="@@home.sell.cta">Publicar mi auto</ng-container>
-      <cx-icon name="arrowRight" [size]="18" />
-    </a>
-  </div>
-</section>
+  </section>
+}

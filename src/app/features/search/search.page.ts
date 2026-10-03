@@ -12,7 +12,8 @@ import {
 import { CATALOG_REPOSITORY, LISTING_REPOSITORY } from '../../domain/repositories';
 import { CarCard } from '../../shared/ui/car-card';
 import { EmptyState, Skeleton } from '../../shared/ui/state-views';
-import { activeFilterCount, filterToParams, parseFilter } from './search-query';
+import { SiteStore } from '../../core/state/site.store';
+import { Stock, activeFilterCount, filterToParams, parseFilter, stockOf } from './search-query';
 import { optional } from '../../core/utils/resource';
 
 const PAGE_SIZE = 12;
@@ -30,7 +31,18 @@ export class SearchPage {
   private readonly catalog = inject(CATALOG_REPOSITORY);
 
   private readonly params = toSignal(this.route.queryParamMap, { requireSync: true });
-  protected readonly filter = computed(() => parseFilter(this.params()));
+  protected readonly region = inject(SiteStore).site.region;
+  private readonly branchId = inject(SiteStore).site.branchId;
+  protected readonly filter = computed(() => parseFilter(this.params(), this.branchId));
+  protected readonly stock = computed(() => stockOf(this.filter(), this.branchId));
+  protected readonly stocks: { value: Stock | undefined; label: string }[] = [
+    { value: undefined, label: $localize`:@@stock.all:Todos` },
+    { value: 'local', label: $localize`:@@stock.local:Autos en ${this.region}:INTERPOLATION:` },
+    {
+      value: 'pickup',
+      label: $localize`:@@stock.pickup:Autos que puedes recoger en ${this.region}:INTERPOLATION:`,
+    },
+  ];
   protected readonly activeCount = computed(() => activeFilterCount(this.filter()));
 
   /** Grows by one page on "load more"; resets whenever the filter changes. */
@@ -63,19 +75,35 @@ export class SearchPage {
   constructor() {
     inject(SeoService).set({
       title: $localize`:@@search.autos-seminuevos-en-venta:Autos seminuevos en venta`,
-      description: $localize`:@@search.busca-autos-seminuevos-verificados-por:Busca autos seminuevos verificados por Carmexio por marca, precio, año y sucursal.`,
+      description: $localize`:@@search.busca-autos-seminuevos-verificados-por:Inventario de Carmexio Guanajuato: autos en la sucursal y autos que puedes recoger en Guanajuato.`,
     });
   }
 
   protected update(changes: Partial<CarFilter>): void {
     void this.router.navigate([], {
-      queryParams: filterToParams({ ...this.filter(), ...changes }),
+      queryParams: filterToParams({ ...this.filter(), ...changes }, this.branchId),
     });
   }
 
   protected clear(): void {
     void this.router.navigate([], {
-      queryParams: filterToParams({ query: this.filter().query, sort: this.filter().sort }),
+      queryParams: filterToParams(
+        {
+          query: this.filter().query,
+          sort: this.filter().sort,
+          locationId: this.filter().locationId,
+          excludeLocationId: this.filter().excludeLocationId,
+        },
+        this.branchId,
+      ),
+    });
+  }
+
+  /** Switches between everything, cars at the branch, and cars to pick up here. */
+  protected setStock(stock: Stock | undefined): void {
+    this.update({
+      locationId: stock === 'local' ? this.branchId : undefined,
+      excludeLocationId: stock === 'pickup' ? this.branchId : undefined,
     });
   }
 

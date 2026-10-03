@@ -49,10 +49,9 @@ import { ThemeMode, ThemeService } from '../../core/theme/theme.service';
         </form>
 
         <nav class="card block links" i18n-aria-label="@@profile.mi-cuenta" aria-label="Mi cuenta">
-          <a routerLink="/mis-anuncios" i18n="@@profile.mis-anuncios">Mis anuncios</a>
           <a routerLink="/favoritos" i18n="@@profile.autos-guardados">Autos guardados</a>
           <a routerLink="/mensajes" i18n="@@profile.mensajes">Mensajes</a>
-          <a routerLink="/sucursales" i18n="@@profile.sucursales">Sucursales</a>
+          <a routerLink="/contacto" i18n="@@nav.contact">Contacto</a>
           @if (session.isStaff()) {
             <a routerLink="/staff" i18n="@@profile.portal-staff">Portal staff</a>
           }

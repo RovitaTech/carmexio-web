@@ -10,6 +10,9 @@ class RecordingQuery implements ListingQuery<RecordingQuery> {
   eq(c: string, v: unknown) {
     return this.push(`eq ${c} ${v}`);
   }
+  neq(c: string, v: unknown) {
+    return this.push(`neq ${c} ${v}`);
+  }
   gte(c: string, v: unknown) {
     return this.push(`gte ${c} ${v}`);
   }
@@ -70,5 +73,15 @@ describe('applyListingFilter', () => {
     expect(applyListingFilter(new RecordingQuery(), { query: ' ,() ' }).calls).toEqual([
       'order created_at desc',
     ]);
+  });
+
+  it('splits the catalog by branch: at this branch, or at every other one', () => {
+    expect(applyListingFilter(new RecordingQuery(), { locationId: 'loc-gto' }).calls).toEqual([
+      'eq location_id loc-gto',
+      'order created_at desc',
+    ]);
+    expect(
+      applyListingFilter(new RecordingQuery(), { excludeLocationId: 'loc-gto' }).calls,
+    ).toEqual(['neq location_id loc-gto', 'order created_at desc']);
   });
 });

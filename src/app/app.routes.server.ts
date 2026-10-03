@@ -8,7 +8,10 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 export const serverRoutes: ServerRoute[] = [
   { path: '', renderMode: RenderMode.Server },
   { path: 'como-funciona', renderMode: RenderMode.Server },
-  { path: 'sucursales', renderMode: RenderMode.Server },
+  { path: 'contacto', renderMode: RenderMode.Server },
+  { path: 'financiamiento', renderMode: RenderMode.Server },
+  { path: 'nosotros', renderMode: RenderMode.Server },
+  { path: 'ayuda', renderMode: RenderMode.Server },
   { path: 'autos', renderMode: RenderMode.Server },
   { path: 'ofertas', renderMode: RenderMode.Server },
   { path: 'autos/:slug', renderMode: RenderMode.Server },

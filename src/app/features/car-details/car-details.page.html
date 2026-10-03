@@ -134,7 +134,7 @@
       <aside class="side">
         <div class="card block contact">
           <p class="price">{{ formatPrice(c.price) }}</p>
-          @if (c.location; as l) {
+          @if (site.branch(); as l) {
             <div class="dealer">
               <img src="/images/logo_mark.png" alt="" width="40" height="30" />
               <div>
@@ -143,6 +143,16 @@
                 <p>{{ l.hours }}</p>
               </div>
             </div>
+          }
+          @if (site.isLocal(c)) {
+            <p class="where here" i18n="@@car.inRegionLong">
+              ✓ En {{ site.site.region }}: ven a verlo y manejarlo.
+            </p>
+          } @else {
+            <p class="where" i18n="@@car.pickupLong">
+              Este auto está en {{ c.city }}. Lo traemos a {{ site.site.region }} para que lo veas y
+              lo recojas aquí; pregúntanos el tiempo de traslado.
+            </p>
           }
           <p class="note" i18n="@@car.carmexio-coordina-visitas-y-pruebas">
             Carmexio coordina visitas y pruebas de manejo. Nunca contactarás al dueño directamente.
@@ -160,14 +170,12 @@
             <a class="btn whatsapp block" [href]="whatsappUrl(c)" target="_blank" rel="noopener"
               >WhatsApp</a
             >
-            @if (c.location; as l) {
-              <a
-                class="btn outline block"
-                [href]="'tel:' + l.phone.replaceAll(' ', '')"
-                i18n="@@car.callBranch"
-                >Llamar a la sucursal</a
-              >
-            }
+            <a
+              class="btn outline block"
+              [href]="site.tel(site.site.phones[0])"
+              i18n="@@car.callBranch"
+              >Llamar a la sucursal</a
+            >
           }
           <div class="row">
             <button

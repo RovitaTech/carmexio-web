@@ -14,8 +14,8 @@ import { Icon } from '../shared/ui/icon';
       <a routerLink="/autos" routerLinkActive="active">
         <cx-icon name="search" /><span i18n="@@tab.search">Buscar</span>
       </a>
-      <a class="sell" routerLink="/vender" i18n-aria-label="@@tab.sell" aria-label="Vender">
-        <cx-icon name="plus" [size]="26" />
+      <a class="sell" routerLink="/contacto" i18n-aria-label="@@tab.contact" aria-label="Contacto">
+        <cx-icon name="phone" [size]="24" />
       </a>
       <a routerLink="/mensajes" routerLinkActive="active">
         <cx-icon name="chat" /><span i18n="@@tab.chats">Chats</span>

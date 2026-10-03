@@ -1,6 +1,11 @@
 // DELETE WHEN LIVE — in-memory auth, favorites and dealer chat.
 import { AppError, AppUser, ChatMessage, Conversation, ProfileChanges } from '../../domain/models';
-import { AuthRepository, ChatRepository, FavoritesRepository } from '../../domain/repositories';
+import {
+  AuthRepository,
+  ChatRepository,
+  ChatTarget,
+  FavoritesRepository,
+} from '../../domain/repositories';
 import { Row, toCar, toConversation, toMessage, toUser } from '../mappers';
 import { DummyDb, requireUser } from './dummy-db';
 
@@ -160,14 +165,12 @@ export class DummyChatRepository implements ChatRepository {
     return this.toConversation(this.row(id));
   }
 
-  async start(target: { listingId: string } | { locationId: string }) {
+  async start(target: ChatTarget) {
     await this.db.delay(0.6);
     const user = requireUser(this.db);
-    const listingId = 'listingId' in target ? target.listingId : null;
+    const listingId = target.listingId ?? null;
     const locationId =
-      'listingId' in target
-        ? this.db.listing(target.listingId)?.['location_id']
-        : target.locationId;
+      target.locationId ?? (listingId ? this.db.listing(listingId)?.['location_id'] : undefined);
     if (!locationId)
       throw new AppError(
         $localize`:@@errors.anuncio-no-encontrado:Anuncio no encontrado.`,

@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { formatKm, formatPrice, carSlug } from '../../core/utils/format';
 import { BODY_LABELS, Car, FUEL_LABELS } from '../../domain/models';
 import { FavoritesStore } from '../../core/state/favorites.store';
+import { SiteStore } from '../../core/state/site.store';
 
 @Component({
   selector: 'cx-car-card',
@@ -34,7 +35,14 @@ import { FavoritesStore } from '../../core/state/favorites.store';
         <h3>{{ car().brand }} {{ car().model }}</h3>
         <p>{{ car().year }} · {{ car().version ?? body() }}</p>
         <strong>{{ price() }}</strong>
-        <p class="specs">{{ km() }} · {{ car().location?.name ?? car().city }}</p>
+        <p class="specs">{{ km() }}</p>
+        @if (local()) {
+          <p class="where here" i18n="@@car.inRegion">En {{ region }}</p>
+        } @else {
+          <p class="where" i18n="@@car.pickupInRegion">
+            Recógelo en {{ region }} · hoy en {{ car().city }}
+          </p>
+        }
       </a>
     </article>
   `,
@@ -125,6 +133,15 @@ import { FavoritesStore } from '../../core/state/favorites.store';
     .specs {
       color: var(--cx-text-3);
     }
+    .where {
+      margin-top: 2px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--cx-text-2);
+    }
+    .where.here {
+      color: var(--cx-success-text);
+    }
   `,
 })
 export class CarCard {
@@ -132,6 +149,9 @@ export class CarCard {
   protected readonly unsaveLabel = $localize`:@@car.unsave:Quitar de favoritos`;
   readonly car = input.required<Car>();
   protected readonly favorites = inject(FavoritesStore);
+  private readonly site = inject(SiteStore);
+  protected readonly region = this.site.site.region;
+  protected readonly local = computed(() => this.site.isLocal(this.car()));
 
   protected readonly slug = computed(() => carSlug(this.car()));
   protected readonly title = computed(

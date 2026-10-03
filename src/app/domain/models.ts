@@ -175,6 +175,10 @@ export interface CarFilter {
   fuelType?: FuelType;
   transmission?: Transmission;
   city?: string;
+  /** Cars at this branch. */
+  locationId?: string;
+  /** Cars at every other branch (brought over on request). */
+  excludeLocationId?: string;
   minPrice?: number;
   maxPrice?: number;
   minYear?: number;
